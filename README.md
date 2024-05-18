@@ -17,17 +17,17 @@ O principal objetivo do App de Doações Solidárias é criar uma plataforma int
 
 ## Capturas de Tela
 
-### Tela Inicial
-![Tela Inicial](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Home.png)
+### Tela Inicial e Tela de Campanhas
+<p align="">
+  <img src="https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Home.png" alt="Tela Inicial" width="250">
+  <img src="https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Campanhas.png" alt="Tela de Campanhas" width="250">
+</p>
 
-### Tela de Campanhas
-![Tela de Campanhas](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Campanhas.png)
-
-### Detalhe da Instituição
-![Detalhe da Instituição](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Instituicao.png)
-
-### Detalhe da Campanha
-![Detalhe da Campanha](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Campanha.png)
+### Detalhe da Instituição e Detalhe da Campanha
+<p align="">
+  <img src="https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Instituicao.png" alt="Detalhe da Instituição" width="250">
+  <img src="https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Campanha.png" alt="Detalhe da Campanha" width="250">
+</p>
 
 ## Instalação
 
@@ -58,6 +58,3 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-## Contato
-
-Para mais informações, entre em contato pelo e-mail: seu-email@exemplo.com
