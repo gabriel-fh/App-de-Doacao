@@ -15,17 +15,31 @@ O principal objetivo do App de Doações Solidárias é criar uma plataforma int
 - **Histórico de doações**: Acompanhe todas as doações realizadas pelo usuário.
 - **Notificações**: Receba alertas sobre novas campanhas e eventos de doação.
 
+## Capturas de Tela
+
+### Tela Inicial
+![Tela Inicial](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Home.png)
+
+### Tela de Campanhas
+![Tela de Campanhas](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Campanhas.png)
+
+### Detalhe da Instituição
+![Detalhe da Instituição](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Instituicao.png)
+
+### Detalhe da Campanha
+![Detalhe da Campanha](https://github.com/gabriel-fh/App-de-Doacao/blob/main/public/root/Campanha.png)
+
 ## Instalação
 
 Para instalar e rodar o app localmente, siga os passos abaixo:
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/gabriel-fh/App-de-Doacao.git
     ```
 2. Navegue até o diretório do projeto:
     ```bash
-    cd seu-repositorio
+    cd App-de-Doacao
     ```
 3. Instale as dependências:
     ```bash
@@ -43,3 +57,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## Contato
+
+Para mais informações, entre em contato pelo e-mail: seu-email@exemplo.com
