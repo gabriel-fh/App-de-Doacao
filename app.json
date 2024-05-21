@@ -13,6 +13,14 @@
         {
           "origin": "https://n"
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização.",
+          "locationAlwaysPermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização.",
+          "locationWhenInUsePermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização."
+        }
       ]
     ],
     "name": "app-de-doacao",

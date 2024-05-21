@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function TabLayout() {
   return (
@@ -8,10 +9,11 @@ export default function TabLayout() {
       screenOptions={{
         tabBarStyle: { height: 70, backgroundColor: "#fff" },
         tabBarItemStyle: { paddingBottom: 10 },
-        headerStyle: { backgroundColor: "#fff" },
+        headerStyle: { backgroundColor: "#8e98de" },
+        headerTitleStyle: { color: "#fff" },
         headerTitleAlign: "center",
         tabBarInactiveTintColor: "#c0c0c0",
-        tabBarActiveTintColor: "#0D62AD",
+        tabBarActiveTintColor: "#8e98de",
       }}
     >
       <Tabs.Screen
@@ -46,7 +48,7 @@ export default function TabLayout() {
         options={{
           title: "Perfil",
           tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome5 name={"user-circle"} size={25} color={color} />
+            <Ionicons name={"person-circle-sharp"} size={40} color={color} />
           ),
         }}
       />
