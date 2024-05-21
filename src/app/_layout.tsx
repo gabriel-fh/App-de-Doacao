@@ -1,13 +1,18 @@
 import "../global.css";
 
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-import { Slot } from "expo-router";
+import { Tabs } from "expo-router";
 
 export default function Layout() {
   return (
-    <GestureHandlerRootView>
-      <Slot />
-    </GestureHandlerRootView>
+    <Tabs>
+      <Tabs.Screen
+        name="index"
+        options={{ title: "Início", headerShown: false }}
+      />
+      <Tabs.Screen
+        name="Map/Map"
+        options={{ title: "Mapa", headerShown: false }}
+      />
+    </Tabs>
   );
 }
