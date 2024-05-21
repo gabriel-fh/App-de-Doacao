@@ -1,18 +1,12 @@
-import "../global.css";
+import React from "react";
+import { Stack } from "expo-router";
 
-import { Tabs } from "expo-router";
-
-export default function Layout() {
+const RootLayoutNav = () => {
   return (
-    <Tabs>
-      <Tabs.Screen
-        name="index"
-        options={{ title: "Início", headerShown: false }}
-      />
-      <Tabs.Screen
-        name="Map/Map"
-        options={{ title: "Mapa", headerShown: false }}
-      />
-    </Tabs>
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
-}
+};
+
+export default RootLayoutNav;
