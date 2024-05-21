@@ -15,17 +15,19 @@ const Map = () => {
   useEffect(() => {
     (async () => {
       const { status } = await requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.error('Aceesso a localização negado!');
+      if (status !== "granted") {
+        console.error("Aceesso a localização negado!");
         return;
       }
 
-      let location = await getCurrentPositionAsync({ accuracy: LocationAccuracy.Balanced });
+      let location = await getCurrentPositionAsync({
+        accuracy: LocationAccuracy.Balanced,
+      });
       setRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.1,
-        longitudeDelta: 0.1,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
       });
     })();
   }, []);
@@ -33,13 +35,8 @@ const Map = () => {
   return (
     <View style={{ flex: 1 }}>
       <MapView
-      ref={mapRef}
-      initialRegion={{
-        latitude: -22.896272986246537, // região default por enquanto
-        longitude: -43.104700078765426,
-        latitudeDelta: 0.1,
-        longitudeDelta: 0.1,
-      }}
+        ref={mapRef}
+        initialRegion={region}
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
