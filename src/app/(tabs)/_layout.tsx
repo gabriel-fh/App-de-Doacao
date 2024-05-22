@@ -14,6 +14,7 @@ export default function TabLayout() {
         headerTitleAlign: "center",
         tabBarInactiveTintColor: "#c0c0c0",
         tabBarActiveTintColor: "#8e98de",
+        tabBarLabelStyle: { fontSize: 12, fontWeight: "bold"},
       }}
     >
       <Tabs.Screen
