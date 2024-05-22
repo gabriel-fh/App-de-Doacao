@@ -1,24 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
+import { View } from "react-native";
+import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CampaignCard from "src/components/CampaignCard";
 
 const index = () => {
-    const top = useSafeAreaInsets().top
-    return (
-    <View style={styles.container} className='flex-1'>
-      <Text className='text-2xl font-bold'>index</Text>
+  const top = useSafeAreaInsets().top;
+  return (
+    <View>
+      <CampaignCard />
     </View>
-  )
-}
+  );
+};
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
-
-export default index
+export default index;
