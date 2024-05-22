@@ -1,13 +1,13 @@
-import "../global.css";
+import React from "react";
+import { Stack } from "expo-router";
+import '../../src/global.css';
 
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-import { Slot } from "expo-router";
-
-export default function Layout() {
+const RootLayoutNav = () => {
   return (
-    <GestureHandlerRootView>
-      <Slot />
-    </GestureHandlerRootView>
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
-}
+};
+
+export default RootLayoutNav;
