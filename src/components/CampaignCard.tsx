@@ -1,6 +1,7 @@
 import { View, Image, StyleSheet, Text } from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
+
 const CampaignCard = () => {
   const metaTest = [82, 100];
 
