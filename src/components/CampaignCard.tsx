@@ -2,12 +2,11 @@ import { View, Image, StyleSheet, Text } from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
 const CampaignCard = () => {
+  const metaTest = [82, 100];
+
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: "https://via.placeholder.com/150" }}
-        style={styles.img}
-      />
+      <Image source={{ uri: "https://picsum.photos/150" }} style={styles.img} />
       <View style={styles.info}>
         <Text numberOfLines={1} style={styles.title}>
           Campanha do Agasalho
@@ -17,8 +16,10 @@ const CampaignCard = () => {
           inverno sombrio{" "}
         </Text>
         <View style={styles.goal}>
-          <Text style={styles.current}>Meta 82/100</Text>
-          <ProgressBar />
+          <Text style={styles.current}>
+            Meta {metaTest[0]} {metaTest[1]}
+          </Text>
+          <ProgressBar objective={metaTest[1]} donated={metaTest[0]} />
         </View>
       </View>
     </View>
