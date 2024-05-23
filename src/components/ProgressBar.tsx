@@ -37,14 +37,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "#8e98de",
+    backgroundColor: "#b7bded",
     width: "100%",
     height: 7,
     borderRadius: 10,
   },
   secondProgress: {
-    backgroundColor: "#b7bded",
-    height: 3,
+    backgroundColor: "#8e98de",
+    height: "100%",
     borderRadius: 10,
   },
 });
