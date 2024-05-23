@@ -6,7 +6,7 @@ const CampaignCard = () => {
   const metaTest = [82, 100];
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...styles.shadow}}>
       <Image source={{ uri: "https://picsum.photos/150" }} style={styles.img} />
       <View style={styles.info}>
         <Text numberOfLines={1} style={styles.title}>
@@ -69,6 +69,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#0D62AD",
     fontFamily: "Poppins-SemiBold",
+  },
+  shadow: {
+    backgroundColor: "#fff",
+    shadowColor: "#999",
+    borderRadius: 12,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2.54,
+    elevation: 10,
   },
 });
 

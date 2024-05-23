@@ -3,7 +3,7 @@ import React from "react";
 
 const NewsCard = () => {
   return (
-    <View style={[styles.container, styles.sombra]}>
+    <View style={[styles.container, styles.shadow]}>
       <Image
         source={{ uri: "https://picsum.photos/350/150" }}
         style={styles.image}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 14,
   },
-  sombra: {
+  shadow: {
     backgroundColor: "#fff",
     shadowColor: "#999",
     borderRadius: 12,
