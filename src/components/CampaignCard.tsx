@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     gap: 8,
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
   img: {
     width: 130,
