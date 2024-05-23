@@ -1,15 +1,14 @@
 import {
   View,
-  Text,
   ScrollView,
   StyleSheet,
-  TextInput,
   Dimensions,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import CampaignCard from "@/components/CampaignCard";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import BackToTopButton from "@/components/BackToTopButton";
+import Searchbar from "@/components/Searchbar";
+import FilterSelect from "@/components/FilterSelect";
 
 const Campaign = () => {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -41,21 +40,9 @@ const Campaign = () => {
         ref={scrollViewRef}
       >
         <View style={styles.filters}>
-          <View style={styles.searchbar}>
-            <TextInput
-              placeholder="Buscar Campanhas"
-              style={styles.textInput}
-            />
+          <Searchbar />
 
-            <View style={styles.iconView}>
-              <FontAwesome5 name="search" size={20} color="#fff" />
-            </View>
-          </View>
-
-          <View style={styles.itemFilter}>
-            <Text style={styles.itemText}>Filtrar</Text>
-            <FontAwesome5 name="caret-down" size={20} color="#fff" />
-          </View>
+          <FilterSelect />
         </View>
 
         <View style={{ gap: 8, flex: 1 }}>

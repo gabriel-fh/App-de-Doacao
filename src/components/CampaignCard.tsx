@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     gap: 8,
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
   img: {
     width: 130,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   },
   current: {
     fontSize: 14,
-    color: "#8e98de",
+    color: "#0D62AD",
     fontFamily: "Poppins-SemiBold",
   },
 });

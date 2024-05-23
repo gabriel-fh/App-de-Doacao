@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
-import "../../src/global.css";
 import * as Font from "expo-font";
 
 const RootLayoutNav = () => {

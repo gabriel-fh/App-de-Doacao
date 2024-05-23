@@ -9,11 +9,11 @@ export default function TabLayout() {
       screenOptions={{
         tabBarStyle: { height: 70, backgroundColor: "#fff" },
         tabBarItemStyle: { paddingBottom: 10 },
-        headerStyle: { backgroundColor: "#8e98de" },
+        headerStyle: { backgroundColor: "#0D62AD" },
         headerTitleStyle: { color: "#fff" },
         headerTitleAlign: "center",
         tabBarInactiveTintColor: "#c0c0c0",
-        tabBarActiveTintColor: "#8e98de",
+        tabBarActiveTintColor: "#0D62AD",
         tabBarLabelStyle: { fontSize: 12, fontWeight: "bold"},
       }}
     >
