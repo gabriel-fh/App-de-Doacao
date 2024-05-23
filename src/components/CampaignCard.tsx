@@ -27,14 +27,15 @@ const CampaignCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 8,
+    marginBottom: 12,
+    gap: 8,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5fcff",
-    paddingHorizontal: 15,
-    paddingVertical: 20,
-    gap: 10,
-    width: "100%",
+    flex: 1,
   },
   img: {
     width: 120,
@@ -44,8 +45,8 @@ const styles = StyleSheet.create({
   info: {
     gap: 10,
     height: "100%",
-    width: "64%",
     justifyContent: "flex-start",
+    flex: 1,
   },
   title: {
     fontSize: 18,
