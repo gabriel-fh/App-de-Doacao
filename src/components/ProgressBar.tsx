@@ -13,10 +13,7 @@ const ProgressBar = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.progress}>
-        <View
-          style={[styles.secondProgress, { width: `${percentage}%` }]}
-        ></View>
+      <View style={[styles.progress, { width: `${percentage}%` }]}>
       </View>
     </View>
   );
@@ -24,27 +21,17 @@ const ProgressBar = ({
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "#cecece",
     width: "100%",
     height: 7,
     borderRadius: 10,
   },
   progress: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: "#b7bded",
-    width: "100%",
-    height: 7,
-    borderRadius: 10,
-  },
-  secondProgress: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "center",
     backgroundColor: "#8e98de",
-    height: "100%",
+    height: 7,
     borderRadius: 10,
   },
 });
