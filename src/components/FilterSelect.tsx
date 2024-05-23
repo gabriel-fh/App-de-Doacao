@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     gap: 8,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#8e98de",
+    backgroundColor: "#0D62AD",
     borderRadius: 10,
     paddingHorizontal: 24,
     maxHeight: 50,

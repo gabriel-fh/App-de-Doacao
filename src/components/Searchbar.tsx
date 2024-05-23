@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 8,
-    borderColor: "#8e98de",
+    borderColor: "#0D62AD",
     borderWidth: 2,
     borderRadius: 10,
     maxHeight: 50,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   iconView: {
-    backgroundColor: "#8e98de",
+    backgroundColor: "#0D62AD",
     borderRadius: 10,
     height: "110%",
     justifyContent: "center",

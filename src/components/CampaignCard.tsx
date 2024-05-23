@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   current: {
     fontSize: 14,
-    color: "#8e98de",
+    color: "#0D62AD",
     fontFamily: "Poppins-SemiBold",
   },
 });
