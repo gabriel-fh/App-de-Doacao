@@ -1,13 +1,13 @@
 import { View, Image, StyleSheet, Text } from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
+
 const CampaignCard = () => {
+  const metaTest = [82, 100];
+
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: "https://via.placeholder.com/150" }}
-        style={styles.img}
-      />
+      <Image source={{ uri: "https://picsum.photos/150" }} style={styles.img} />
       <View style={styles.info}>
         <Text numberOfLines={1} style={styles.title}>
           Campanha do Agasalho
@@ -17,8 +17,10 @@ const CampaignCard = () => {
           inverno sombrio{" "}
         </Text>
         <View style={styles.goal}>
-          <Text style={styles.current}>Meta 82/100</Text>
-          <ProgressBar />
+          <Text style={styles.current}>
+            Meta {metaTest[0]} / {metaTest[1]}
+          </Text>
+          <ProgressBar objective={metaTest[1]} donated={metaTest[0]} />
         </View>
       </View>
     </View>
@@ -27,34 +29,35 @@ const CampaignCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    marginBottom: 12,
+    gap: 8,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5fcff",
-    paddingHorizontal: 15,
-    paddingVertical: 20,
-    gap: 10,
-    width: "100%",
   },
   img: {
-    width: 120,
-    height: 120,
+    width: 130,
+    height: 130,
     borderRadius: 10,
   },
   info: {
     gap: 10,
     height: "100%",
-    width: "64%",
     justifyContent: "flex-start",
+    flex: 1,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: "Poppins-SemiBold",
   },
   description: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#666",
     overflow: "hidden",
+    fontFamily: "Poppins-Medium",
   },
   goal: {
     display: "flex",
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   current: {
     fontSize: 14,
     color: "#8e98de",
-    fontWeight: "500",
+    fontFamily: "Poppins-SemiBold",
   },
 });
 
