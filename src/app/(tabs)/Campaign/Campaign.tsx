@@ -1,12 +1,126 @@
-import { View, Text } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  Dimensions,
+} from "react-native";
+import React, { useRef, useState } from "react";
+import CampaignCard from "@/components/CampaignCard";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import BackToTopButton from "@/components/BackToTopButton";
 
 const Campaign = () => {
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [showButton, setShowButton] = useState(false);
+
+  const screenHeight = Dimensions.get("window").height;
+
+  const handleScroll = (event) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    if (offsetY > screenHeight * 0.4) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
   return (
-    <View>
-      <Text>Campaign</Text>
+    <View style={{ position: "relative", flex: 1 }}>
+      <ScrollView
+        style={styles.container}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 20,
+          paddingHorizontal: 12,
+        }}
+        ref={scrollViewRef}
+      >
+        <View style={styles.filters}>
+          <View style={styles.searchbar}>
+            <TextInput
+              placeholder="Buscar Campanhas"
+              style={styles.textInput}
+            />
+
+            <View style={styles.iconView}>
+              <FontAwesome5 name="search" size={20} color="#fff" />
+            </View>
+          </View>
+
+          <View style={styles.itemFilter}>
+            <Text style={styles.itemText}>Filtrar</Text>
+            <FontAwesome5 name="caret-down" size={20} color="#fff" />
+          </View>
+        </View>
+
+        <View style={{ gap: 8, flex: 1 }}>
+          {Array.from({ length: 10 }).map((_, index) => (
+            <CampaignCard key={index} />
+          ))}
+        </View>
+      </ScrollView>
+      <BackToTopButton scrollViewRef={scrollViewRef} showButton={showButton} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  filters: {
+    flex: 1,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 20,
+  },
+  searchbar: {
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
+    borderColor: "#8e98de",
+    borderWidth: 2,
+    borderRadius: 10,
+    maxHeight: 50,
+    flex: 1,
+    paddingLeft: 12,
+    marginBottom: 12,
+  },
+  textInput: {
+    marginVertical: 8,
+    fontSize: 16,
+    flex: 1,
+  },
+  iconView: {
+    backgroundColor: "#8e98de",
+    borderRadius: 10,
+    height: "110%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 12,
+  },
+  itemFilter: {
+    flexDirection: "row",
+    gap: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#8e98de",
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    maxHeight: 50,
+  },
+  itemText: {
+    fontSize: 16,
+    color: "#fff",
+  },
+});
 
 export default Campaign;
