@@ -1,29 +1,49 @@
-import { View, Image, StyleSheet, Text } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
+import { router } from "expo-router";
 
 const CampaignCard = () => {
   const metaTest = [82, 100];
 
+  const handlePress = () => {
+    router.navigate("CampaignModal/CampaignModal");
+  };
+
   return (
-    <View style={{...styles.container, ...styles.shadow}}>
-      <Image source={{ uri: "https://picsum.photos/150" }} style={styles.img} />
-      <View style={styles.info}>
-        <Text numberOfLines={1} style={styles.title}>
-          Campanha do Agasalho
-        </Text>
-        <Text numberOfLines={2} style={styles.description}>
-          Nesta campanha nosso foco é arrecadar roupas de frio para ajudar n
-          inverno sombrio{" "}
-        </Text>
-        <View style={styles.goal}>
-          <Text style={styles.current}>
-            Meta {metaTest[0]} / {metaTest[1]}
+    <TouchableOpacity
+      onPress={handlePress}
+      style={{ ...styles.container, ...styles.shadow }}
+    >
+      <>
+        <Image
+          source={{ uri: "https://picsum.photos/150" }}
+          style={styles.img}
+        />
+        <View style={styles.info}>
+          <Text numberOfLines={1} style={styles.title}>
+            Campanha do Agasalho
           </Text>
-          <ProgressBar objective={metaTest[1]} donated={metaTest[0]} />
+          <Text numberOfLines={2} style={styles.description}>
+            Nesta campanha nosso foco é arrecadar roupas de frio para ajudar n
+            inverno sombrio{" "}
+          </Text>
+          <View style={styles.goal}>
+            <Text style={styles.current}>
+              Meta {metaTest[0]} / {metaTest[1]}
+            </Text>
+            <ProgressBar objective={metaTest[1]} donated={metaTest[0]} />
+          </View>
         </View>
-      </View>
-    </View>
+      </>
+    </TouchableOpacity>
   );
 };
 

@@ -48,6 +48,14 @@ const RootLayoutNav = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="CampaignModal/CampaignModal"
+        options={{
+          presentation: "modal",
+          animation: "slide_from_bottom",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };
