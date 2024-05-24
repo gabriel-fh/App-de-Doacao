@@ -24,6 +24,11 @@
       ]
     ],
     "name": "app-de-doacao",
-    "slug": "app-de-doacao"
+    "slug": "app-de-doacao",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0D62AD"
+    }
   }
 }

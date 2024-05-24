@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import * as Font from "expo-font";
+import { StatusBar } from "expo-status-bar";
 
 const RootLayoutNav = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -38,17 +39,28 @@ const RootLayoutNav = () => {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="Institution/Institution"
-        options={{
-          presentation: "modal",
-          animation: "slide_from_bottom",
-          headerShown: false,
-        }}
-      />
-    </Stack>
+    <>
+      <StatusBar style="light" />
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Institution/Institution"
+          options={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="CampaignModal/CampaignModal"
+          options={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </>
   );
 };
 
