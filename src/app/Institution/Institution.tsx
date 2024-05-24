@@ -1,6 +1,7 @@
 import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, Image, StyleSheet, Text, ScrollView } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
@@ -9,6 +10,8 @@ import Foundation from "react-native-vector-icons/Foundation";
 const Institution = () => {
   return (
     <View style={{ position: "relative", flex: 1 }}>
+      <StatusBar hidden />
+
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image

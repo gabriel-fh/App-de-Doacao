@@ -7,10 +7,14 @@ import ProgressBar from "@/components/ProgressBar";
 import IconText from "@/components/IconText";
 import ProgressBarTitle from "@/components/ProgressBarTitle";
 import CloseModalButton from "@/components/CloseModalButton";
+import FloatButton from "@/components/FloatButton";
+import { StatusBar } from "expo-status-bar";
 
 const CampaignModal = () => {
   return (
     <View style={{ position: "relative", flex: 1 }}>
+      <StatusBar hidden />
+
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image
@@ -71,6 +75,8 @@ const CampaignModal = () => {
           </View>
         </View>
       </ScrollView>
+
+      <FloatButton />
     </View>
   );
 };
