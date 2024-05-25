@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 
-const FloatButton = () => {
+const FloatButton = ({ onPress, text }: { onPress: () => void, text: string }) => {
   return (
     <View style={[styles.container, styles.shadow]}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.text}>Doar Agora</Text>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <Text style={styles.text}>{text}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
+    backgroundColor: "#f1f1f1",
   },
   button: {
     width: "100%",

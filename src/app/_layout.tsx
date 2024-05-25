@@ -59,6 +59,15 @@ const RootLayoutNav = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="Donation/Donation"
+          options={{
+            presentation: "modal",
+            // animation: "slide_from_bottom",
+            // headerShown: false,
+            headerTitle: "Quero Doar",
+          }}
+        />
       </Stack>
     </>
   );

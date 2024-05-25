@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Foundation from "react-native-vector-icons/Foundation";
@@ -9,8 +9,12 @@ import ProgressBarTitle from "@/components/ProgressBarTitle";
 import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
+import PopUp from "@/components/PopUp";
+import { router } from "expo-router";
 
 const CampaignModal = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
   return (
     <View style={{ position: "relative", flex: 1 }}>
       <StatusBar hidden />
@@ -23,7 +27,17 @@ const CampaignModal = () => {
           resizeMode="cover"
         />
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <Text style={styles.title}>Campanha do Agasalho</Text>
+          <View>
+            <Text style={styles.title}>Campanha do Agasalho</Text>
+            <TouchableOpacity style={styles.userContainer} onPress={() => router.navigate('Institution/Institution')}>
+              <Image
+                source={{ uri: "https://picsum.photos/20" }}
+                style={styles.avatar}
+                resizeMode="contain"
+              />
+              <Text style={styles.username}>acao.comunitaria.unilasalle</Text>
+            </TouchableOpacity>
+          </View>
 
           <View style={{ gap: 4 }}>
             <ProgressBar objective={700} donated={500} />
@@ -72,8 +86,11 @@ const CampaignModal = () => {
           </View>
         </View>
       </ScrollView>
-
-      <FloatButton />
+      <FloatButton text="Doar Agora" onPress={() => router.navigate("Donation/Donation")} />
+      {/* <PopUp
+        isVisible={openModal}
+        closePopUp={() => setOpenModal((prev) => !prev)}
+      ></PopUp> */}
     </View>
   );
 };
@@ -90,7 +107,7 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 12,
     paddingVertical: 20,
-    gap: 10,
+    gap: 20,
   },
   title: {
     fontSize: 19,
@@ -110,6 +127,19 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Poppins-Medium",
     color: "#666",
+  },
+  userContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  avatar: {
+    height: 21,
+    width: 21,
+    borderRadius: 50,
+  },
+  username: {
+    fontFamily: "Poppins-Medium",
   },
 });
 

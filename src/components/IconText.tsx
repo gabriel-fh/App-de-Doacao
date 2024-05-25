@@ -14,7 +14,6 @@ const IconText = ({
         flexDirection: "row",
         gap: 8,
         alignItems: "center",
-        
       }}
     >
       <View style={{ minWidth: 30, alignItems: "center" }}>{children}</View>
