@@ -13,7 +13,7 @@ const AddDecrease = () => {
       >
         <FontAwesome name="minus" color={"#0D62AD"} size={17} />
       </TouchableOpacity>
-      <Text style={{ fontFamily: "Poppins-Medium", fontSize: 17 }}>
+      <Text style={{ fontSize: 17 }}>
         {count}
       </Text>
       <TouchableOpacity onPress={() => setCount((prev) => prev + 1)}>

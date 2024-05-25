@@ -45,7 +45,7 @@ const CampaignModal = () => {
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
               <Text>
-                <Text style={{ color: "#0D62AD", fontFamily: "Poppins-Bold" }}>
+                <Text style={{ color: "#0D62AD"}}>
                   700 Doações{" "}
                 </Text>
                 Coletadas
@@ -56,7 +56,7 @@ const CampaignModal = () => {
 
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text style={{ ...styles.text, fontFamily: "Poppins-Regular" }}>
+            <Text style={{ ...styles.text}}>
               Lorem Ipsum simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -111,11 +111,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
-    fontFamily: "Poppins-SemiBold",
   },
   subtitle: {
     fontSize: 17,
-    fontFamily: "Poppins-Medium",
     marginTop: 4,
   },
   iconText: {
@@ -125,7 +123,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   text: {
-    fontFamily: "Poppins-Medium",
     color: "#666",
   },
   userContainer: {
@@ -139,7 +136,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   username: {
-    fontFamily: "Poppins-Medium",
   },
 });
 

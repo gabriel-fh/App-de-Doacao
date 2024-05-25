@@ -36,7 +36,7 @@ const Institution = () => {
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text
-              style={{ ...styles.description, fontFamily: "Poppins-Regular" }}
+              style={{ ...styles.description}}
             >
               Lorem Ipsum simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
@@ -73,14 +73,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
-    fontFamily: "Poppins-SemiBold",
   },
   subtitle: {
     fontSize: 17,
-    fontFamily: "Poppins-Medium",
   },
   description: {
-    fontFamily: "Poppins-Medium",
     color: "#666",
   },
 });

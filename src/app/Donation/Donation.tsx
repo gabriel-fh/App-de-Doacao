@@ -17,7 +17,7 @@ const Donation = () => {
     // <View style={{ position: "relative", flex: 1 }}>
     <ScrollView>
       <View style={styles.container}>
-        {/* <View>
+        <View>
           <Text style={styles.title}>Campanha do Agasalho</Text>
           <View style={styles.userContainer}>
             <Image
@@ -27,11 +27,11 @@ const Donation = () => {
             />
             <Text style={styles.username}>acao.comunitaria.unilasalle</Text>
           </View>
-        </View> */}
+        </View>
         <View>
           <Text style={styles.subTitle}>Selecione itens que deseja doar</Text>
           <Text>Select ??</Text>
-          <ScrollView style={{ height: 277, marginVertical: 20 }}>
+          <ScrollView style={{ height: 277, marginVertical: 20 }} nestedScrollEnabled={true}>
             {Array.from({ length: 10 }).map((_, idx) => (
               <View key={idx} style={styles.item}>
                 <Text style={styles.text}>Item {idx + 1}</Text>
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
-    fontFamily: "Poppins-SemiBold",
   },
   userContainer: {
     flexDirection: "row",
@@ -123,11 +122,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   username: {
-    fontFamily: "Poppins-Medium",
   },
   subTitle: {
     fontSize: 17,
-    fontFamily: "Poppins-Medium",
   },
   item: {
     display: "flex",
@@ -142,7 +139,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontFamily: "Poppins-Medium",
   },
   dateTime: {
     position: "relative",
@@ -162,7 +158,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     left: 15,
     fontSize: 17,
-    fontFamily: "Poppins-Medium",
     color: "#0D62AD",
   },
   iconText: {

@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 17,
     color: "#fff",
-    fontFamily: 'Poppins-Medium'
   },
 });
 

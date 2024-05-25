@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontSize: 20,
-    fontFamily: "Poppins-SemiBold",
   },
   shadow: {
     shadowColor: "#999",
