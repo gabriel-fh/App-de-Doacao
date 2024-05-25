@@ -49,29 +49,26 @@ const CampaignModal = () => {
               type and scrambled it to make.
             </Text>
           </View>
-
-          <View style={{ gap: 4 }}>
+          <View style={{ gap: 4, width: "100%" }}>
+            <Text style={styles.subtitle}>O que doar?</Text>
+            <ProgressBarTitle />
+            <ProgressBarTitle />
+            <ProgressBarTitle />
+          </View>
+          <View style={{ gap: 8 }}>
             <Text style={styles.subtitle}>Onde realizar as Doações?</Text>
 
-            <IconText text="07:00 - 16:30">
-              <AntDesign name="clockcircle" size={20} color="#0D62AD" />
-            </IconText>
-
-            <IconText text="R. Gastão Gonçalves, 79 - Santa Rosa, Niterói - RJ, 24240-030">
-              <MaterialIcons name="location-pin" size={28} color="#0D62AD" />
-            </IconText>
-
-            <IconText text="(21) 99999-9999">
-              <Foundation name="telephone" size={28} color="#0D62AD" />
-            </IconText>
-          </View>
-
-          <View style={{ gap: 4, width: "55%" }}>
-            <Text style={styles.subtitle}>Oque doar?</Text>
-
-            <ProgressBarTitle />
-            <ProgressBarTitle />
-            <ProgressBarTitle />
+            <View style={{ gap: 10, marginTop: 4 }}>
+              <IconText text="07:00 - 16:30">
+                <AntDesign name="clockcircle" size={20} color="#0D62AD" />
+              </IconText>
+              <IconText text="(21) 99999-9999">
+                <Foundation name="telephone" size={28} color="#0D62AD" />
+              </IconText>
+              <IconText text="R. Gastão Gonçalves, 79 - Santa Rosa, Niterói - RJ, 24240-030">
+                <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
+              </IconText>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -84,6 +81,7 @@ const CampaignModal = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 100,
   },
   image: {
     height: 200,
@@ -101,6 +99,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 17,
     fontFamily: "Poppins-Medium",
+    marginTop: 4,
   },
   iconText: {
     display: "flex",

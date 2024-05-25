@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import React from "react";
 import NewsCard from "@/components/NewsCard";
 import CampaignCard from "@/components/CampaignCard";
-import Carousel from "react-native-reanimated-carousel";
+// import Carousel from "react-native-reanimated-carousel";
 
 const index = () => {
   const width = Dimensions.get("window").width;
