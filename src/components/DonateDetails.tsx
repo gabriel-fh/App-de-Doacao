@@ -79,8 +79,11 @@ const DonateDetails = ({ closePopUp }) => {
 
   const handleConfirm = () => {
     if (validateFields()) {
-        closePopUp();
-        router.navigate("Donation/Donation");
+      closePopUp();
+      router.navigate({
+        pathname: "Donation/Donation",
+        params: { items, selectedDate },
+      });
     }
   };
 
@@ -127,9 +130,7 @@ const DonateDetails = ({ closePopUp }) => {
           onPress={() => console.log}
         />
       </View>
-      {/* {errorMsg && ( */}
-        <Text style={{ color: "red", marginVertical: 10 }}>{errorMsg}</Text>
-    {/* //   )} */}
+      <Text style={{ color: "red", marginVertical: 10 }}>{errorMsg}</Text>
       <Button text={"Continuar"} onPress={() => handleConfirm()} />
     </View>
   );

@@ -66,6 +66,7 @@ const RootLayoutNav = () => {
             // animation: "slide_from_bottom",
             // headerShown: false,
             headerTitle: "Quero Doar",
+            
           }}
         />
       </Stack>

@@ -6,16 +6,28 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import AddDecrease from "@/components/AddDecrease";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import IconText from "@/components/IconText";
+import { useLocalSearchParams } from "expo-router";
 
 const Donation = () => {
+  const { items, selectedDate } = useLocalSearchParams();
+
+  const itemsArray = Array.isArray(items) ? items : items.split(",");
+  const [donationItems, setDonationItems] = useState(itemsArray);
+
+  console.log(items, selectedDate);
+
+  const delteItem = (item) => {
+    setDonationItems((prevItems) => prevItems.filter((i) => i !== item));
+  }
+
   return (
     // <View style={{ position: "relative", flex: 1 }}>
-    <ScrollView>
+    <ScrollView style={{backgroundColor: '#fff'}}>
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>Campanha do Agasalho</Text>
@@ -29,12 +41,13 @@ const Donation = () => {
           </View>
         </View>
         <View>
-          <Text style={styles.subTitle}>Selecione itens que deseja doar</Text>
-          <Text>Select ??</Text>
-          <ScrollView style={{ height: 277, marginVertical: 20 }} nestedScrollEnabled={true}>
-            {Array.from({ length: 10 }).map((_, idx) => (
+          <ScrollView
+            style={{ height: 277, marginVertical: 20 }}
+            nestedScrollEnabled={true}
+          >
+            {donationItems.map((item, idx) => (
               <View key={idx} style={styles.item}>
-                <Text style={styles.text}>Item {idx + 1}</Text>
+                <Text style={styles.text}>{item}</Text>
                 <View
                   style={{
                     display: "flex",
@@ -44,9 +57,9 @@ const Donation = () => {
                   }}
                 >
                   <View>
-                    <AddDecrease />
+                    <AddDecrease handleRemoveItem={() => delteItem(item)}/>
                   </View>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => delteItem(item)}>
                     <FontAwesome name="trash" color={"#ff0000"} size={20} />
                   </TouchableOpacity>
                 </View>
@@ -121,8 +134,7 @@ const styles = StyleSheet.create({
     width: 25,
     borderRadius: 50,
   },
-  username: {
-  },
+  username: {},
   subTitle: {
     fontSize: 17,
   },
@@ -133,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#eeeeee",
     borderRadius: 10,
     marginTop: 10,
   },
