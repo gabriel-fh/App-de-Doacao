@@ -28,7 +28,7 @@ const PopUp = ({
       visible={isVisible}
       presentationStyle={"overFullScreen"}
     >
-      <TouchableWithoutFeedback onPress={closePopUp}>
+      <TouchableWithoutFeedback onPress={closePopUp} >
         <GestureHandlerRootView style={styles.container}>
           <TouchableWithoutFeedback>
             <View style={styles.popupContainer}>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     gap: 10,
     width: "90%",
-    paddingVertical: 30,
+    paddingVertical: 25,
     paddingHorizontal: 15,
     shadowColor: "#000",
     shadowOffset: {

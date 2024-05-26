@@ -1,21 +1,51 @@
-import { View, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { View, Text } from "react-native";
+import React, { useRef, useState } from "react";
 import Button from "./Button";
 import {
   Calendar,
+  CalendarListRef,
   CalendarTheme,
   toDateId,
 } from "@marceloterreiro/flash-calendar";
+import { addMonths, subMonths, startOfMonth } from "date-fns";
 
 const today = toDateId(new Date());
 
 const CustomCalendar = ({ selectedDate, setSelectedDate, setShowCalendar }) => {
   const [date, setDate] = useState(selectedDate || today);
-  // const [selectedDate, setSelectedDate] = useState(today);
+  const ref = useRef<CalendarListRef>(null);
+
   const handleSelectDate = () => {
     setSelectedDate(date);
     setShowCalendar(false);
   };
+
+  function getNextMonth(date) {
+    const currentDate = new Date(date);
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const nextMonth = (currentMonth + 1) % 12;
+    const nextYear = nextMonth === 0 ? currentYear + 1 : currentYear;
+    const nextMonthDate = new Date(nextYear, nextMonth, 1);
+    return nextMonthDate;
+  }
+
+  const getDisabledDates = () => {
+    const today = new Date();
+    const disabledDates = [];
+
+    for (let i = 1; i < today.getDate(); i++) {
+      const date = new Date(today.getFullYear(), today.getMonth(), i);
+      const formattedDate = toDateId(date);
+      disabledDates.push(formattedDate);
+    }
+
+    return disabledDates;
+  };
+
+  const disabledDates = getDisabledDates();
+  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
+
   return (
     <View>
       <Calendar
@@ -25,11 +55,11 @@ const CustomCalendar = ({ selectedDate, setSelectedDate, setShowCalendar }) => {
             endId: date,
           },
         ]}
-        calendarMonthId={today}
         onCalendarDayPress={setDate}
         calendarFormatLocale="pt-BR"
         theme={theme}
-        calendarDisabledDateIds={['2024-05-25']}
+        calendarDisabledDateIds={disabledDates}
+        calendarMonthId={today}
       />
       <View style={{ marginTop: 20 }}>
         <Button text={"Confirmar"} onPress={() => handleSelectDate()} />
@@ -39,7 +69,6 @@ const CustomCalendar = ({ selectedDate, setSelectedDate, setShowCalendar }) => {
 };
 
 const theme: CalendarTheme = {
-  
   itemWeekName: { content: { color: "#0D62AD", fontWeight: 600 } },
   itemDay: {
     idle: ({ isPressed, isWeekend }) => ({
@@ -75,19 +104,6 @@ const theme: CalendarTheme = {
             ? "#ffffff"
             : "#000000",
       },
-      active: ({ isEndOfRange, isStartOfRange }) => ({
-        container: {
-          backgroundColor: "#f00",
-          borderTopLeftRadius: isStartOfRange ? 4 : 0,
-          borderBottomLeftRadius: isStartOfRange ? 4 : 0,
-          borderTopRightRadius: isEndOfRange ? 4 : 0,
-          borderBottomRightRadius: isEndOfRange ? 4 : 0,
-        },
-        content: {
-          color: "#ffffff",
-        },
-      }),
-      
     }),
   },
 };

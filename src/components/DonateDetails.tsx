@@ -1,16 +1,13 @@
 import {
   View,
   Text,
-  Modal,
   ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
 import Picker from "./Picker";
 import Button from "./Button";
-import { Calendar, toDateId } from "@marceloterreiro/flash-calendar";
 import { router } from "expo-router";
 import Badge from "./Badge";
 import CustomCalendar from "./CustomCalendar";
@@ -38,12 +35,10 @@ const DonateDetails = ({ closePopUp }) => {
     "o Wanderlei",
     "querendo dá ideia errada",
   ];
-
-  const today = toDateId(new Date());
-
   const [items, setItems] = useState([]);
   const [selectedDate, setSelectedDate] = useState();
   const [showCalendar, setShowCalendar] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Função que seleciona ou deseleciona um item
   const selectItem = (newItem) => {
@@ -58,6 +53,35 @@ const DonateDetails = ({ closePopUp }) => {
 
   const formatedDate = (date) => {
     return date?.split("-").reverse().join("/");
+  };
+
+  const validateFields = () => {
+    if (items.length === 0 && !selectedDate) {
+      setErrorMsg(
+        "Selecione pelo menos um item para doação e escolha uma data"
+      );
+      return false;
+    }
+
+    if (items.length === 0) {
+      setErrorMsg("Selecione pelo menos um item para doação");
+      return false;
+    }
+
+    if (!selectedDate) {
+      setErrorMsg("Selecione uma data para a doação");
+      return false;
+    }
+
+    setErrorMsg("");
+    return true;
+  };
+
+  const handleConfirm = () => {
+    if (validateFields()) {
+        closePopUp();
+        router.navigate("Donation/Donation");
+    }
   };
 
   return (
@@ -103,13 +127,10 @@ const DonateDetails = ({ closePopUp }) => {
           onPress={() => console.log}
         />
       </View>
-      <Button
-        text={"Continuar"}
-        onPress={() => {
-          closePopUp();
-          router.navigate("Donation/Donation");
-        }}
-      />
+      {/* {errorMsg && ( */}
+        <Text style={{ color: "red", marginVertical: 10 }}>{errorMsg}</Text>
+    {/* //   )} */}
+      <Button text={"Continuar"} onPress={() => handleConfirm()} />
     </View>
   );
 };
@@ -130,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginVertical: 20,
+    marginTop: 30,
   },
 });
 
