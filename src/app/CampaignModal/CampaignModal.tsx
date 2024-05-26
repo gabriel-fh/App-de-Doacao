@@ -18,6 +18,7 @@ import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
 import PopUp from "@/components/PopUp";
 import { router } from "expo-router";
+import DonateDetails from "@/components/DonateDetails";
 
 const CampaignModal = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -101,7 +102,9 @@ const CampaignModal = () => {
       <PopUp
         isVisible={openModal}
         closePopUp={() => setOpenModal((prev) => !prev)}
-      ></PopUp>
+      >
+        <DonateDetails closePopUp={() => setOpenModal((prev) => !prev)} />
+      </PopUp>
     </View>
   );
 };
