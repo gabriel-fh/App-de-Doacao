@@ -1,21 +1,21 @@
 import {
-  Alert,
-  GestureResponderEvent,
-  ScrollView,
-  SectionList,
   StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { Modal } from "react-native";
 import { StatusBar } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Badge from "./Badge";
 import Button from "./Button";
 import { router } from "expo-router";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
 
 const PopUp = ({
   isVisible,
@@ -24,7 +24,40 @@ const PopUp = ({
   isVisible: boolean;
   closePopUp: () => void;
 }) => {
+  const [items, setItems] = useState([]);
 
+  // Função que seleciona ou deseleciona um item
+  const selectItem = (newItem) => {
+    // Se o item já estiver na lista, remove ele se não adiciona
+    if (items.includes(newItem)) {
+      setItems((prevItems) => prevItems.filter((item) => item !== newItem));
+      return;
+    } else {
+      setItems((prevItems) => [...prevItems, newItem]);
+    }
+  };
+
+  const data = [
+    "casaco",
+    "blusa de frio",
+    "cobertor",
+    "batata",
+    "sla porra",
+    "vasco",
+    "esquema de piramide",
+    "droga",
+    "chinelo",
+    "cachorro",
+    "gato",
+    "saxofodase",
+    "gremio",
+    "eu tava",
+    "com meus manos",
+    "la na minha quebrada",
+    "e chegou ",
+    "o Wanderlei",
+    "querendo dá ideia errada",
+  ];
 
   return (
     <Modal
@@ -39,56 +72,28 @@ const PopUp = ({
         backgroundColor={"rgba(0,0,0,0.5)"}
       />
       <TouchableWithoutFeedback onPress={closePopUp}>
-        <View style={styles.container}>
+        <GestureHandlerRootView style={styles.container}>
           <TouchableWithoutFeedback>
-            <View style={styles.popupContainer} >
+            <View style={styles.popupContainer}>
               <Text style={styles.subTitle}>
                 Selecione itens que deseja doar
               </Text>
-              <ScrollView style={{height: 300, paddingBottom: 50}} nestedScrollEnabled={true}>
-                <View
-                  style={{
-                    marginTop: 10,
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    gap: 10,
-                  }}
-                >
-                  {[
-                    "casaco",
-                    "blusa de frio",
-                    "cobertor",
-                    "batata",
-                    "sla porra",
-                    "vasco",
-                    "esquema de piramide",
-                    "droga",
-                    "chinelo",
-                    "cachorro",
-                    "gato",
-                    "saxofodase",
-                    "casaco",
-                    "eu tava",
-                    "com meus manos",
-                    "la na minha quebrada",
-                    "e chegou ",
-                    "o Wanderlei",
-                    "querendo dá ideia errada",
-                  ].map((item, idx) => (
-                    <Badge key={idx} text={item} />
+              <ScrollView
+                style={{ maxHeight: 300, paddingBottom: 10 }}
+                nestedScrollEnabled={true}
+              >
+                <View style={styles.badgeContainer}>
+                  {data.map((item, idx) => (
+                    <TouchableOpacity
+                      key={idx}
+                      onPress={() => selectItem(item)}
+                    >
+                      <Badge text={item} selected={items.includes(item)} />
+                    </TouchableOpacity>
                   ))}
                 </View>
               </ScrollView>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginVertical: 20,
-                }}
-              >
+              <View style={styles.pickersContainer}>
                 <View style={styles.dateTime}>
                   <Text style={styles.dateTimeText}>Data</Text>
                   <View style={styles.iconText}>
@@ -113,7 +118,7 @@ const PopUp = ({
               />
             </View>
           </TouchableWithoutFeedback>
-        </View>
+        </GestureHandlerRootView>
       </TouchableWithoutFeedback>
     </Modal>
   );
@@ -128,12 +133,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   popupContainer: {
+    maxHeight: 550,
     backgroundColor: "white",
     borderRadius: 15,
     gap: 10,
     width: "90%",
     paddingVertical: 30,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -143,25 +149,22 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  title: {
-    fontSize: 19,
-  },
   subTitle: {
     fontSize: 17,
   },
-  item: {
+  badgeContainer: {
+    marginTop: 10,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: "#ffffff",
-    borderRadius: 10,
-    marginTop: 10,
+    flexWrap: "wrap",
+    gap: 10,
   },
-  text: {
-    fontSize: 15,
+  pickersContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 20,
   },
   dateTime: {
     position: "relative",
@@ -170,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 2,
     borderColor: "#0D62AD",
-    width: 150,
+    width: 140,
     height: 50,
     borderRadius: 10,
   },
