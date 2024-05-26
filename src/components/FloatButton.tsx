@@ -1,12 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
+import Button from "./Button";
 
 const FloatButton = ({ onPress, text }: { onPress: () => void, text: string }) => {
   return (
     <View style={[styles.container, styles.shadow]}>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
-        <Text style={styles.text}>{text}</Text>
-      </TouchableOpacity>
+      <Button text={text} onPress={onPress}/>
     </View>
   );
 };
@@ -20,18 +19,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 12,
     backgroundColor: "#f1f1f1",
-  },
-  button: {
-    width: "100%",
-    paddingVertical: 12,
-    backgroundColor: "#0D62AD",
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    color: "#fff",
-    fontSize: 20,
   },
   shadow: {
     shadowColor: "#999",

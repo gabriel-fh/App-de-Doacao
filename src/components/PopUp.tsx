@@ -2,14 +2,20 @@ import {
   Alert,
   GestureResponderEvent,
   ScrollView,
+  SectionList,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import React, { useRef } from "react";
 import { Modal } from "react-native";
 import { StatusBar } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Badge from "./Badge";
+import Button from "./Button";
+import { router } from "expo-router";
 
 const PopUp = ({
   isVisible,
@@ -18,13 +24,7 @@ const PopUp = ({
   isVisible: boolean;
   closePopUp: () => void;
 }) => {
-  const ModalRef = useRef(null);
 
-  const handleOutsideClick = (event: GestureResponderEvent) => {
-    // if (event.target === ModalRef.current) {
-    //   closePopUp();
-    // }
-  };
 
   return (
     <Modal
@@ -38,30 +38,81 @@ const PopUp = ({
         barStyle="light-content"
         backgroundColor={"rgba(0,0,0,0.5)"}
       />
-      <TouchableWithoutFeedback onPress={handleOutsideClick}>
+      <TouchableWithoutFeedback onPress={closePopUp}>
         <View style={styles.container}>
-          <View ref={ModalRef} style={styles.popupContainer}>
-            <Text>Selecione os itens que deseja doar</Text>
-            <Text>Select</Text>
-            <ScrollView style={{
-              height: 200,
-              marginTop: 10,
-              marginBottom: 10,
-              padding: 10,
-              borderRadius: 10,
-              backgroundColor: "#f1f1f1",
-            }}>
-              {Array.from({ length: 10 }).map((_, index) => (
-                <Text key={index} style={{
-                  fontSize: 16,
-                  padding: 10,
-                  backgroundColor: "#fff",
-                  borderRadius: 10,
-                  marginBottom: 5,
-                }} >Item {index + 1}</Text>
-              ))}
-            </ScrollView>
-          </View>
+          <TouchableWithoutFeedback>
+            <View style={styles.popupContainer} >
+              <Text style={styles.subTitle}>
+                Selecione itens que deseja doar
+              </Text>
+              <ScrollView style={{height: 300, paddingBottom: 50}} nestedScrollEnabled={true}>
+                <View
+                  style={{
+                    marginTop: 10,
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    gap: 10,
+                  }}
+                >
+                  {[
+                    "casaco",
+                    "blusa de frio",
+                    "cobertor",
+                    "batata",
+                    "sla porra",
+                    "vasco",
+                    "esquema de piramide",
+                    "droga",
+                    "chinelo",
+                    "cachorro",
+                    "gato",
+                    "saxofodase",
+                    "casaco",
+                    "eu tava",
+                    "com meus manos",
+                    "la na minha quebrada",
+                    "e chegou ",
+                    "o Wanderlei",
+                    "querendo dá ideia errada",
+                  ].map((item, idx) => (
+                    <Badge key={idx} text={item} />
+                  ))}
+                </View>
+              </ScrollView>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginVertical: 20,
+                }}
+              >
+                <View style={styles.dateTime}>
+                  <Text style={styles.dateTimeText}>Data</Text>
+                  <View style={styles.iconText}>
+                    <Text style={{ color: "#666" }}>DD/MM/YYYY</Text>
+                    <FontAwesome name="calendar" size={20} color={"#0D62AD"} />
+                  </View>
+                </View>
+                <View style={styles.dateTime}>
+                  <Text style={styles.dateTimeText}>Hora</Text>
+                  <View style={styles.iconText}>
+                    <Text style={{ color: "#666" }}>HH:MM</Text>
+                    <FontAwesome name="clock-o" size={20} color={"#0D62AD"} />
+                  </View>
+                </View>
+              </View>
+              <Button
+                text={"Continuar"}
+                onPress={() => {
+                  closePopUp();
+                  router.navigate("Donation/Donation");
+                }}
+              />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -79,7 +130,8 @@ const styles = StyleSheet.create({
   popupContainer: {
     backgroundColor: "white",
     borderRadius: 15,
-    width: "80%",
+    gap: 10,
+    width: "90%",
     paddingVertical: 30,
     paddingHorizontal: 20,
     shadowColor: "#000",
@@ -90,6 +142,52 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  title: {
+    fontSize: 19,
+  },
+  subTitle: {
+    fontSize: 17,
+  },
+  item: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  text: {
+    fontSize: 15,
+  },
+  dateTime: {
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#0D62AD",
+    width: 150,
+    height: 50,
+    borderRadius: 10,
+  },
+  dateTimeText: {
+    position: "absolute",
+    top: -14,
+    backgroundColor: "#ffffff",
+    paddingHorizontal: 5,
+    left: 15,
+    fontSize: 17,
+    color: "#0D62AD",
+  },
+  iconText: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
 });
 

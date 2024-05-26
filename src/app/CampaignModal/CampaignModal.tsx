@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -29,7 +36,10 @@ const CampaignModal = () => {
         <View style={{ ...styles.container, ...styles.wrapper }}>
           <View>
             <Text style={styles.title}>Campanha do Agasalho</Text>
-            <TouchableOpacity style={styles.userContainer} onPress={() => router.navigate('Institution/Institution')}>
+            <TouchableOpacity
+              style={styles.userContainer}
+              onPress={() => router.navigate("Institution/Institution")}
+            >
               <Image
                 source={{ uri: "https://picsum.photos/20" }}
                 style={styles.avatar}
@@ -45,9 +55,7 @@ const CampaignModal = () => {
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
               <Text>
-                <Text style={{ color: "#0D62AD"}}>
-                  700 Doações{" "}
-                </Text>
+                <Text style={{ color: "#0D62AD" }}>700 Doações </Text>
                 Coletadas
               </Text>
               <Text>20 dias atrás</Text>
@@ -56,7 +64,7 @@ const CampaignModal = () => {
 
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text style={{ ...styles.text}}>
+            <Text style={{ ...styles.text }}>
               Lorem Ipsum simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -86,11 +94,14 @@ const CampaignModal = () => {
           </View>
         </View>
       </ScrollView>
-      <FloatButton text="Doar Agora" onPress={() => router.navigate("Donation/Donation")} />
-      {/* <PopUp
+      <FloatButton
+        text="Doar Agora"
+        onPress={() => setOpenModal((prev) => !prev)}
+      />
+      <PopUp
         isVisible={openModal}
         closePopUp={() => setOpenModal((prev) => !prev)}
-      ></PopUp> */}
+      ></PopUp>
     </View>
   );
 };
@@ -135,8 +146,7 @@ const styles = StyleSheet.create({
     width: 21,
     borderRadius: 50,
   },
-  username: {
-  },
+  username: {},
 });
 
 export default CampaignModal;
