@@ -72,13 +72,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontFamily: "Poppins-SemiBold",
   },
   description: {
     fontSize: 12,
     color: "#666",
     overflow: "hidden",
-    fontFamily: "Poppins-Medium",
   },
   goal: {
     display: "flex",
@@ -88,7 +86,6 @@ const styles = StyleSheet.create({
   current: {
     fontSize: 14,
     color: "#0D62AD",
-    fontFamily: "Poppins-SemiBold",
   },
   shadow: {
     backgroundColor: "#fff",

@@ -10,7 +10,6 @@ const UserInfos = () => {
         <Text
           style={{
             fontSize: 18,
-            fontFamily: "Poppins-SemiBold",
             color: "#404040",
           }}
         >
@@ -19,7 +18,6 @@ const UserInfos = () => {
         <Text
           style={{
             fontSize: 16,
-            fontFamily: "Poppins-Medium",
             color: "#404040",
           }}
         >

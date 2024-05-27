@@ -42,7 +42,7 @@ const Map = () => {
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
-        loadingIndicatorColor="#000"
+        loadingIndicatorColor="#0D62AD"
         loadingBackgroundColor="#f1f1f1"
       >
         {region && (
