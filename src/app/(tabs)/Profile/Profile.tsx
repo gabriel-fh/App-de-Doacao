@@ -72,7 +72,10 @@ const Profile = () => {
                   }}
                 >
                   {tab.icon}
-                  <Text>{tab.title}</Text>
+                  <Text style={{
+                    fontFamily: 'Montserrat_600SemiBold',
+                    fontSize: 16,
+                  }}>{tab.title}</Text>
                 </View>
                 {idx !== profileTabs.length - 1 && (
                   <FontAwesome name={"angle-right"} size={30} color={"#666"} />

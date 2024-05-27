@@ -120,7 +120,15 @@ const DonateDetails = ({ closePopUp, campaignInfo }) => {
           onPress={() => console.log}
         />
       </View>
-      <Text style={{ color: "red", marginVertical: 10 }}>{errorMsg}</Text>
+      <Text
+        style={{
+          color: "red",
+          marginVertical: 10,
+          fontFamily: "Montserrat_500Medium",
+        }}
+      >
+        {errorMsg}
+      </Text>
       <Button text={"Continuar"} onPress={() => handleConfirm()} />
     </View>
   );
@@ -128,7 +136,8 @@ const DonateDetails = ({ closePopUp, campaignInfo }) => {
 
 const styles = StyleSheet.create({
   subTitle: {
-    fontSize: 17,
+    fontSize: 18,
+    fontFamily: "Montserrat_500Medium",
   },
   badgeContainer: {
     marginTop: 10,

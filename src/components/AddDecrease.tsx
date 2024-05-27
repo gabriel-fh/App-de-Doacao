@@ -18,7 +18,7 @@ const AddDecrease = ({handleRemoveItem}: {handleRemoveItem: () => void}) => {
       >
         <FontAwesome name="minus" color={"#0D62AD"} size={17} />
       </TouchableOpacity>
-      <Text style={{ fontSize: 17 }}>
+      <Text style={{ fontSize: 17, fontFamily: 'Montserrat_500Medium' }}>
         {count}
       </Text>
       <TouchableOpacity onPress={() => setCount((prev) => prev + 1)}>

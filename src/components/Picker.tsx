@@ -19,7 +19,9 @@ const Picker = ({
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.iconText}>
-        <Text style={{ color: "#666" }}>{placeholder}</Text>
+        <Text style={{ color: "#666", fontFamily: "Montserrat_500Medium" }}>
+          {placeholder}
+        </Text>
         <FontAwesome name={icon} size={iconSize} color={"#0D62AD"} />
       </View>
     </TouchableOpacity>
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
     left: 15,
     fontSize: 17,
     color: "#0D62AD",
+    fontFamily: "Montserrat_600SemiBold",
   },
   iconText: {
     display: "flex",

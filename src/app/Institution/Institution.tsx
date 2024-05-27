@@ -25,19 +25,18 @@ const Institution = () => {
             children={"Ação Comunitária - Unilasalle RJ"}
           />
 
-          <IconText text="Niterói, Rio de Janeiro">
-            <Entypo name={"location"} size={20} />
-          </IconText>
+          <View style={{gap: 12}}>
+            <IconText text="Niterói, Rio de Janeiro">
+              <Entypo name={"location"} size={20} color={'#0D62AD'} />
+            </IconText>
 
-          <IconText text="(21) 99999-9999">
-            <Foundation name={"telephone"} size={22} />
-          </IconText>
-
+            <IconText text="(21) 99999-9999">
+              <Foundation name={"telephone"} size={22} color={'#0D62AD'} />
+            </IconText>
+          </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text
-              style={{ ...styles.description}}
-            >
+            <Text style={{ ...styles.description }}>
               Lorem Ipsum simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -69,16 +68,20 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 12,
     paddingVertical: 20,
-    gap: 10,
+    gap: 15,
   },
   title: {
-    fontSize: 19,
+    fontSize: 20,
+    fontFamily: "Montserrat_600SemiBold",
   },
   subtitle: {
-    fontSize: 17,
+    fontSize: 18,
+    fontFamily: "Montserrat_600SemiBold",
   },
   description: {
-    color: "#666",
+    fontSize: 14,
+    color: "#595959",
+    fontFamily: "Montserrat_500Medium",
     marginVertical: 5,
   },
 });

@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/montserrat": "^0.2.3",
     "@gorhom/bottom-sheet": "^4.6.3",
     "@marceloterreiro/flash-calendar": "^0.0.9",
     "@shopify/flash-list": "1.6.4",

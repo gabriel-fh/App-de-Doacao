@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 16,
     flex: 1,
+    fontFamily: "Montserrat_600SemiBold",
   },
   iconView: {
     backgroundColor: "#0D62AD",

@@ -38,7 +38,7 @@ const BackToTopButton = ({
     <TouchableHighlight onPress={handlePress}>
       <Animated.View
         style={{
-          backgroundColor: "#8e98de",
+          backgroundColor: "rgba(13, 98, 173, 0.647) ",
           padding: 10,
           height: 45,
           width: 45,
