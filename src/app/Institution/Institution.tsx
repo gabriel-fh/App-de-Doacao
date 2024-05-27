@@ -15,7 +15,7 @@ const Institution = () => {
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image
-          source={{ uri: "https://picsum.photos/500/210" }}
+          source={{ uri: "https://picsum.photos/500/211" }}
           style={styles.image}
           resizeMode="cover"
         />
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   description: {
     color: "#666",
+    marginVertical: 5,
   },
 });
 
