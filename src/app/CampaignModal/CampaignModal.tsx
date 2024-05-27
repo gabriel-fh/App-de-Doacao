@@ -23,8 +23,16 @@ import DonateDetails from "@/components/DonateDetails";
 const CampaignModal = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const campaignInfo = {
+    name: "Campanha do Agasalho",
+    institution: {
+      name: "acao.comunitaria.unilasalle",
+      image: "https://picsum.photos/20",
+    },
+  };
+
   return (
-    <View style={{ position: "relative", flex: 1 }}>
+    <View style={{ position: "relative", flex: 1, backgroundColor: '#fff' }}>
       <StatusBar hidden />
 
       <CloseModalButton />
@@ -103,7 +111,10 @@ const CampaignModal = () => {
         isVisible={openModal}
         closePopUp={() => setOpenModal((prev) => !prev)}
       >
-        <DonateDetails closePopUp={() => setOpenModal((prev) => !prev)} />
+        <DonateDetails
+          campaignInfo={campaignInfo}
+          closePopUp={() => setOpenModal((prev) => !prev)}
+        />
       </PopUp>
     </View>
   );

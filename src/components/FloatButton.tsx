@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#fff"
   },
   shadow: {
     shadowColor: "#999",

@@ -13,7 +13,7 @@ import Badge from "./Badge";
 import CustomCalendar from "./CustomCalendar";
 import PopUp from "./PopUp";
 
-const DonateDetails = ({ closePopUp }) => {
+const DonateDetails = ({ closePopUp, campaignInfo }) => {
   const data = [
     "casaco",
     "blusa de frio",
@@ -82,7 +82,11 @@ const DonateDetails = ({ closePopUp }) => {
       closePopUp();
       router.navigate({
         pathname: "Donation/Donation",
-        params: { items, selectedDate },
+        params: {
+          items,
+          selectedDate,
+          campaignInfo: JSON.stringify(campaignInfo),
+        },
       });
     }
   };

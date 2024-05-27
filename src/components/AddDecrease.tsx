@@ -10,7 +10,7 @@ const AddDecrease = ({handleRemoveItem}: {handleRemoveItem: () => void}) => {
       <TouchableOpacity
         disabled={count === 0}
         onPress={
-          count === 0
+          count > 1
             ? () => {
               setCount((prev) => prev - 1);}
             : handleRemoveItem
