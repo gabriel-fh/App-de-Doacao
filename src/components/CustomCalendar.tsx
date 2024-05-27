@@ -9,7 +9,9 @@ import {
 } from "@marceloterreiro/flash-calendar";
 import { addMonths, subMonths, startOfMonth } from "date-fns";
 
-const today = toDateId(new Date());
+const date = new Date();
+date.setHours(date.getHours() - 3);
+const today = toDateId(date);
 
 const CustomCalendar = ({ selectedDate, setSelectedDate, setShowCalendar }) => {
   const [date, setDate] = useState(selectedDate || today);
