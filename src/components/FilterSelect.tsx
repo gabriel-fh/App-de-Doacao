@@ -6,7 +6,7 @@ const FilterSelect = () => {
   return (
     <View style={styles.itemFilter}>
       <Text style={styles.itemText}>Filtrar</Text>
-      <FontAwesome5 name="caret-down" size={20} color="#fff" />
+      <FontAwesome5 name="caret-down" size={21} color="#fff" style={{marginBottom: 5}} />
     </View>
   );
 };
@@ -15,16 +15,16 @@ const styles = StyleSheet.create({
   itemFilter: {
     flexDirection: "row",
     gap: 8,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#0D62AD",
     borderRadius: 10,
-    paddingHorizontal: 24,
+    paddingHorizontal: 18,
     maxHeight: 50,
   },
   itemText: {
     fontSize: 16,
     color: "#fff",
+    fontFamily: "Montserrat_600SemiBold",
   },
 });
 

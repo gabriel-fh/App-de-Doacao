@@ -4,23 +4,21 @@ import React from "react";
 
 const UserInfos = () => {
   return (
-    <View style={{ flexDirection: "row", gap: 8, width: "100%" }}>
-      <Ionicons name={"person-circle-sharp"} size={60} color={"#404040"} />
+    <View style={{ flexDirection: "row", gap: 10, alignItems: 'center', width: "100%" }}>
+      <Ionicons name={"person-circle-sharp"} size={60} color={"#0D62AD"} />
       <View style={{}}>
         <Text
           style={{
             fontSize: 18,
-            fontFamily: "Poppins-SemiBold",
-            color: "#404040",
+            fontFamily: 'Montserrat_600SemiBold'
           }}
         >
-          Jorge Amador
+          Jorge Amado
         </Text>
         <Text
           style={{
             fontSize: 16,
-            fontFamily: "Poppins-Medium",
-            color: "#404040",
+            fontFamily: 'Montserrat_500Medium'
           }}
         >
           (21) 99999-9999

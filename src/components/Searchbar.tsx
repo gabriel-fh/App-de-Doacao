@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   textInput: {
-    marginVertical: 8,
+    marginVertical: 10,
     fontSize: 16,
     flex: 1,
+    fontFamily: "Montserrat_600SemiBold",
   },
   iconView: {
     backgroundColor: "#0D62AD",
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     height: "110%",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
   },
 });
 
