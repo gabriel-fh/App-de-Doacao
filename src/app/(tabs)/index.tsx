@@ -17,7 +17,11 @@ const index = () => {
         paddingVertical: 20,
       }}
     >
-      <Text style={styles.title} children="Campanhas" />
+      <View style={{ gap: 10 }}>
+        <Text style={styles.title} children="Campanhas" />
+        <CampaignCard />
+      </View>
+
       {/* <Carousel
         loop
         width={width}
@@ -29,9 +33,8 @@ const index = () => {
         style={{ flex: 1, marginTop: 8 }}
         renderItem={({ index }) => <CampaignCard key={index} />}
       /> */}
-      <CampaignCard  />
       <View style={{ gap: 8 }}>
-      <Text style={styles.title} children="Notícias" />
+        <Text style={styles.title} children="Notícias" />
         {Array.from({ length: 3 }).map((_, index) => (
           <NewsCard key={index} />
         ))}
@@ -46,6 +49,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
+    fontFamily: "Montserrat_600SemiBold",
   },
 });
 

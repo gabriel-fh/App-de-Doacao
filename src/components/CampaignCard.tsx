@@ -72,11 +72,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+    fontFamily: "Montserrat_600SemiBold",
   },
   description: {
-    fontSize: 12,
-    color: "#666",
+    fontSize: 13,
+    color: "#595959",
     overflow: "hidden",
+    fontFamily: "Montserrat_500Medium",
   },
   goal: {
     display: "flex",
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
   current: {
     fontSize: 14,
     color: "#0D62AD",
+    fontFamily: "Montserrat_500Medium",
   },
   shadow: {
     backgroundColor: "#fff",

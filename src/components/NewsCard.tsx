@@ -46,12 +46,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    fontWeight: "700",
     fontSize: 16,
+    fontFamily: "Montserrat_600SemiBold",
   },
   description: {
-    fontWeight: "400",
-    fontSize: 12,
+    fontSize: 13,
+    color: "#595959",
+    overflow: "hidden",
+    fontFamily: "Montserrat_500Medium",
   },
   userContainer: {
     flexDirection: "row",
@@ -62,10 +64,12 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     borderRadius: 50,
+    borderWidth: 1,
+    borderColor: "#0D62AD", 
   },
   username: {
-    fontWeight: "500",
     fontSize: 14,
+    fontFamily: "Montserrat_600SemiBold",
   },
   shadow: {
     backgroundColor: "#fff",

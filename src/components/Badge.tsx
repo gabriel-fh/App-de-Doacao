@@ -9,7 +9,14 @@ const Badge = ({ text, selected }: { text: string; selected: boolean }) => {
         { backgroundColor: selected ? "#0D62AD" : "#E2E8F0" },
       ]}
     >
-      <Text style={{ color: selected ? "#E2E8F0" : "#000" }}>{text}</Text>
+      <Text
+        style={{
+          color: selected ? "#E2E8F0" : "#000",
+          fontFamily: "Montserrat_500Medium",
+        }}
+      >
+        {text}
+      </Text>
     </View>
   );
 };

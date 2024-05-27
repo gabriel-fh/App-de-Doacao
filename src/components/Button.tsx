@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontSize: 20,
+    fontFamily: "Montserrat_600SemiBold",
   },
 });
 

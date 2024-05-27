@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
     maxHeight: 50,
   },
   itemText: {
-    fontSize: 17,
+    fontSize: 16,
     color: "#fff",
+    fontFamily: "Montserrat_600SemiBold",
   },
 });
 

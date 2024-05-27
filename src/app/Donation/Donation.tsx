@@ -129,8 +129,9 @@ const Donation = () => {
                   borderColor: "#0D62AD",
                   borderRadius: 10,
                   textAlignVertical: "top",
+                  fontFamily: "Montserrat_500Medium",
                 }}
-                placeholderTextColor="#999"
+                placeholderTextColor="#545454"
                 keyboardType={"default"}
                 value={commentary}
                 onChangeText={(text) => setCommentary(text)}
@@ -170,10 +171,7 @@ const Donation = () => {
       </ScrollView>
       {!isKeyboardOpen && (
         <View>
-          <FloatButton
-            onPress={() => console.log}
-            text={"Enviar"}
-          />
+          <FloatButton onPress={() => console.log} text={"Enviar"} />
         </View>
       )}
     </View>
@@ -188,22 +186,30 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   title: {
-    fontSize: 19,
-    marginBottom: 10,
+    fontSize: 20,
+    marginBottom: 4,
+    fontFamily: "Montserrat_600SemiBold",
   },
   userContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
+    marginTop: 7,
   },
   avatar: {
-    height: 25,
-    width: 25,
+    height: 22,
+    width: 22,
     borderRadius: 50,
+    borderWidth: 1,
+    borderColor: "#0D62AD",
   },
-  username: {},
+  username: {
+    fontSize: 14,
+    fontFamily: "Montserrat_600SemiBold",
+  },
   subTitle: {
-    fontSize: 17,
+    fontSize: 16,
+    fontFamily: "Montserrat_600SemiBold",
   },
   item: {
     display: "flex",
@@ -217,6 +223,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    fontFamily: "Montserrat_500Medium",
   },
   iconText: {
     display: "flex",
