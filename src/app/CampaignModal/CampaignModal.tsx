@@ -21,14 +21,34 @@ import { router } from "expo-router";
 import DonateDetails from "@/components/DonateDetails";
 
 const CampaignModal = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
   const campaignInfo = {
     name: "Campanha do Agasalho",
     institution: {
       name: "acao.comunitaria.unilasalle",
       image: "https://picsum.photos/20",
     },
+    items: [
+      "casaco",
+      "blusa de frio",
+      "cobertor",
+      "roupa de cama",
+      "tênis",
+      "casaco",
+      "blusa de frio",
+      "cobertor",
+      "roupa de cama",
+      "tênis",
+      "casaco",
+      "blusa de frio",
+      "cobertor",
+      "roupa de cama",
+      "tênis",
+      "casaco",
+      "blusa de frio",
+      "cobertor",
+      "roupa de cama",
+      "tênis",
+    ],
   };
 
   return (
@@ -130,17 +150,15 @@ const CampaignModal = () => {
       </ScrollView>
       <FloatButton
         text="Doar Agora"
-        onPress={() => setOpenModal((prev) => !prev)}
+        onPress={() =>
+          router.navigate({
+            pathname: "Donation/Donation",
+            params: {
+              campaignInfo: JSON.stringify(campaignInfo),
+            },
+          })
+        }
       />
-      <PopUp
-        isVisible={openModal}
-        closePopUp={() => setOpenModal((prev) => !prev)}
-      >
-        <DonateDetails
-          campaignInfo={campaignInfo}
-          closePopUp={() => setOpenModal((prev) => !prev)}
-        />
-      </PopUp>
     </View>
   );
 };
