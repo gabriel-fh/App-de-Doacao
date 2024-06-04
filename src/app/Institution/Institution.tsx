@@ -1,6 +1,8 @@
-import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
+import LoadingFullScreen from "@/components/LoadingFullScreen";
+import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
+import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, Image, StyleSheet, Text, ScrollView } from "react-native";
@@ -8,30 +10,40 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
 
 const Institution = () => {
+  const { institutionId } = useLocalSearchParams();
+
+  const { data: institutionInfo, isLoading } = useFetchInstitutionById(
+    Array.isArray(institutionId) ? institutionId[0] : institutionId
+  );
+
+  if (isLoading) {
+    return <LoadingFullScreen />;
+  }
+
   return (
     <View style={{ position: "relative", flex: 1 }}>
       <StatusBar hidden />
 
       <CloseModalButton />
       <ScrollView style={styles.container}>
-        <Image
-          source={{ uri: "https://picsum.photos/500/211" }}
-          style={styles.image}
-          resizeMode="cover"
-        />
         <View style={{ ...styles.container, ...styles.wrapper }}>
+          <Image
+            source={{ uri: institutionInfo.avatar }}
+            style={styles.image}
+            resizeMode="cover"
+          />
           <Text
             style={styles.title}
             children={"Ação Comunitária - Unilasalle RJ"}
           />
 
-          <View style={{gap: 12}}>
-            <IconText text="Niterói, Rio de Janeiro">
-              <Entypo name={"location"} size={20} color={'#0D62AD'} />
+          <View style={{ gap: 12 }}>
+            <IconText text={"Niterói, Rio de Janeiro"}>
+              <Entypo name={"location"} size={20} color={"#0D62AD"} />
             </IconText>
 
             <IconText text="(21) 99999-9999">
-              <Foundation name={"telephone"} size={22} color={'#0D62AD'} />
+              <Foundation name={"telephone"} size={22} color={"#0D62AD"} />
             </IconText>
           </View>
           <View>
@@ -45,11 +57,11 @@ const Institution = () => {
           </View>
           <View>
             <Text style={styles.subtitle}>Campanhas Ativas</Text>
-            <View style={{ marginTop: 10 }}>
+            {/* <View style={{ marginTop: 10 }}>
               {Array.from({ length: 3 }).map((_, idx) => (
                 <CampaignCard key={idx} />
               ))}
-            </View>
+            </View> */}
           </View>
         </View>
       </ScrollView>
@@ -62,8 +74,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    height: 200,
-    width: "100%",
+    height: 80,
+    width: 80,
   },
   wrapper: {
     paddingHorizontal: 12,

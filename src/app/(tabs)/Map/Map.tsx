@@ -10,6 +10,7 @@ import { router } from "expo-router";
 import { useFetchInstitutions } from "@/hooks/Institutions/useFetchInstitution";
 import { theme } from "@/Theme/theme";
 import { LinearGradient } from "expo-linear-gradient";
+import InstitutionMarker from "@/components/InstitutionMarker";
 
 const Map = () => {
   const mapRef = useRef<MapView>(null);
@@ -60,41 +61,10 @@ const Map = () => {
         {institutions &&
           institutions.map((institution) => {
             return (
-              <Marker
+              <InstitutionMarker
                 key={institution.id}
-                coordinate={{
-                  latitude: Number(institution.address.latitude),
-                  longitude: Number(institution.address.longitude),
-                }}
-                onPress={() => {
-                  router.navigate("Institution/Institution");
-                }}
-              >
-                <LinearGradient
-                  colors={[
-                    theme.acaoUni.blue,
-                    theme.acaoUni.red,
-                  ]}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 10000,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 4,
-                    overflow: "hidden",
-                  }}
-                >
-                  <Image
-                    source={{ uri: institution.avatar }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 10000,
-                    }}
-                  />
-                </LinearGradient>
-              </Marker>
+                institution={institution}
+              />
             );
           })}
       </MapView>

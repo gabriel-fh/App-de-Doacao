@@ -51,3 +51,7 @@ export interface Institution {
     avatar: string,
     address: Address
 }
+
+export interface InstitutionById extends Institution {
+    campaigns: Campaign[],
+}
