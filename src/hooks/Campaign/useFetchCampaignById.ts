@@ -2,12 +2,11 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 import api from "../../setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
-import { Campaign, CampaignById } from "@/@types/app";
+import { CampaignById } from "@/@types/app";
 
 
 interface FetchDataQueryKey {
     campaignId: string,
-
 }
 
 const fetchData = async ({ queryKey }: QueryFunctionContext<[string, FetchDataQueryKey]>): Promise<CampaignById> => {
