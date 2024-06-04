@@ -1,5 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import { theme } from "@/Theme/theme";
 
 const ProgressBar = ({
   objective,
@@ -13,8 +15,10 @@ const ProgressBar = ({
 
   return (
     <View style={styles.container}>
-      <View style={[styles.progress, { width: `${percentage}%` }]}>
-      </View>
+      <LinearGradient
+        colors={[theme.primary, theme.secondary]}
+        style={[styles.progress, { width: `${percentage}%` }]}
+      />
     </View>
   );
 };
