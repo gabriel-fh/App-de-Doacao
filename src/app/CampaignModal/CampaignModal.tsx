@@ -34,6 +34,7 @@ const CampaignModal = () => {
     return <Text>Carregando...</Text>;
   }
 
+
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <StatusBar hidden />
@@ -135,17 +136,15 @@ const CampaignModal = () => {
       </ScrollView>
       <FloatButton
         text="Doar Agora"
-        onPress={() => setOpenModal((prev) => !prev)}
+        onPress={() =>
+          router.navigate({
+            pathname: "Donation/Donation",
+            params: {
+              campaignInfo: JSON.stringify(campaignInfo),
+            },
+          })
+        }
       />
-      <PopUp
-        isVisible={openModal}
-        closePopUp={() => setOpenModal((prev) => !prev)}
-      >
-        <DonateDetails
-          campaignInfo={campaignInfo}
-          closePopUp={() => setOpenModal((prev) => !prev)}
-        />
-      </PopUp>
     </View>
   );
 };

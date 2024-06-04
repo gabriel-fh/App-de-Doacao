@@ -11,7 +11,7 @@ const Badge = ({ text, selected }: { text: string; selected: boolean }) => {
     >
       <Text
         style={{
-          color: selected ? "#E2E8F0" : "#000",
+          color: selected ? "#fff" : "#000",
           fontFamily: "Montserrat_500Medium",
         }}
       >
