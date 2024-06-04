@@ -22,8 +22,8 @@ export interface Address {
     city: string,
     state: string,
     zipcode: string,
-    latitude: string,
-    longitude: string
+    latitude: number,
+    longitude: number
 }
 
 export interface Item {
@@ -40,4 +40,14 @@ export interface News {
     subtitle: string,
     description: string,
     banner: string,
+}
+
+export interface Institution {
+    id: number,
+    name: string,
+    status: string,
+    description: string,
+    phone: string,
+    avatar: string,
+    address: Address
 }

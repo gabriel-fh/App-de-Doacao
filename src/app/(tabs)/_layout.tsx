@@ -1,3 +1,4 @@
+import { theme } from "@/Theme/theme";
 import { Tabs } from "expo-router";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
@@ -9,11 +10,11 @@ export default function TabLayout() {
       screenOptions={{
         tabBarStyle: { height: 70, backgroundColor: "#fff" },
         tabBarItemStyle: { paddingBottom: 10 },
-        headerStyle: { backgroundColor: "#0D62AD" },
+        headerStyle: { backgroundColor: theme.primary },
         headerTitleStyle: { color: "#fff" },
         headerTitleAlign: "center",
         tabBarInactiveTintColor: "#c0c0c0",
-        tabBarActiveTintColor: "#0D62AD",
+        tabBarActiveTintColor: theme.primary,
         tabBarLabelStyle: { fontSize: 12, fontWeight: "bold"},
       }}
     >

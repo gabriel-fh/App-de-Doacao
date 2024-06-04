@@ -22,7 +22,7 @@ import PopUp from "@/components/PopUp";
 import Picker from "@/components/Picker";
 
 type routeParams = {
-  items: string | string[];
+  necessary_items: string | string[];
   selectedDate: string;
   campaignInfo: string;
 };
@@ -30,7 +30,7 @@ type routeParams = {
 const Donation = () => {
   const { campaignInfo } = useLocalSearchParams<routeParams>();
   const parsedCampaignInfo = JSON.parse(campaignInfo);
-  const { name, institution, items } = parsedCampaignInfo;
+  const { name, institution, necessary_items: items } = parsedCampaignInfo;
 
   const [donationItems, setDonationItems] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -72,7 +72,7 @@ const Donation = () => {
     }
   };
 
-  const delteItem = (item) => {
+  const deleteItem = (item) => {
     setDonationItems((prevItems) => prevItems.filter((i) => i !== item));
     if (donationItems.length === 0) {
       router.canGoBack();
@@ -180,10 +180,10 @@ const Donation = () => {
                       >
                         <View>
                           <AddDecrease
-                            handleRemoveItem={() => delteItem(item)}
+                            handleRemoveItem={() => deleteItem(item)}
                           />
                         </View>
-                        <TouchableOpacity onPress={() => delteItem(item)}>
+                        <TouchableOpacity onPress={() => deleteItem(item)}>
                           <FontAwesome
                             name="trash"
                             color={"#ff0000"}
