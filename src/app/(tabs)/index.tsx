@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import NewsCard from "@/components/NewsCard";
 import CampaignCard from "@/components/CampaignCard";
+import api from "@/setup/api";
+import { useFetchCampaign } from "@/hooks/Campaign/useFetchCampaign";
+import { useFetchNews } from "@/hooks/News/useFetchNews";
 // import Carousel from "react-native-reanimated-carousel";
 
 const index = () => {
-  const width = Dimensions.get("window").width;
+  const { data: campaigns, isLoading: isLoadingCampaign } = useFetchCampaign();
 
-  const numbers = [1, 2, 3, 4, 5];
+  const { data: news, isLoading: isLoadingNews } = useFetchNews();
 
   return (
     <ScrollView
@@ -19,25 +22,22 @@ const index = () => {
     >
       <View style={{ gap: 10 }}>
         <Text style={styles.title} children="Campanhas" />
-        <CampaignCard />
+        {isLoadingCampaign ? (
+          <Text>Loading...</Text>
+        ) : (
+          campaigns.map((item) => (
+            <CampaignCard key={item.id} campaign={item} />
+          ))
+        )}
       </View>
 
-      {/* <Carousel
-        loop
-        width={width}
-        height={width / 2.5}
-        data={numbers}
-        mode="parallax"
-        modeConfig={{}}
-        scrollAnimationDuration={1000}
-        style={{ flex: 1, marginTop: 8 }}
-        renderItem={({ index }) => <CampaignCard key={index} />}
-      /> */}
-      <View style={{ gap: 8 }}>
+      <View style={{ gap: 10 }}>
         <Text style={styles.title} children="Notícias" />
-        {Array.from({ length: 3 }).map((_, index) => (
-          <NewsCard key={index} />
-        ))}
+        {isLoadingNews ? (
+          <Text>Loading...</Text>
+        ) : (
+          news.map((item) => <NewsCard key={item.id} news={item} />)
+        )}
       </View>
     </ScrollView>
   );

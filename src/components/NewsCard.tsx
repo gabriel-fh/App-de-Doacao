@@ -1,30 +1,27 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import React from "react";
+import { News } from "@/@types/app";
 
-const NewsCard = () => {
+const NewsCard = ({ news }: { news: News }) => {
   return (
     <View style={[styles.container, styles.shadow]}>
       <Image
-        source={{ uri: "https://picsum.photos/350/150" }}
+        source={{ uri: news.banner }}
         style={styles.image}
-        resizeMode="contain"
+        resizeMode="cover"
       />
-      <Text style={styles.title}>Enchentes no Rio Grande do Sul</Text>
+      <Text style={styles.title}>{news.title}</Text>
 
-      <Text style={styles.description}>
-        Nesta campanha nosso foco é arrecadar roupas de frio para ajudar n
-        inverno sombrio Nesta campanha nosso foco é arrecadar roupas de frio
-        para ajudar no inverno sombrio
-      </Text>
+      <Text style={styles.description} numberOfLines={4}>{news.description}</Text>
 
-      <View style={styles.userContainer}>
+      {/* <View style={styles.userContainer}>
         <Image
           source={{ uri: "https://picsum.photos/20" }}
           style={styles.avatar}
           resizeMode="contain"
         />
         <Text style={styles.username}>acao.comunitaria.unilasalle</Text>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -65,7 +62,7 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD", 
+    borderColor: "#0D62AD",
   },
   username: {
     fontSize: 14,
