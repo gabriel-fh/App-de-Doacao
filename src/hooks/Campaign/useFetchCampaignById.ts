@@ -20,7 +20,7 @@ const fetchData = async ({ queryKey }: QueryFunctionContext<[string, FetchDataQu
 export function useFetchCampaignById(campaignId: string) {
     const query = useQuery({
         queryFn: fetchData,
-        queryKey: [QueryKeys.Campaigns, { campaignId }],
+        queryKey: [QueryKeys.CampaignById, { campaignId }],
         retry: 3,
         enabled: !!campaignId,
     });

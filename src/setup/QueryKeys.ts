@@ -3,4 +3,7 @@ export enum QueryKeys {
     SearchCampaigns = 'search-campaigns',
     News = 'list-news',
     Institutions = 'list-institutions',
+    NewsById = 'news-by-id',
+    CampaignById = 'campaign-by-id',
+    InstitutionById = 'institution-by'
 }

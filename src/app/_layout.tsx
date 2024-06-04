@@ -72,6 +72,14 @@ const RootLayoutNav = () => {
               headerTitle: "Quero Doar",
             }}
           />
+          <Stack.Screen
+            name="NewsModal/NewsModal"
+            options={{
+              presentation: "modal",
+              animation: "slide_from_bottom",
+              headerShown: false,
+            }}
+          />
         </Stack>
       </QueryClientProvider>
     </>
