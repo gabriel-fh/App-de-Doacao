@@ -2,13 +2,13 @@ import { View, Text } from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
 
-const ProgressBarTitle = () => {
+const ProgressBarTitle = ({ title, objective, donated }) => {
   return (
     <View style={{ gap: 4, marginTop: 4 }}>
-      <Text style={{ fontSize: 14.5, 
-        fontFamily: "Montserrat_600SemiBold", 
-       }}>Vestimenta</Text>
-      <ProgressBar objective={200} donated={150} />
+      <Text style={{ fontSize: 14.5, fontFamily: "Montserrat_600SemiBold" }}>
+        {title}
+      </Text>
+      <ProgressBar objective={objective} donated={donated} />
       <View
         style={{
           display: "flex",
@@ -23,7 +23,7 @@ const ProgressBarTitle = () => {
             fontFamily: "Montserrat_600SemiBold",
           }}
         >
-          700 Doações{" "}
+          {donated} Doações{" "}
         </Text>
         <Text
           style={{

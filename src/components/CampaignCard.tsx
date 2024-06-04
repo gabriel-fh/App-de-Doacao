@@ -6,7 +6,12 @@ import { Campaign } from "@/@types/app";
 
 const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
   const handlePress = () => {
-    router.navigate("CampaignModal/CampaignModal");
+    router.navigate({
+      pathname: "CampaignModal/CampaignModal",
+      params: {
+        campaignId: campaign.id,
+      },
+    });
   };
 
   return (
