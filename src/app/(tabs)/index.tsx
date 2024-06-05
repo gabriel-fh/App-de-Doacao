@@ -23,7 +23,7 @@ const index = () => {
       <View style={{ gap: 10 }}>
         <Text style={styles.title} children="Campanhas" />
         {isLoadingCampaign ? (
-          <Text>Loading...</Text>
+          <Text>Carregando...</Text>
         ) : (
           campaigns.map((item) => (
             <CampaignCard key={item.id} campaign={item} />
@@ -34,7 +34,7 @@ const index = () => {
       <View style={{ gap: 10 }}>
         <Text style={styles.title} children="Notícias" />
         {isLoadingNews ? (
-          <Text>Loading...</Text>
+          <Text>Carregando...</Text>
         ) : (
           news.map((item) => <NewsCard key={item.id} news={item} />)
         )}
