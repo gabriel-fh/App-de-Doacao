@@ -39,7 +39,7 @@ export interface News {
     title: string,
     subtitle: string,
     description: string,
-    banner: string,
+    banners: string[],
 }
 
 export interface Institution {
