@@ -15,6 +15,7 @@ const CampaignCarousel = () => {
   const { data: campaigns, isLoading: isLoadingCampaign } = useFetchCampaign();
 
   const width = Dimensions.get("window").width;
+  
 
   if (isLoadingCampaign) {
     return (
@@ -24,6 +25,10 @@ const CampaignCarousel = () => {
         <ActivityIndicator size="large" color={theme.primary} />
       </View>
     );
+  }
+
+  if (campaigns.length === 0) {
+    return null
   }
 
   return (

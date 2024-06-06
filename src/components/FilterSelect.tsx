@@ -39,7 +39,7 @@ const FilterSelect = ({
         />
       </TouchableOpacity>
 
-      <Modal visible={showModal} animationType="slide" transparent>
+      <Modal visible={showModal} animationType="fade" transparent>
         <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
           <View
             style={{

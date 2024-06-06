@@ -24,16 +24,18 @@ const index = () => {
     >
       <CampaignCarousel />
 
-      <View style={{ gap: 10 }}>
-        <Text style={styles.title} children="Notícias" />
-        {isLoadingNews ? (
-          <View style={{ marginTop: 20 }}>
-            <ActivityIndicator size="large" color={theme.primary} />
-          </View>
-        ) : (
-          news.map((item) => <NewsCard key={item.id} news={item} />)
-        )}
-      </View>
+      {news && news?.length > 0 && (
+        <View style={{ gap: 10 }}>
+          <Text style={styles.title} children="Notícias" />
+          {isLoadingNews ? (
+            <View style={{ marginTop: 20 }}>
+              <ActivityIndicator size="large" color={theme.primary} />
+            </View>
+          ) : (
+            news.map((item) => <NewsCard key={item.id} news={item} />)
+          )}
+        </View>
+      )}
     </ScrollView>
   );
 };
