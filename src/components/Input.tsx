@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import TextInputMask from "react-native-mask-input";
 import { theme } from "@/Theme/theme";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 type InputProps = {
   title: string;
@@ -18,6 +19,8 @@ type InputProps = {
 };
 
 const Input = ({ ...props }: InputProps) => {
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
   const handleChange = (masked: string, unmasked: string) => {
     if (props.onChangeText) {
       props.onChangeText(masked, unmasked);
@@ -34,6 +37,7 @@ const Input = ({ ...props }: InputProps) => {
           {props.title}
         </Text>
         <TextInputMask
+          secureTextEntry={props.password && !passwordVisible}
           style={styles.input}
           placeholder={props.placeholder}
           placeholderTextColor="#999"
@@ -44,6 +48,18 @@ const Input = ({ ...props }: InputProps) => {
           autoCapitalize={props.email ? "none" : "sentences"}
           autoCorrect={false}
         />
+        {props.password && (
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => setPasswordVisible(!passwordVisible)}
+          >
+            <FontAwesome
+              name={!passwordVisible ? "eye" : "eye-slash"}
+              size={20}
+              color={theme.primary}
+            />
+          </TouchableOpacity>
+        )}
       </View>
       {props.errorMessage && (
         <Text style={styles.error}>{props.errorMessage}</Text>
@@ -75,6 +91,17 @@ const styles = StyleSheet.create({
   input: {
     margin: 12,
     fontFamily: "Montserrat_400Regular",
+  },
+  icon: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+    backgroundColor: "#fff",
+    width: 30,
+    height: 30,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   error: {
     color: "red",
