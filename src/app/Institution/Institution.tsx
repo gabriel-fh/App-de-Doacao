@@ -1,7 +1,9 @@
+import { theme } from "@/Theme/theme";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
 import LoadingFullScreen from "@/components/LoadingFullScreen";
 import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -22,16 +24,28 @@ const Institution = () => {
 
   return (
     <View style={{ position: "relative", flex: 1 }}>
-      <StatusBar hidden />
+      {institutionInfo.banner && (
+        <Image
+          source={{ uri: institutionInfo.banner }}
+          style={styles.banner}
+          resizeMode="cover"
+        />
+      )}
 
       <CloseModalButton />
+      
       <ScrollView style={styles.container}>
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <Image
-            source={{ uri: institutionInfo.avatar }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <LinearGradient
+            colors={[theme.acaoUni.blue, theme.acaoUni.red]}
+            style={styles.imageBorder}
+          >
+            <Image
+              source={{ uri: institutionInfo.avatar }}
+              style={styles.image}
+            />
+          </LinearGradient>
+
           <Text
             style={styles.title}
             children={"Ação Comunitária - Unilasalle RJ"}
@@ -73,9 +87,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  banner: {
+    height: 200,
+    width: "100%",
+  },
   image: {
-    height: 80,
+    width: "100%",
+    height: "100%",
+    borderRadius: 10000,
+  },
+  imageBorder: {
     width: 80,
+    height: 80,
+    borderRadius: 10000,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 4,
+    overflow: "hidden",
   },
   wrapper: {
     paddingHorizontal: 12,

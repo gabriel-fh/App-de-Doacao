@@ -49,6 +49,7 @@ export interface Institution {
     description: string,
     phone: string,
     avatar: string,
+    banner: string,
     address: Address
 }
 

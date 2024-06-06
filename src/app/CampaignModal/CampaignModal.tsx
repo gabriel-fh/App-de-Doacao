@@ -20,7 +20,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 
 const CampaignModal = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const { campaignId } = useLocalSearchParams();
 
@@ -34,7 +33,6 @@ const CampaignModal = () => {
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar hidden />
 
       <CloseModalButton />
       <ScrollView style={styles.container}>

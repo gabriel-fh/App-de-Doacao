@@ -19,6 +19,8 @@ const CampaignCarousel = () => {
   if (isLoadingCampaign) {
     return (
       <View style={{ marginTop: 20 }}>
+        <Text style={styles.title} children="Campanhas" />
+
         <ActivityIndicator size="large" color={theme.primary} />
       </View>
     );
@@ -31,8 +33,8 @@ const CampaignCarousel = () => {
       <Carousel
         data={campaigns}
         width={width - 24}
-        height={width / 2}
-        style={{ flex: 1 }}
+        height={180}
+        style={{ flex: 1, marginTop: 10 }}
         loop
         autoPlay
         autoPlayInterval={3000}

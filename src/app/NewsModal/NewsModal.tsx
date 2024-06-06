@@ -18,9 +18,9 @@ const NewsModal = () => {
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar hidden />
 
       <CloseModalButton />
+      
       <ScrollView style={styles.container}>
         {newsInfo.banners && (
           <Image
