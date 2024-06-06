@@ -15,6 +15,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
+import { theme } from "@/Theme/theme";
 
 const RootLayoutNav = () => {
   const [fontsLoaded] = useFonts({
@@ -67,8 +68,6 @@ const RootLayoutNav = () => {
             name="Donation/Donation"
             options={{
               presentation: "modal",
-              // animation: "slide_from_bottom",
-              // headerShown: false,
               headerTitle: "Quero Doar",
             }}
           />
@@ -78,6 +77,26 @@ const RootLayoutNav = () => {
               presentation: "modal",
               animation: "slide_from_bottom",
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Login/Login"
+            options={{
+              title: "Login",
+              headerStyle: { backgroundColor: theme.primary },
+              headerTitleStyle: { color: "#fff" },
+              headerTitleAlign: "center",
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="SignUp/SignUp"
+            options={{
+              title: "Cadastre-se",
+              headerStyle: { backgroundColor: theme.primary },
+              headerTitleStyle: { color: "#fff" },
+              headerTitleAlign: "center",
+              headerTintColor: '#fff',
             }}
           />
         </Stack>

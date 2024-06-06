@@ -10,6 +10,7 @@ import UserInfos from "@/components/UserInfos";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import { router } from "expo-router";
 
 const Profile = () => {
   const profileTabs = [
@@ -45,7 +46,7 @@ const Profile = () => {
           paddingHorizontal: 12,
         }}
       >
-        <UserInfos />
+        {/* <UserInfos />
 
         <View
           style={{
@@ -83,7 +84,10 @@ const Profile = () => {
               </TouchableOpacity>
             );
           })}
-        </View>
+        </View> */}
+        <TouchableOpacity onPress={() => router.navigate("Login/Login")}>
+          <Text>Login</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
