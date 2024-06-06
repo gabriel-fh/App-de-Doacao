@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
@@ -13,8 +12,26 @@ import { theme } from "@/Theme/theme";
 import { KeyboardAvoidingView } from "react-native";
 import { router } from "expo-router";
 import FormHeader from "@/components/FormHeader";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  email: z.string().email("Por favor, insira um e-mail válido"),
+});
 
 const Login = () => {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(formSchema),
+  });
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -28,9 +45,36 @@ const Login = () => {
             gap: 30,
           }}
         >
-          <Input placeholder={"Digite seu e-mail"} title={"E-mail"} />
-          <Input placeholder={"Digite sua senha"} title={"Senha"} />
-          <Button text={"Entrar"} onPress={() => console.log}></Button>
+          <Controller
+            control={control}
+            name={"email"}
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder={"Digite seu e-mail"}
+                title={"E-mail"}
+                value={value}
+                onChangeText={onChange}
+                errorMessage={error?.message}
+                onBlur={onBlur}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name={"password"}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                placeholder={"Digite sua senha"}
+                title={"Senha"}
+                value={value}
+                onChangeText={onChange}
+              />
+            )}
+          />
+          <Button text={"Entrar"} onPress={handleSubmit(onSubmit)}></Button>
         </View>
         <View style={{ marginTop: 15, alignItems: "center" }}>
           <Text

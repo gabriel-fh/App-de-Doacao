@@ -10,9 +10,9 @@ const SignUp = () => {
       <View style={styles.wrapper}>
         <FormHeader title={"Cadastrar"}/>
         <View style={styles.inputContainer}>
-          <Input placeholder={"Digite seu nome"} title={"Nome *"} />
+          <Input placeholder={"Digite seu nome"} title={"Nome completo *"} />
           <Input placeholder={"Digite seu e-mail"} title={"E-mail *"} />
-          <Input placeholder={"Digite seu numero"} title={"Telefone *"} />
+          <Input placeholder={"(DD) xxxxx-xxxx"} title={"Telefone *"} />
           <Input placeholder={"Minimo de 8 caracteres"} title={"Senha *"} />
           <Input placeholder={"Digite sua senha novamente"} title={"Confirme sua senha *"} />
         <Button text="Continuar" onPress={() => console.log}></Button>
