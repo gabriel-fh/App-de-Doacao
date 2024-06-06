@@ -56,6 +56,7 @@ const Login = () => {
                 placeholder={"Digite seu e-mail"}
                 title={"E-mail"}
                 value={value}
+                email
                 onChangeText={onChange}
                 errorMessage={error?.message}
                 onBlur={onBlur}
