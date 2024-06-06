@@ -17,19 +17,23 @@ import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
 import PopUp from "@/components/PopUp";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import DonateDetails from "@/components/DonateDetails";
+import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 
 const CampaignModal = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const campaignInfo = {
-    name: "Campanha do Agasalho",
-    institution: {
-      name: "acao.comunitaria.unilasalle",
-      image: "https://picsum.photos/20",
-    },
-  };
+  const { campaignId } = useLocalSearchParams();
+
+  const { data: campaignInfo, isLoading } = useFetchCampaignById(
+    Array.isArray(campaignId) ? campaignId[0] : campaignId
+  );
+
+  if (isLoading) {
+    return <Text>Carregando...</Text>;
+  }
+
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
@@ -38,28 +42,31 @@ const CampaignModal = () => {
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image
-          source={{ uri: "https://picsum.photos/500/210" }}
+          source={{ uri: campaignInfo.banner }}
           style={styles.image}
           resizeMode="cover"
         />
         <View style={{ ...styles.container, ...styles.wrapper }}>
           <View>
-            <Text style={styles.title}>Campanha do Agasalho</Text>
+            <Text style={styles.title}>{campaignInfo.name}</Text>
             <TouchableOpacity
               style={styles.userContainer}
               onPress={() => router.navigate("Institution/Institution")}
             >
               <Image
-                source={{ uri: "https://picsum.photos/20" }}
+                source={{ uri: campaignInfo.avatar }}
                 style={styles.avatar}
                 resizeMode="contain"
               />
-              <Text style={styles.username}>acao.comunitaria.unilasalle</Text>
+              <Text style={styles.username}>{campaignInfo.name}</Text>
             </TouchableOpacity>
           </View>
 
           <View style={{ gap: 4 }}>
-            <ProgressBar objective={700} donated={500} />
+            <ProgressBar
+              objective={campaignInfo.donated_items_objective}
+              donated={campaignInfo.donated_items_quantity}
+            />
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -77,7 +84,7 @@ const CampaignModal = () => {
                     fontFamily: "Montserrat_600SemiBold",
                   }}
                 >
-                  700 Doações{" "}
+                  {campaignInfo.donated_items_quantity} Doações{" "}
                 </Text>
                 <Text
                   style={{
@@ -87,29 +94,26 @@ const CampaignModal = () => {
                   Coletadas
                 </Text>
               </View>
-              <Text
-                style={{
-                  fontFamily: "Montserrat_500Medium",
-                }}
-              >
-                20 dias atrás
-              </Text>
             </View>
           </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
-              Lorem Ipsum simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make.
+              {campaignInfo.description}
             </Text>
           </View>
-          <View style={{ gap: 8, width: "100%" }}>
+          <View style={{ gap: 8, width: "80%" }}>
             <Text style={styles.subtitle}>O que doar?</Text>
-            <ProgressBarTitle />
-            <ProgressBarTitle />
-            <ProgressBarTitle />
+            {campaignInfo.necessary_items.map((item) => {
+              return (
+                <ProgressBarTitle
+                  key={item.id}
+                  title={item.name}
+                  objective={item.quantity_objective}
+                  donated={item.donated_total}
+                />
+              );
+            })}
           </View>
           <View style={{ gap: 8 }}>
             <Text style={styles.subtitle}>Onde realizar as Doações?</Text>
@@ -121,7 +125,9 @@ const CampaignModal = () => {
               <IconText text="(21) 99999-9999">
                 <Foundation name="telephone" size={28} color="#0D62AD" />
               </IconText>
-              <IconText text="R. Gastão Gonçalves, 79 - Santa Rosa, Niterói - RJ, 24240-030">
+              <IconText
+                text={`${campaignInfo.addressess[0].street} - ${campaignInfo.addressess[0].city}`}
+              >
                 <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
               </IconText>
             </View>
@@ -130,17 +136,15 @@ const CampaignModal = () => {
       </ScrollView>
       <FloatButton
         text="Doar Agora"
-        onPress={() => setOpenModal((prev) => !prev)}
+        onPress={() =>
+          router.navigate({
+            pathname: "Donation/Donation",
+            params: {
+              campaignInfo: JSON.stringify(campaignInfo),
+            },
+          })
+        }
       />
-      <PopUp
-        isVisible={openModal}
-        closePopUp={() => setOpenModal((prev) => !prev)}
-      >
-        <DonateDetails
-          campaignInfo={campaignInfo}
-          closePopUp={() => setOpenModal((prev) => !prev)}
-        />
-      </PopUp>
     </View>
   );
 };

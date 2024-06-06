@@ -3,16 +3,23 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import CampaignCard from "@/components/CampaignCard";
 import BackToTopButton from "@/components/BackToTopButton";
 import Searchbar from "@/components/Searchbar";
 import FilterSelect from "@/components/FilterSelect";
+import { useSearchCampaign } from "@/hooks/Campaign/useSearchCampaigns";
+import { theme } from "@/Theme/theme";
 
 const Campaign = () => {
   const scrollViewRef = useRef<ScrollView>(null);
   const [showButton, setShowButton] = useState(false);
+
+  const [searchParam, setSearchParam] = useState<string>("");
+
+  const { data: campaigns, isLoading } = useSearchCampaign(searchParam);
 
   const screenHeight = Dimensions.get("window").height;
 
@@ -40,15 +47,31 @@ const Campaign = () => {
         ref={scrollViewRef}
       >
         <View style={styles.filters}>
-          <Searchbar />
+          <Searchbar
+            searchParam={searchParam}
+            setSearchParam={setSearchParam}
+          />
 
           <FilterSelect />
         </View>
 
-        <View style={{ gap: 8, flex: 1 }}>
-          {Array.from({ length: 10 }).map((_, index) => (
-            <CampaignCard key={index} />
-          ))}
+        <View style={{ gap: 10, flex: 1 }}>
+          {isLoading ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: 40,
+              }}
+            >
+              <ActivityIndicator size="large" color={theme.primary} />
+            </View>
+          ) : (
+            campaigns.map((item, index) => (
+              <CampaignCard key={index} campaign={item} />
+            ))
+          )}
         </View>
       </ScrollView>
       <BackToTopButton scrollViewRef={scrollViewRef} showButton={showButton} />

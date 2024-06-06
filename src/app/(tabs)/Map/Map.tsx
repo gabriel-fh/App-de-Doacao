@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ActivityIndicator, View, Image } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {
@@ -7,10 +7,16 @@ import {
   getCurrentPositionAsync,
 } from "expo-location";
 import { router } from "expo-router";
+import { useFetchInstitutions } from "@/hooks/Institutions/useFetchInstitution";
+import { theme } from "@/Theme/theme";
+import { LinearGradient } from "expo-linear-gradient";
+import InstitutionMarker from "@/components/InstitutionMarker";
 
 const Map = () => {
   const mapRef = useRef<MapView>(null);
   const [region, setRegion] = useState(null);
+
+  const { data: institutions, isLoading } = useFetchInstitutions();
 
   // obtendo localização do usuário
   useEffect(() => {
@@ -33,6 +39,13 @@ const Map = () => {
     })();
   }, []);
 
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,23 +55,18 @@ const Map = () => {
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
-        loadingIndicatorColor="#0D62AD"
+        loadingIndicatorColor={theme.primary}
         loadingBackgroundColor="#f1f1f1"
       >
-        {region && (
-          <Marker
-            coordinate={{
-              latitude: region?.latitude + 0.001,
-              longitude: region?.longitude,
-            }}
-            image={{
-              uri: "https://cdn-icons-png.flaticon.com/512/3619/3619129.png",
-            }}
-            onPress={() => {
-              router.navigate('Institution/Institution') 
-            }}
-          />
-        )}
+        {institutions &&
+          institutions.map((institution) => {
+            return (
+              <InstitutionMarker
+                key={institution.id}
+                institution={institution}
+              />
+            );
+          })}
       </MapView>
     </View>
   );

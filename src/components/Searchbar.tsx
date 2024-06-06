@@ -2,10 +2,24 @@ import { View, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-const Searchbar = () => {
+const Searchbar = ({
+  setSearchParam,
+  searchParam,
+}: {
+  setSearchParam: (value: string) => void;
+  searchParam: string;
+}) => {
+  const handleSearch = (text: string) => {
+    setSearchParam(text);
+  };
   return (
     <View style={styles.searchbar}>
-      <TextInput placeholder="Buscar Campanhas" style={styles.textInput} />
+      <TextInput
+        placeholder="Buscar Campanhas"
+        style={styles.textInput}
+        value={searchParam}
+        onChangeText={handleSearch}
+      />
 
       <View style={styles.iconView}>
         <FontAwesome5 name="search" size={20} color="#fff" />
