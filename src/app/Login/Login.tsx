@@ -11,6 +11,8 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { theme } from "@/Theme/theme";
 import { KeyboardAvoidingView } from "react-native";
+import { router } from "expo-router";
+import FormHeader from "@/components/FormHeader";
 
 const Login = () => {
 
@@ -20,31 +22,7 @@ const Login = () => {
       style={styles.container}
     >
       <View style={styles.loginContainer}>
-        <View style={styles.loginHeader}>
-          <View
-            style={{
-              height: 2,
-              backgroundColor: theme.primary,
-              flex: 1,
-            }}
-          />
-          <Text
-            style={{
-              fontFamily: "Montserrat_700Bold",
-              fontSize: 30,
-              color: theme.primary,
-            }}
-          >
-            Login
-          </Text>
-          <View
-            style={{
-              height: 2,
-              flex: 1,
-              backgroundColor: theme.primary,
-            }}
-          />
-        </View>
+        <FormHeader title="Login" />
         <View
           style={{
             gap: 30,
@@ -63,13 +41,13 @@ const Login = () => {
           >
             Ainda não possui uma conta?
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.navigate("SignUp/SignUp")}>
             <Text
               style={{
                 color: theme.primary,
                 marginTop: 10,
                 fontFamily: "Montserrat_600SemiBold",
-                fontSize: 16
+                fontSize: 16,
               }}
             >
               Cadastre-se

@@ -68,8 +68,6 @@ const RootLayoutNav = () => {
             name="Donation/Donation"
             options={{
               presentation: "modal",
-              // animation: "slide_from_bottom",
-              // headerShown: false,
               headerTitle: "Quero Doar",
             }}
           />
@@ -85,6 +83,16 @@ const RootLayoutNav = () => {
             name="Login/Login"
             options={{
               title: "Login",
+              headerStyle: { backgroundColor: theme.primary },
+              headerTitleStyle: { color: "#fff" },
+              headerTitleAlign: "center",
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="SignUp/SignUp"
+            options={{
+              title: "Cadastre-se",
               headerStyle: { backgroundColor: theme.primary },
               headerTitleStyle: { color: "#fff" },
               headerTitleAlign: "center",

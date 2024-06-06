@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 12,
+    fontFamily: "Montserrat_400Regular",
   },
 });
 
