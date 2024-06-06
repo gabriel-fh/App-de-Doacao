@@ -13,7 +13,7 @@ export interface CampaignById extends Campaign {
     start_date: string,
     end_date: string,
     addressess: Address[],
-    necessary_items: Item[]
+    necessary_items: ItemById[]
 }
 
 export interface Address {
@@ -29,9 +29,13 @@ export interface Address {
 export interface Item {
     id: number,
     name: string,
+    status: string,
+
+}
+
+export interface ItemById extends Item {
     donated_total: number,
     quantity_objective: number
-
 }
 
 export interface News {

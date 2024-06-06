@@ -5,5 +5,6 @@ export enum QueryKeys {
     Institutions = 'list-institutions',
     NewsById = 'news-by-id',
     CampaignById = 'campaign-by-id',
-    InstitutionById = 'institution-by'
+    InstitutionById = 'institution-by',
+    Items = 'list-items',
 }

@@ -1,13 +1,99 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { useFetchItems } from "@/hooks/Campaign/useFetchItems";
+import Badge from "./Badge";
+import { Item } from "@/@types/app";
+import { theme } from "@/Theme/theme";
 
-const FilterSelect = () => {
+const FilterSelect = ({
+  donationItems,
+  selectItem,
+}: {
+  donationItems: Item[];
+  selectItem: (item: Item) => void;
+}) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const { data: items, isLoading } = useFetchItems();
+
   return (
-    <View style={styles.itemFilter}>
-      <Text style={styles.itemText}>Filtrar</Text>
-      <FontAwesome5 name="caret-down" size={21} color="#fff" style={{marginBottom: 5}} />
-    </View>
+    <>
+      <TouchableOpacity
+        style={styles.itemFilter}
+        onPress={() => setShowModal(true)}
+      >
+        <Text style={styles.itemText}>Filtrar</Text>
+        <FontAwesome5
+          name="caret-down"
+          size={21}
+          color="#fff"
+          style={{ marginBottom: 5 }}
+        />
+      </TouchableOpacity>
+
+      <Modal visible={showModal} animationType="slide" transparent>
+        <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0,0,0,0.5)",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "90%",
+                height: "50%",
+                borderRadius: 10,
+                padding: 10,
+              }}
+            >
+              <Text
+                style={{ fontSize: 20, fontFamily: "Montserrat_600SemiBold" }}
+              >
+                Filtrar Itens
+              </Text>
+              <View>
+                {isLoading ? (
+                  <ActivityIndicator size="large" color={theme.primary} />
+                ) : (
+                  <View
+                    style={{
+                      flexWrap: "wrap",
+                      flexDirection: "row",
+                      gap: 10,
+                      paddingTop: 10,
+                    }}
+                  >
+                    {items.map((item, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        onPress={() => selectItem(item)}
+                      >
+                        <Badge
+                          text={item.name}
+                          selected={donationItems.includes(item)}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    </>
   );
 };
 
