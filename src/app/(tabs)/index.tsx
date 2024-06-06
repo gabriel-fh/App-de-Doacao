@@ -25,7 +25,7 @@ const index = () => {
         {isLoadingCampaign ? (
           <Text>Carregando...</Text>
         ) : (
-          campaigns.map((item) => (
+          campaigns?.map((item) => (
             <CampaignCard key={item.id} campaign={item} />
           ))
         )}
@@ -36,7 +36,7 @@ const index = () => {
         {isLoadingNews ? (
           <Text>Carregando...</Text>
         ) : (
-          news.map((item) => <NewsCard key={item.id} news={item} />)
+          news?.map((item) => <NewsCard key={item.id} news={item} />)
         )}
       </View>
     </ScrollView>
