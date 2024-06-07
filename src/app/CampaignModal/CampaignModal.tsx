@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Foundation from "react-native-vector-icons/Foundation";
@@ -16,13 +16,10 @@ import ProgressBarTitle from "@/components/ProgressBarTitle";
 import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
-import PopUp from "@/components/PopUp";
 import { router, useLocalSearchParams } from "expo-router";
-import DonateDetails from "@/components/DonateDetails";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 
 const CampaignModal = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const { campaignId } = useLocalSearchParams();
 
@@ -34,10 +31,8 @@ const CampaignModal = () => {
     return <Text>Carregando...</Text>;
   }
 
-
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar hidden />
 
       <CloseModalButton />
       <ScrollView style={styles.container}>
@@ -122,14 +117,29 @@ const CampaignModal = () => {
               <IconText text="07:00 - 16:30">
                 <AntDesign name="clockcircle" size={20} color="#0D62AD" />
               </IconText>
+
               <IconText text="(21) 99999-9999">
                 <Foundation name="telephone" size={28} color="#0D62AD" />
               </IconText>
-              <IconText
-                text={`${campaignInfo.addressess[0].street} - ${campaignInfo.addressess[0].city}`}
-              >
-                <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
-              </IconText>
+
+              <View>
+                <IconText text="Endereços de entrega" arrow>
+                  <MaterialIcons
+                    name="location-pin"
+                    size={30}
+                    color="#0D62AD"
+                  />
+                </IconText>
+                <View style={{ paddingLeft: 8 }}>
+                  {campaignInfo.addressess.map((item) => {
+                    return (
+                      <Text style={styles.addressess} key={item.id}>
+                        {item.street} - {item.city}
+                      </Text>
+                    );
+                  })}
+                </View>
+              </View>
             </View>
           </View>
         </View>
@@ -200,6 +210,11 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 14,
     fontFamily: "Montserrat_600SemiBold",
+  },
+  addressess: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: 14,
+    color: "#595959",
   },
 });
 

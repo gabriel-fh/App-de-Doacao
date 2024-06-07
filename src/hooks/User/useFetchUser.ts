@@ -1,4 +1,5 @@
 import { User } from "@/@types/app";
+import { QueryKeys } from "@/setup/QueryKeys";
 import { authedApi } from "@/setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,10 +11,10 @@ const fetchData = async (): Promise<User> => {
   if (!storagedData) {
     return null;
   }
-
+  
   const response = await authedApi.get(`/donator`);
-
-  return response.data.data;
+  
+  return response.data;
 };
 
 export function useFetchUser() {

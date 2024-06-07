@@ -15,7 +15,7 @@ export const authedApi = Axios.create({
 
 authedApi.interceptors.request.use(
     async (config) => {
-        const authDataSerialized = await AsyncStorage.getItem("@Baoo:AuthData");
+        const authDataSerialized = await AsyncStorage.getItem("@app-doacao:AuthToken");
         const _authData = JSON.parse(authDataSerialized);
         config.headers["Authorization"] = `Bearer ${_authData.token}`;
         return config;

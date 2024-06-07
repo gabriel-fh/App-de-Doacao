@@ -36,6 +36,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         "@app-doacao:AuthToken",
         JSON.stringify({ token })
       );
+
+
       return true;
     } catch (err) {
       console.error(err?.response?.data);
