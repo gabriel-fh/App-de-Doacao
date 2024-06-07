@@ -18,10 +18,11 @@ import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
 import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
+import { useAuth } from "@/contexts/Auth";
 
 const CampaignModal = () => {
-
   const { campaignId } = useLocalSearchParams();
+  const authContext = useAuth();
 
   const { data: campaignInfo, isLoading } = useFetchCampaignById(
     Array.isArray(campaignId) ? campaignId[0] : campaignId
@@ -33,7 +34,6 @@ const CampaignModal = () => {
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image
@@ -146,14 +146,18 @@ const CampaignModal = () => {
       </ScrollView>
       <FloatButton
         text="Doar Agora"
-        onPress={() =>
-          router.navigate({
-            pathname: "Donation/Donation",
-            params: {
-              campaignInfo: JSON.stringify(campaignInfo),
-            },
-          })
-        }
+        onPress={() => {
+          if (authContext.authData) {
+            router.navigate({
+              pathname: "Donation/Donation",
+              params: {
+                campaignInfo: JSON.stringify(campaignInfo),
+              },
+            });
+          } else {
+            router.navigate("Login/Login");
+          }
+        }}
       />
     </View>
   );

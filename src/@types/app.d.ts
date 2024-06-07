@@ -63,6 +63,7 @@ export interface Item {
 export interface ItemById extends Item {
     donated_total: number,
     quantity_objective: number
+    quantity?: number
 }
 
 // Noticia

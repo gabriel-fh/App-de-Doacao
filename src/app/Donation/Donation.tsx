@@ -20,6 +20,7 @@ import Badge from "@/components/Badge";
 import CustomCalendar from "@/components/CustomCalendar";
 import PopUp from "@/components/PopUp";
 import Picker from "@/components/Picker";
+import { CampaignById, ItemById } from "@/@types/app";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -29,10 +30,9 @@ type routeParams = {
 
 const Donation = () => {
   const { campaignInfo } = useLocalSearchParams<routeParams>();
-  const parsedCampaignInfo = JSON.parse(campaignInfo);
-  const { name, institution, necessary_items: items } = parsedCampaignInfo;
+  const parsedCampaignInfo: CampaignById = JSON.parse(campaignInfo);
 
-  const [donationItems, setDonationItems] = useState([]);
+  const [donationItems, setDonationItems] = useState<ItemById[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
   const [commentary, setCommentary] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -60,20 +60,23 @@ const Donation = () => {
     };
   }, []);
 
-  const selectItem = (newItem) => {
+  const selectItem = (newItem: ItemById) => {
     // Se o item já estiver na lista, remove ele se não adiciona
-    if (donationItems.includes(newItem)) {
+    if (donationItems.find((item) => item.id === newItem.id)) {
       setDonationItems((prevItems) =>
-        prevItems.filter((item) => item !== newItem)
+        prevItems.filter((item) => item.id !== newItem.id)
       );
       return;
     } else {
-      setDonationItems((prevItems) => [...prevItems, newItem]);
+      setDonationItems((prevItems) => [
+        ...prevItems,
+        { ...newItem, quantity: 1 },
+      ]);
     }
   };
 
   const deleteItem = (item) => {
-    setDonationItems((prevItems) => prevItems.filter((i) => i !== item));
+    setDonationItems((prevItems) => prevItems.filter((i) => i.id !== item.id));
     if (donationItems.length === 0) {
       router.canGoBack();
     }
@@ -107,7 +110,11 @@ const Donation = () => {
 
   const handleConfirm = () => {
     if (validateFields()) {
-      console.log("Doação enviada");
+      const sendItems = donationItems.map((item) => {
+        const { id, quantity } = item;
+        return { id, quantity };
+      });
+      console.log("Doação enviada com sucesso");
     }
   };
 
@@ -116,14 +123,14 @@ const Donation = () => {
       <ScrollView style={{ backgroundColor: "#fff" }}>
         <View style={styles.container}>
           <View>
-            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
             <View style={styles.userContainer}>
               <Image
-                source={{ uri: institution.image }}
+                source={{ uri: parsedCampaignInfo.avatar }}
                 style={styles.avatar}
                 resizeMode="contain"
               />
-              <Text style={styles.username}>{institution.name}</Text>
+              <Text style={styles.username}>{parsedCampaignInfo.name}</Text>
             </View>
           </View>
           <View style={{ gap: 25 }}>
@@ -137,14 +144,14 @@ const Donation = () => {
                   nestedScrollEnabled={true}
                 >
                   <View style={styles.badgeContainer}>
-                    {items.map((item, idx) => (
+                    {parsedCampaignInfo.necessary_items.map((item) => (
                       <TouchableOpacity
-                        key={idx}
+                        key={item?.id}
                         onPress={() => selectItem(item)}
                       >
                         <Badge
-                          text={item}
-                          selected={donationItems.includes(item)}
+                          text={item.name}
+                          selected={donationItems.some((i) => i.id === item.id)}
                         />
                       </TouchableOpacity>
                     ))}
@@ -168,7 +175,7 @@ const Donation = () => {
                         style={[styles.text, { maxWidth: "50%" }]}
                         numberOfLines={2}
                       >
-                        {item}
+                        {item?.name}
                       </Text>
                       <View
                         style={{
@@ -181,6 +188,8 @@ const Donation = () => {
                         <View>
                           <AddDecrease
                             handleRemoveItem={() => deleteItem(item)}
+                            setDonationItems={setDonationItems}
+                            currentItem={item}
                           />
                         </View>
                         <TouchableOpacity onPress={() => deleteItem(item)}>

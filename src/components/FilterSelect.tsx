@@ -13,6 +13,7 @@ import { useFetchItems } from "@/hooks/Campaign/useFetchItems";
 import Badge from "./Badge";
 import { Item } from "@/@types/app";
 import { theme } from "@/Theme/theme";
+import PopUp from "./PopUp";
 
 const FilterSelect = ({
   donationItems,
@@ -38,7 +39,7 @@ const FilterSelect = ({
           style={{ marginBottom: 5 }}
         />
       </TouchableOpacity>
-
+      {/* 
       <Modal visible={showModal} animationType="fade" transparent>
         <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
           <View
@@ -49,50 +50,48 @@ const FilterSelect = ({
               backgroundColor: "rgba(0,0,0,0.5)",
             }}
           >
-            <View
-              style={{
-                backgroundColor: "white",
-                width: "90%",
-                height: "50%",
-                borderRadius: 10,
-                padding: 10,
-              }}
-            >
-              <Text
-                style={{ fontSize: 20, fontFamily: "Montserrat_600SemiBold" }}
-              >
-                Filtrar Itens
-              </Text>
-              <View>
-                {isLoading ? (
-                  <ActivityIndicator size="large" color={theme.primary} />
-                ) : (
-                  <View
-                    style={{
-                      flexWrap: "wrap",
-                      flexDirection: "row",
-                      gap: 10,
-                      paddingTop: 10,
-                    }}
-                  >
-                    {items.map((item, idx) => (
-                      <TouchableOpacity
-                        key={idx}
-                        onPress={() => selectItem(item)}
-                      >
-                        <Badge
-                          text={item.name}
-                          selected={donationItems.includes(item)}
-                        />
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                )}
-              </View>
-            </View>
+            
           </View>
         </TouchableWithoutFeedback>
-      </Modal>
+      </Modal> */}
+      <PopUp isVisible={showModal} closePopUp={() => setShowModal(false)}>
+        <View
+          style={{
+            backgroundColor: "white",
+            width: "90%",
+            height: "50%",
+            borderRadius: 10,
+            // padding: 10,
+          }}
+        >
+          <Text style={{ fontSize: 20, fontFamily: "Montserrat_600SemiBold" }}>
+            Filtrar Itens
+          </Text>
+          <View>
+            {isLoading ? (
+              <ActivityIndicator size="large" color={theme.primary} />
+            ) : (
+              <View
+                style={{
+                  flexWrap: "wrap",
+                  flexDirection: "row",
+                  gap: 10,
+                  paddingTop: 10,
+                }}
+              >
+                {items.map((item, idx) => (
+                  <TouchableOpacity key={idx} onPress={() => selectItem(item)}>
+                    <Badge
+                      text={item.name}
+                      selected={donationItems.includes(item)}
+                    />
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
+      </PopUp>
     </>
   );
 };
