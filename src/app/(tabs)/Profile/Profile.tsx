@@ -38,6 +38,7 @@ const Profile = () => {
     {
       icon: <FontAwesome name={"sign-out"} size={30} color={"#f00"} />,
       title: "Sair",
+      onPress: authContext.signOut
     },
   ];
   
@@ -70,6 +71,7 @@ const Profile = () => {
                     borderBottomColor: "#ddd",
                   },
                 ]}
+                onPress={() => tab?.onPress()}
               >
                 <View
                   style={{
