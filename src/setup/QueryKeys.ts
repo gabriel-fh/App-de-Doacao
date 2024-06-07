@@ -7,4 +7,5 @@ export enum QueryKeys {
     CampaignById = 'campaign-by-id',
     InstitutionById = 'institution-by',
     Items = 'list-items',
+    UserData = 'user-data',
 }

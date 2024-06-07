@@ -11,8 +11,11 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import { router } from "expo-router";
+import { useAuth } from "@/contexts/Auth";
 
 const Profile = () => {
+  const authContext = useAuth();
+
   const profileTabs = [
     {
       icon: <FontAwesome name={"heart"} size={25} color={"#0D62AD"} />,
@@ -35,9 +38,11 @@ const Profile = () => {
       title: "Sair",
     },
   ];
+  console.log(authContext.authData);
+  
 
-  return (
-    <View style={{ position: "relative", flex: 1 }}>
+  if (authContext.authData) {
+    return (
       <ScrollView
         style={styles.container}
         scrollEventThrottle={16}
@@ -46,7 +51,7 @@ const Profile = () => {
           paddingHorizontal: 12,
         }}
       >
-        {/* <UserInfos />
+        <UserInfos data={authContext.authData}/>
 
         <View
           style={{
@@ -73,10 +78,14 @@ const Profile = () => {
                   }}
                 >
                   {tab.icon}
-                  <Text style={{
-                    fontFamily: 'Montserrat_600SemiBold',
-                    fontSize: 16,
-                  }}>{tab.title}</Text>
+                  <Text
+                    style={{
+                      fontFamily: "Montserrat_600SemiBold",
+                      fontSize: 16,
+                    }}
+                  >
+                    {tab.title}
+                  </Text>
                 </View>
                 {idx !== profileTabs.length - 1 && (
                   <FontAwesome name={"angle-right"} size={30} color={"#666"} />
@@ -84,7 +93,21 @@ const Profile = () => {
               </TouchableOpacity>
             );
           })}
-        </View> */}
+        </View>
+      </ScrollView>
+    );
+  }
+
+  return (
+    <View style={{ position: "relative", flex: 1 }}>
+      <ScrollView
+        style={styles.container}
+        scrollEventThrottle={16}
+        contentContainerStyle={{
+          paddingVertical: 20,
+          paddingHorizontal: 12,
+        }}
+      >
         <TouchableOpacity onPress={() => router.navigate("Login/Login")}>
           <Text>Login</Text>
         </TouchableOpacity>
