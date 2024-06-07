@@ -27,9 +27,10 @@ const UserInfos = ({ data }: { data: User }) => {
           style={{
             fontSize: 16,
             fontFamily: "Montserrat_500Medium",
+            marginTop: 4,
           }}
         >
-          {data.phone}
+          {data.phone.replace("+55", '').replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
         </Text>
       </View>
     </View>

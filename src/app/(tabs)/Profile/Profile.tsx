@@ -29,14 +29,17 @@ const Profile = () => {
     {
       icon: <FontAwesome name={"trophy"} size={27} color={"#0D62AD"} />,
       title: "Conquistas",
+      onPress: () => console.log,
     },
     {
       icon: <Ionicons name={"settings"} size={27} color={"#0D62AD"} />,
       title: "Configurações",
+      onPress: () => console.log,
     },
     {
       icon: <FontAwesome6 name={"circle-info"} size={25} color={"#0D62AD"} />,
       title: "Sobre",
+      onPress: () => console.log,
     },
     {
       icon: <FontAwesome name={"sign-out"} size={30} color={"#f00"} />,
@@ -117,24 +120,14 @@ const Profile = () => {
           flex: 1,
         }}
       >
-        {/* <TouchableOpacity onPress={() => router.navigate("Login/Login")}>
-          <Text style={styles.title}>Já possui conta ? Faça Login</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => router.navigate("SignUp/SignUp")}>
-          <Text style={styles.subTitle}>
-            Ainda não possui conta ? Registre-se
-          </Text>
-        </TouchableOpacity> */}
-
         <View style={styles.loginContainer}>
           <Text style={styles.title}>Você não está logado!</Text>
 
           <Image
             source={require("assets/Mobile-login-amico.png")}
             style={{
-              width: 210,
-              height: 210,
+              width: 230,
+              height: 230,
               alignSelf: "center",
             }}
           />
