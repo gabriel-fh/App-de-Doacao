@@ -73,6 +73,10 @@ const RootLayoutNav = () => {
               options={{
                 presentation: "modal",
                 headerTitle: "Quero Doar",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
               }}
             />
             <Stack.Screen
@@ -97,6 +101,16 @@ const RootLayoutNav = () => {
               name="SignUp/SignUp"
               options={{
                 title: "Cadastre-se",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="MyDonations/MyDonations"
+              options={{
+                title: "Minhas Doações",
                 headerStyle: { backgroundColor: theme.primary },
                 headerTitleStyle: { color: "#fff" },
                 headerTitleAlign: "center",

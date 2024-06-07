@@ -35,10 +35,10 @@ export interface Campaign {
 }
 
 export interface CampaignById extends Campaign {
-    start_date: string,
-    end_date: string,
-    addressess: Address[],
-    necessary_items: ItemById[]
+  start_date: string;
+  end_date: string;
+  addressess: Address[];
+  necessary_items: ItemById[];
 }
 
 // Endereço
@@ -54,39 +54,47 @@ export interface Address {
 
 // Item da doação
 export interface Item {
-    id: number,
-    name: string,
-    status: string,
-
+  id: number;
+  name: string;
+  status: string;
 }
 
 export interface ItemById extends Item {
-    donated_total: number,
-    quantity_objective: number
-    quantity?: number
+  donated_total: number;
+  quantity_objective: number;
+  quantity?: number;
 }
 
 // Noticia
 export interface News {
-    id: number,
-    title: string,
-    subtitle: string,
-    description: string,
-    banners: string[],
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  banners: string[];
 }
 
 // Instituição
 export interface Institution {
-    id: number,
-    name: string,
-    status: string,
-    description: string,
-    phone: string,
-    avatar: string,
-    banner: string,
-    address: Address
+  id: number;
+  name: string;
+  status: string;
+  description: string;
+  phone: string;
+  avatar: string;
+  banner: string;
+  address: Address;
 }
 
 export interface InstitutionById extends Institution {
   campaigns: Campaign[];
+}
+
+// Doação
+
+export interface Donation {
+  id: number;
+  campaign: Campaign;
+  items: Item[];
+  status: string;
 }

@@ -120,9 +120,6 @@ const Donation = () => {
       };
 
       await mutateDonation(postData);
-
-      router.navigate("/");
-
       return true;
     } catch (err) {
       console.error(err?.response?.data);
@@ -137,6 +134,8 @@ const Donation = () => {
         return { id, quantity };
       });
       const response = await sendDonation(sendItems);
+      
+      router.navigate("/");
 
       console.log("Donation response: " + response);
     }

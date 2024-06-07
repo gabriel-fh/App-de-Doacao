@@ -22,6 +22,7 @@ const Profile = () => {
     {
       icon: <FontAwesome name={"heart"} size={25} color={"#0D62AD"} />,
       title: "Minhas Doações",
+      onPress: () => router.navigate("MyDonations/MyDonations"),
     },
     {
       icon: <FontAwesome name={"trophy"} size={27} color={"#0D62AD"} />,
