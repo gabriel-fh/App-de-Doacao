@@ -5,13 +5,15 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import UserInfos from "@/components/UserInfos";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import { router } from "expo-router";
 import { useAuth } from "@/contexts/Auth";
+import { theme } from "@/Theme/theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
   const authContext = useAuth();
@@ -38,7 +40,6 @@ const Profile = () => {
       title: "Sair",
     },
   ];
-  console.log(authContext.authData);
   
 
   if (authContext.authData) {
@@ -51,7 +52,7 @@ const Profile = () => {
           paddingHorizontal: 12,
         }}
       >
-        <UserInfos data={authContext.authData}/>
+        <UserInfos data={authContext.authData} />
 
         <View
           style={{
@@ -106,11 +107,22 @@ const Profile = () => {
         contentContainerStyle={{
           paddingVertical: 20,
           paddingHorizontal: 12,
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+          flex: 1,
         }}
       >
         <TouchableOpacity onPress={() => router.navigate("Login/Login")}>
-          <Text>Login</Text>
+          <Text style={styles.title}>Já possui conta ? Faça Login</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => router.navigate("SingUp/SingUp")}>
+          <Text style={styles.subTitle}>
+            Ainda não possui conta ? Registre-se
+          </Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </View>
   );
@@ -125,6 +137,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 20,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 4,
+    fontFamily: "Montserrat_600SemiBold",
+    color: theme.primary,
+  },
+  subTitle: {
+    fontSize: 17,
+    fontFamily: "Montserrat_600SemiBold",
   },
 });
 
