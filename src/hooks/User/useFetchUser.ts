@@ -1,5 +1,6 @@
 import { User } from "@/@types/app";
 import { authedApi } from "@/setup/api";
+import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery } from "@tanstack/react-query";
 
@@ -18,7 +19,7 @@ const fetchData = async (): Promise<User> => {
 export function useFetchUser() {
   const query = useQuery({
     queryFn: fetchData,
-    queryKey: ["user-data"],
+    queryKey: [QueryKeys.UserData],
     retry: 3,
     staleTime: 1000 * 60 * 5,
     refetchInterval: 1000 * 30,

@@ -13,6 +13,10 @@ export interface User {
   phone: string;
 }
 
+export interface UserRegister extends User {
+  password: string;
+}
+
 export interface AuthStorageData {
   token: string;
   expiration_date: string;
