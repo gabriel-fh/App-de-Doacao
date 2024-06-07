@@ -6,42 +6,52 @@ import FormHeader from "@/components/FormHeader";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/contexts/Auth";
+import { UserRegister } from "@/@types/app";
+import { router } from "expo-router";
 
-const formSchema = z
-  .object({
-    full_name: z
-      .string()
-      .min(3, "Nome deve ter no mínimo 3 caracteres")
-      .regex(/^[^0-9]*$/, "Por favor, insira um nome válido"),
-    email: z.string().email("Por favor, insira um e-mail válido"),
-    telephone: z
-      .string()
-      .regex(
-        /^\(\d{3}\) \d{5}-\d{4}$/,
-        "Por favor, insira um telefone válido no formato (DDD) 99999-9999"
-      ),
-    password: z.string().min(8, "Senha deve ter no mínimo 8 caracteres"),
-    confirm_password: z.string(),
-  })
-  .refine((data) => data.password === data.confirm_password, {
-    message: "As senhas não são iguais",
-    path: ["confirm_password"],
-  });
+const formSchema = z.object({
+  name: z
+    .string()
+    .min(3, "Nome deve ter no mínimo 3 caracteres")
+    .regex(/^[^0-9]*$/, "Por favor, insira um nome válido"),
+  email: z.string().email("Por favor, insira um e-mail válido"),
+  phone: z
+    .string()
+    .regex(
+      /^\(\d{2}\) \d{5}-\d{4}$/,
+      "Por favor, insira um telefone válido no formato (99) 99999-9999"
+    ),
+  password: z.string().min(8, "Senha deve ter no mínimo 8 caracteres"),
+});
 
 const SignUp = () => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      full_name: "",
+      name: "",
       email: "",
-      telephone: "",
+      phone: "",
       password: "",
-      confirm_password: "",
     },
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const authContext = useAuth();
+
+  const onSubmit = async (data: UserRegister) => {
+    const { phone } = data;
+    const response = authContext.signUp({
+      ...data,
+      phone: `+55${phone
+        .replaceAll(" ", "")
+        .replaceAll("(", "")
+        .replaceAll(")", "")
+        .replaceAll("-", "")}`,
+    });
+
+    if (response) {
+      router.navigate("/");
+    }
   };
 
   return (
@@ -51,7 +61,7 @@ const SignUp = () => {
         <View style={styles.inputContainer}>
           <Controller
             control={control}
-            name={"full_name"}
+            name={"name"}
             render={({
               field: { onChange, value, onBlur },
               fieldState: { error },
@@ -86,18 +96,35 @@ const SignUp = () => {
           />
           <Controller
             control={control}
-            name={"telephone"}
+            name={"phone"}
             render={({
               field: { onChange, value, onBlur },
               fieldState: { error },
             }) => (
               <Input
-                placeholder={"(DDD) xxxxx-xxxx"}
+                placeholder={"(xx) xxxxx-xxxx"}
                 title={"Telefone *"}
                 value={value}
                 onChangeText={onChange}
                 errorMessage={error?.message}
                 onBlur={onBlur}
+                mask={[
+                  "(",
+                  /\d/,
+                  /\d/,
+                  ")",
+                  " ",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
               />
             )}
           />
@@ -111,24 +138,6 @@ const SignUp = () => {
               <Input
                 placeholder={"Minimo de 8 caracteres"}
                 title={"Senha *"}
-                value={value}
-                password
-                onChangeText={onChange}
-                errorMessage={error?.message}
-                onBlur={onBlur}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={"confirm_password"}
-            render={({
-              field: { onChange, value, onBlur },
-              fieldState: { error },
-            }) => (
-              <Input
-                placeholder={"Digite sua senha novamente"}
-                title={"Confirme sua senha *"}
                 value={value}
                 password
                 onChangeText={onChange}
