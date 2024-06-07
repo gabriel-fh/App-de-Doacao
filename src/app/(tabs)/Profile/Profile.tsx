@@ -4,6 +4,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useEffect } from "react";
 import UserInfos from "@/components/UserInfos";
@@ -14,6 +15,7 @@ import { router } from "expo-router";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Button from "@/components/Button";
 
 const Profile = () => {
   const authContext = useAuth();
@@ -39,10 +41,9 @@ const Profile = () => {
     {
       icon: <FontAwesome name={"sign-out"} size={30} color={"#f00"} />,
       title: "Sair",
-      onPress: authContext.signOut
+      onPress: authContext.signOut,
     },
   ];
-  
 
   if (authContext.authData) {
     return (
@@ -116,16 +117,45 @@ const Profile = () => {
           flex: 1,
         }}
       >
-        <TouchableOpacity onPress={() => router.navigate("Login/Login")}>
+        {/* <TouchableOpacity onPress={() => router.navigate("Login/Login")}>
           <Text style={styles.title}>Já possui conta ? Faça Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.navigate("SingUp/SingUp")}>
+        <TouchableOpacity onPress={() => router.navigate("SignUp/SignUp")}>
           <Text style={styles.subTitle}>
             Ainda não possui conta ? Registre-se
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
+        <View style={styles.loginContainer}>
+          <Text style={styles.title}>Você não está logado!</Text>
+
+          <Image
+            source={require("assets/Mobile-login-amico.png")}
+            style={{
+              width: 210,
+              height: 210,
+              alignSelf: "center",
+            }}
+          />
+          <Button
+            text={"Entrar"}
+            onPress={() => router.navigate("Login/Login")}
+          />
+          <TouchableOpacity onPress={() => router.navigate("SignUp/SignUp")}>
+            <Text
+              style={{
+                color: theme.primary,
+                marginTop: 10,
+                fontFamily: "Montserrat_600SemiBold",
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              Cadastre-se
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -141,15 +171,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
   },
-  title: {
-    fontSize: 20,
-    marginBottom: 4,
-    fontFamily: "Montserrat_600SemiBold",
-    color: theme.primary,
+  loginContainer: {
+    width: "90%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 5,
   },
-  subTitle: {
-    fontSize: 17,
+  title: {
     fontFamily: "Montserrat_600SemiBold",
+    fontSize: 20,
+    textAlign: "center",
   },
 });
 

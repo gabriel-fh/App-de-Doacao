@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { theme } from "@/Theme/theme";
+import { router } from "expo-router";
 
 type DonationCardProps = {
   title: string;
@@ -64,7 +65,7 @@ const DonationCard = ({
           marginVertical: 8,
         }}
       /> */}
-      <View>
+      {/* <View>
         <TouchableOpacity
           style={{
             padding: 8,
@@ -75,6 +76,7 @@ const DonationCard = ({
             width: "35%",
             marginTop: 12,
           }}
+          onPress={() => router.navigate("DonationDetails/DonationDetails")}
         >
           <Text
             style={{
@@ -85,7 +87,7 @@ const DonationCard = ({
             Ver detalhes
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
