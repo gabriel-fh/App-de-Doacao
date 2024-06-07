@@ -1,5 +1,4 @@
 import { Data, UserRegister } from "@/@types/app";
-import { QueryKeys } from "@/setup/QueryKeys";
 import api from "@/setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -12,6 +11,13 @@ type PostData = {
 const postData = async (postData: PostData) => {
   const response = await api.post(`/login`, postData);
 
+  console.log(response.data);
+
+  return response.data;
+};
+
+const postRegister = async (data: UserRegister) => {
+  const response = await api.post("/donators", data);
   return response.data;
 };
 
@@ -27,7 +33,7 @@ export function useMutateUser() {
   return {
     mutate: async (data: PostData): Promise<Data> => {
       const result = await mutateAsync(data);
-
+      console.log(result);
       return result;
     },
   };
