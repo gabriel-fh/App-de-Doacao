@@ -15,12 +15,17 @@ import FormHeader from "@/components/FormHeader";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/contexts/Auth";
+import Toast from "react-native-toast-message";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, insira um e-mail válido"),
+  password: z.string(),
 });
 
 const Login = () => {
+  const authContext = useAuth();
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -29,8 +34,15 @@ const Login = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const response = await authContext.signIn(data);
+    if(response) {
+      Toast.show({
+        type: "success",
+        text1: "Login efetuado com sucesso!",
+      });
+      router.navigate("/")
+    }
   };
 
   return (

@@ -1,22 +1,8 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import React, { useRef, useState } from "react";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Foundation from "react-native-vector-icons/Foundation";
-import ProgressBar from "@/components/ProgressBar";
-import IconText from "@/components/IconText";
-import ProgressBarTitle from "@/components/ProgressBarTitle";
+import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
+import React from "react";
 import CloseModalButton from "@/components/CloseModalButton";
-import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
 
 const NewsModal = () => {
@@ -32,15 +18,17 @@ const NewsModal = () => {
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar hidden />
 
       <CloseModalButton />
+      
       <ScrollView style={styles.container}>
-        <Image
-          source={{ uri: newsInfo.banner }}
-          style={styles.image}
-          resizeMode="cover"
-        />
+        {newsInfo.banners && (
+          <Image
+            source={{ uri: newsInfo.banners[0] }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        )}
         <View style={{ ...styles.container, ...styles.wrapper }}>
           <View>
             <Text style={styles.title}>{newsInfo.title}</Text>

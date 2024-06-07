@@ -1,12 +1,16 @@
 import { View, Text } from "react-native";
 import React from "react";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { theme } from "@/Theme/theme";
 
 const IconText = ({
   text,
   children,
+  arrow,
 }: {
   text: string;
   children: React.ReactNode;
+  arrow?: boolean;
 }) => {
   return (
     <View
@@ -17,12 +21,12 @@ const IconText = ({
       }}
     >
       <View style={{ minWidth: 30, alignItems: "center" }}>{children}</View>
-      <Text
-        style={{ width: "80%", fontFamily: "Montserrat_500Medium"}}
-        numberOfLines={2}
-      >
+      <Text style={{ fontFamily: "Montserrat_500Medium" }} numberOfLines={2}>
         {text}
       </Text>
+      {arrow && (
+        <AntDesign name={"arrowright"} size={20} color={theme.primary} />
+      )}
     </View>
   );
 };
