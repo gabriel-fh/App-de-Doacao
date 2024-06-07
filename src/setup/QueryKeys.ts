@@ -8,4 +8,5 @@ export enum QueryKeys {
     InstitutionById = 'institution-by',
     Items = 'list-items',
     UserData = 'user-data',
+    UserDonations = 'user-donations',
 }
