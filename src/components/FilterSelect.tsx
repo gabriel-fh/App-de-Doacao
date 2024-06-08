@@ -59,7 +59,7 @@ const FilterSelect = ({
           style={{
             backgroundColor: "white",
             width: "90%",
-            height: "50%",
+            // height: "50%",
             borderRadius: 10,
             // padding: 10,
           }}
