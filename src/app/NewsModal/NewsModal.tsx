@@ -1,9 +1,19 @@
-import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+} from "react-native";
 import React from "react";
 import CloseModalButton from "@/components/CloseModalButton";
 import { StatusBar } from "expo-status-bar";
 import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
+import { theme } from "@/Theme/theme";
 
 const NewsModal = () => {
   const { newsId } = useLocalSearchParams();
@@ -13,24 +23,46 @@ const NewsModal = () => {
   );
 
   if (isLoading) {
-    return <Text>Carregando...</Text>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator
+          size={"large"}
+          color={theme.primary}
+        ></ActivityIndicator>
+      </View>
+    );
   }
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-
       <CloseModalButton />
-      
+
       <ScrollView style={styles.container}>
-        {newsInfo.banners && (
-          <Image
-            source={{ uri: newsInfo.banners[0] }}
-            style={styles.image}
-            resizeMode="cover"
+        {newsInfo.banners.length > 0 && (
+          <FlatList
+            data={newsInfo.banners}
+            horizontal
+            keyExtractor={(item) => item}
+            pagingEnabled
+            renderItem={({ item }) => (
+              <Image
+                source={{ uri: item }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            )}
           />
         )}
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <View>
+          <View style={{
+            gap: 12,
+          }}>
             <Text style={styles.title}>{newsInfo.title}</Text>
             <Text style={styles.subtitle}>{newsInfo.subtitle}</Text>
             <Text style={{ ...styles.description }}>
@@ -42,6 +74,7 @@ const NewsModal = () => {
     </View>
   );
 };
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -50,7 +83,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 200,
-    width: "100%",
+    width: width,
   },
   wrapper: {
     paddingHorizontal: 12,
@@ -62,7 +95,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_600SemiBold",
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     marginTop: 4,
     fontFamily: "Montserrat_600SemiBold",
   },
@@ -77,6 +110,7 @@ const styles = StyleSheet.create({
     color: "#595959",
     fontFamily: "Montserrat_500Medium",
     marginVertical: 5,
+    textAlign: "justify",
   },
   userContainer: {
     flexDirection: "row",

@@ -11,7 +11,6 @@ import NewsCard from "@/components/NewsCard";
 import { useFetchNews } from "@/hooks/News/useFetchNews";
 import CampaignCarousel from "@/components/CampaignCarousel";
 import { theme } from "@/Theme/theme";
-import { showMessage } from "react-native-flash-message";
 
 const index = () => {
   const { data: news, isLoading: isLoadingNews } = useFetchNews();
@@ -25,30 +24,6 @@ const index = () => {
       }}
     >
       <CampaignCarousel />
-
-      <TouchableOpacity
-        onPress={() => {
-          showMessage({
-            message: "Conectado com sucesso!",
-            type: "none",
-            style: {
-              backgroundColor: "#13a709",
-              height: 60,
-              marginTop: 20,
-            },
-            floating: true,
-            titleStyle: {
-              color: "white",
-              fontSize: 18,
-              fontFamily: "Montserrat_600SemiBold",
-              marginTop: 7,
-              textAlign: "center",
-            },
-          });
-        }}
-      >
-        <Text>vasco</Text>
-      </TouchableOpacity>
 
       {news && news?.length > 0 && (
         <View style={{ gap: 10 }}>

@@ -1,4 +1,5 @@
 import { theme } from "@/Theme/theme";
+import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
 import LoadingFullScreen from "@/components/LoadingFullScreen";
@@ -24,58 +25,73 @@ const Institution = () => {
 
   return (
     <View style={{ position: "relative", flex: 1 }}>
-      {institutionInfo.banner && (
-        <Image
-          source={{ uri: institutionInfo.banner }}
-          style={styles.banner}
-          resizeMode="cover"
-        />
-      )}
-
       <CloseModalButton />
-      
+
       <ScrollView style={styles.container}>
-        <View style={{ ...styles.container, ...styles.wrapper }}>
-          <LinearGradient
-            colors={[theme.acaoUni.blue, theme.acaoUni.red]}
-            style={styles.imageBorder}
-          >
-            <Image
-              source={{ uri: institutionInfo.avatar }}
-              style={styles.image}
-            />
-          </LinearGradient>
-
-          <Text
-            style={styles.title}
-            children={"Ação Comunitária - Unilasalle RJ"}
+        {institutionInfo.banner && (
+          <Image
+            source={{ uri: institutionInfo.banner }}
+            style={styles.banner}
+            resizeMode="cover"
           />
+        )}
+        <View style={{ ...styles.container, ...styles.wrapper }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 15,
+            }}
+          >
+            <LinearGradient
+              colors={[theme.acaoUni.blue, theme.acaoUni.red]}
+              style={styles.imageBorder}
+            >
+              <Image
+                source={{ uri: institutionInfo.avatar }}
+                style={styles.image}
+              />
+            </LinearGradient>
 
-          <View style={{ gap: 12 }}>
-            <IconText text={"Niterói, Rio de Janeiro"}>
+            <Text
+              style={styles.title}
+              children={"Ação Comunitária - Unilasalle RJ"}
+              numberOfLines={2}
+            />
+          </View>
+
+          <View style={{ gap: 12, marginVertical: 10 }}>
+            <IconText
+              text={
+                institutionInfo.address?.street +
+                " - " +
+                institutionInfo.address?.city
+              }
+            >
               <Entypo name={"location"} size={20} color={"#0D62AD"} />
             </IconText>
 
-            <IconText text="(21) 99999-9999">
+            <IconText
+              text={institutionInfo.phone
+                .replace("+55", "")
+                .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
+            >
               <Foundation name={"telephone"} size={22} color={"#0D62AD"} />
             </IconText>
           </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
-              Lorem Ipsum simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make.
+              {institutionInfo.description}
             </Text>
           </View>
           <View>
             <Text style={styles.subtitle}>Campanhas Ativas</Text>
-            {/* <View style={{ marginTop: 10 }}>
-              {Array.from({ length: 3 }).map((_, idx) => (
-                <CampaignCard key={idx} />
+            <View style={{ marginTop: 10 }}>
+              {institutionInfo.campaigns.map((item, idx) => (
+                <CampaignCard key={idx} campaign={item} />
               ))}
-            </View> */}
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -97,8 +113,8 @@ const styles = StyleSheet.create({
     borderRadius: 10000,
   },
   imageBorder: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     borderRadius: 10000,
     justifyContent: "center",
     alignItems: "center",
@@ -113,6 +129,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: "Montserrat_600SemiBold",
+    flex: 1,
   },
   subtitle: {
     fontSize: 18,
@@ -123,6 +140,8 @@ const styles = StyleSheet.create({
     color: "#595959",
     fontFamily: "Montserrat_500Medium",
     marginVertical: 5,
+    textAlign: "justify",
+    marginTop: 10,
   },
 });
 

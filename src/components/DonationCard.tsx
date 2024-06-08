@@ -20,7 +20,7 @@ const DonationCard = ({
 }: DonationCardProps) => {
   const donationStatus = {
     agended: "agendada",
-    completed: "completa",
+    concluded: "completa",
   };
   return (
     <View style={[styles.container, styles.shadow]}>
@@ -32,7 +32,7 @@ const DonationCard = ({
           width: "100%",
         }}
       >
-        <Image source={{ uri: image }} style={styles.img} resizeMode="center" />
+        <Image source={{ uri: image }} style={styles.img} resizeMode="cover" />
         <View style={{ gap: 8 }}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description} numberOfLines={1}>

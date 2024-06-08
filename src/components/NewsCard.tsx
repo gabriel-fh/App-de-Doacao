@@ -32,7 +32,7 @@ const NewsCard = ({ news }: { news: News }) => {
         <Text style={styles.title}>{news.title}</Text>
 
         <Text style={styles.description} numberOfLines={4}>
-          {news.description}
+          {news.subtitle}
         </Text>
       </View>
     </TouchableOpacity>

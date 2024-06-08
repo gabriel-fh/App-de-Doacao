@@ -24,7 +24,7 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: authData, isLoading } = useFetchUser();
+  const { data: authData, isLoading, invalidateRefresh } = useFetchUser();
   const { mutate: mutateUser } = useMutateUser();
   const { mutate: mutateRegisterUser } = useMutateRegisterUser();
   const queryClient = useQueryClient();
@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         "@app-doacao:AuthToken",
         JSON.stringify({ token })
       );
+
+      invalidateRefresh();
 
       return true;
     } catch (err) {
@@ -51,6 +53,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       queryClient.refetchQueries({
         queryKey: [QueryKeys.UserData],
       });
+
+      invalidateRefresh();
 
       router.navigate("/");
       showMessage({
@@ -83,6 +87,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         "@app-doacao:AuthToken",
         JSON.stringify({ token })
       );
+
+      invalidateRefresh();
+
       return true;
     } catch (err) {
       console.error(err?.response?.data);
