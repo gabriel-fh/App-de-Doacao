@@ -22,6 +22,7 @@ import PopUp from "@/components/PopUp";
 import Picker from "@/components/Picker";
 import { CampaignById, ItemById } from "@/@types/app";
 import { useMutateDonation } from "@/hooks/Donation/useMutateDonation";
+import { showMessage } from "react-native-flash-message";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -134,8 +135,27 @@ const Donation = () => {
         return { id, quantity };
       });
       const response = await sendDonation(sendItems);
-      
-      router.navigate("/");
+
+      if (response) {
+        router.navigate("/");
+        showMessage({
+          message: "Doação realizada com sucesso!",
+          type: "none",
+          style: {
+            backgroundColor: "#13a709",
+            height: 60,
+            marginTop: 20,
+          },
+          floating: true,
+          titleStyle: {
+            color: "white",
+            fontSize: 18,
+            fontFamily: "Montserrat_600SemiBold",
+            marginTop: 7,
+            textAlign: "center",
+          },
+        });
+      }
 
       console.log("Donation response: " + response);
     }

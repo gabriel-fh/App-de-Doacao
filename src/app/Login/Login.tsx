@@ -16,7 +16,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/contexts/Auth";
-import Toast from "react-native-toast-message";
+import { showMessage } from "react-native-flash-message";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, insira um e-mail válido"),
@@ -36,12 +36,25 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const response = await authContext.signIn(data);
-    if(response) {
-      Toast.show({
-        type: "success",
-        text1: "Login efetuado com sucesso!",
+    if (response) {
+      router.navigate("/");
+      showMessage({
+        message: "Conectado com sucesso!",
+        type: "none",
+        style: {
+          backgroundColor: "#13a709",
+          height: 60,
+          marginTop: 20,
+        },
+        floating: true,
+        titleStyle: {
+          color: "white",
+          fontSize: 18,
+          fontFamily: "Montserrat_600SemiBold",
+          marginTop: 7,
+          textAlign: "center",
+        },
       });
-      router.navigate("/")
     }
   };
 
