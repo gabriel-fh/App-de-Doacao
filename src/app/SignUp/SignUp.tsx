@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/contexts/Auth";
 import { UserRegister } from "@/@types/app";
 import { router } from "expo-router";
+import { showMessage } from "react-native-flash-message";
 
 const formSchema = z.object({
   name: z
@@ -51,6 +52,23 @@ const SignUp = () => {
 
     if (response) {
       router.navigate("/");
+      showMessage({
+        message: "Conta criada com sucesso!",
+        type: "none",
+        style: {
+          backgroundColor: "#13a709",
+          height: 60,
+          marginTop: 20,
+        },
+        floating: true,
+        titleStyle: {
+          color: "white",
+          fontSize: 18,
+          fontFamily: "Montserrat_600SemiBold",
+          marginTop: 7,
+          textAlign: "center",
+        },
+      });
     }
   };
 

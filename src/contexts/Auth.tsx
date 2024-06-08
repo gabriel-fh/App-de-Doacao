@@ -7,8 +7,9 @@ import {
 import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "@tanstack/react-query";
+import { router } from "expo-router";
 import { createContext, useContext } from "react";
-import Toast from "react-native-toast-message";
+import { showMessage } from "react-native-flash-message";
 
 interface AuthContextData {
   authData?: User;
@@ -37,7 +38,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         JSON.stringify({ token })
       );
 
-
       return true;
     } catch (err) {
       console.error(err?.response?.data);
@@ -49,7 +49,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await AsyncStorage.removeItem("@app-doacao:AuthToken");
       queryClient.refetchQueries({
-        queryKey: [QueryKeys.UserData]
+        queryKey: [QueryKeys.UserData],
+      });
+
+      router.navigate("/");
+      showMessage({
+        message: "Desconectado com sucesso!",
+        type: "none",
+        style: {
+          backgroundColor: "#b50606",
+          height: 60,
+          marginTop: 20,
+        },
+        floating: true,
+        titleStyle: {
+          color: "white",
+          fontSize: 18,
+          fontFamily: "Montserrat_600SemiBold",
+          marginTop: 7,
+          textAlign: "center",
+        },
       });
     } catch (err) {
       console.error(err);

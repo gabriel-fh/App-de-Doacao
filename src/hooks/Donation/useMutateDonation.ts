@@ -3,7 +3,7 @@ import { QueryKeys } from "@/setup/QueryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type PostData = {
-  campaign_id: 1;
+  campaign_id: number;
   donation_time: string;
   items: [
     {
@@ -20,21 +20,20 @@ const postData = async (postData: PostData) => {
 };
 
 
-// export function useMutateUser() {
-//     const queryClient = useQueryClient();
-//     const { mutateAsync } = useMutation<Data, unknown, PostData>({
-//       mutationFn: postData,
-//       onSuccess: () => {
-//         queryClient.invalidateQueries({ queryKey: [QueryKeys.UserData] });
-//       },
-//     });
+export function useMutateDonation() {
+    const queryClient = useQueryClient();
+    const { mutateAsync } = useMutation<void, unknown, PostData>({
+      mutationFn: postData,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.UserDonations] });
+      },
+    });
   
-//     return {
-//       mutate: async (data: PostData): Promise<Data> => {
-//         const result = await mutateAsync(data);
-//         console.log(result);
-//         return result;
-//       },
-//     };
-//   }
+    return {
+      mutate: async (data: PostData): Promise<void> => {
+        await mutateAsync(data);
+        return;
+      },
+    };
+  }
   

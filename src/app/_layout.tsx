@@ -16,8 +16,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { theme } from "@/Theme/theme";
-import Toast from "react-native-toast-message";
 import { AuthProvider } from "@/contexts/Auth";
+import FlashMessage from "react-native-flash-message";
 
 const RootLayoutNav = () => {
   const [fontsLoaded] = useFonts({
@@ -48,7 +48,7 @@ const RootLayoutNav = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <Toast />
+          <FlashMessage position="top" />
           <StatusBar style="light" />
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -73,6 +73,10 @@ const RootLayoutNav = () => {
               options={{
                 presentation: "modal",
                 headerTitle: "Quero Doar",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
               }}
             />
             <Stack.Screen
@@ -97,6 +101,16 @@ const RootLayoutNav = () => {
               name="SignUp/SignUp"
               options={{
                 title: "Cadastre-se",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="MyDonations/MyDonations"
+              options={{
+                title: "Minhas Doações",
                 headerStyle: { backgroundColor: theme.primary },
                 headerTitleStyle: { color: "#fff" },
                 headerTitleAlign: "center",
