@@ -5,8 +5,9 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Foundation from "react-native-vector-icons/Foundation";
@@ -16,29 +17,35 @@ import ProgressBarTitle from "@/components/ProgressBarTitle";
 import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
 import { StatusBar } from "expo-status-bar";
-import PopUp from "@/components/PopUp";
 import { router, useLocalSearchParams } from "expo-router";
-import DonateDetails from "@/components/DonateDetails";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
+import { useAuth } from "@/contexts/Auth";
+import { theme } from "@/Theme/theme";
 
 const CampaignModal = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
   const { campaignId } = useLocalSearchParams();
+  const authContext = useAuth();
 
   const { data: campaignInfo, isLoading } = useFetchCampaignById(
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
 
   if (isLoading) {
-    return <Text>Carregando...</Text>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
   }
-
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar hidden />
-
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image
@@ -47,9 +54,18 @@ const CampaignModal = () => {
           resizeMode="cover"
         />
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <View>
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+          }}>
+            <Image
+              source={{ uri: campaignInfo.avatar }}
+              style={styles.avatar}
+              resizeMode="contain"
+            />
             <Text style={styles.title}>{campaignInfo.name}</Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.userContainer}
               onPress={() => router.navigate("Institution/Institution")}
             >
@@ -59,7 +75,7 @@ const CampaignModal = () => {
                 resizeMode="contain"
               />
               <Text style={styles.username}>{campaignInfo.name}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View style={{ gap: 4 }}>
@@ -122,28 +138,47 @@ const CampaignModal = () => {
               <IconText text="07:00 - 16:30">
                 <AntDesign name="clockcircle" size={20} color="#0D62AD" />
               </IconText>
+
               <IconText text="(21) 99999-9999">
                 <Foundation name="telephone" size={28} color="#0D62AD" />
               </IconText>
-              <IconText
-                text={`${campaignInfo.addressess[0].street} - ${campaignInfo.addressess[0].city}`}
-              >
-                <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
-              </IconText>
+
+              <View>
+                <IconText text="Endereços de entrega" arrow>
+                  <MaterialIcons
+                    name="location-pin"
+                    size={30}
+                    color="#0D62AD"
+                  />
+                </IconText>
+                <View style={{ paddingLeft: 8 }}>
+                  {campaignInfo.addressess.map((item) => {
+                    return (
+                      <Text style={styles.addressess} key={item.id}>
+                        {item.street} - {item.city}
+                      </Text>
+                    );
+                  })}
+                </View>
+              </View>
             </View>
           </View>
         </View>
       </ScrollView>
       <FloatButton
         text="Doar Agora"
-        onPress={() =>
-          router.navigate({
-            pathname: "Donation/Donation",
-            params: {
-              campaignInfo: JSON.stringify(campaignInfo),
-            },
-          })
-        }
+        onPress={() => {
+          if (authContext.authData) {
+            router.navigate({
+              pathname: "Donation/Donation",
+              params: {
+                campaignInfo: JSON.stringify(campaignInfo),
+              },
+            });
+          } else {
+            router.navigate("Login/Login");
+          }
+        }}
       />
     </View>
   );
@@ -183,6 +218,8 @@ const styles = StyleSheet.create({
     color: "#595959",
     fontFamily: "Montserrat_500Medium",
     marginVertical: 5,
+    textAlign: "justify",
+    marginTop: 10,
   },
   userContainer: {
     flexDirection: "row",
@@ -191,8 +228,8 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   avatar: {
-    height: 22,
-    width: 22,
+    height: 40,
+    width: 40,
     borderRadius: 50,
     borderWidth: 1,
     borderColor: "#0D62AD",
@@ -200,6 +237,11 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 14,
     fontFamily: "Montserrat_600SemiBold",
+  },
+  addressess: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: 14,
+    color: "#595959",
   },
 });
 

@@ -3,7 +3,6 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
@@ -19,28 +18,22 @@ const NewsCard = ({ news }: { news: News }) => {
       },
     });
   };
+  
   return (
     <TouchableOpacity onPress={handlePress}>
       <View style={[styles.container, styles.shadow]}>
-        <Image
-          source={{ uri: news.banner }}
-          style={styles.image}
-          resizeMode="cover"
-        />
+        {news.banners && (
+          <Image
+            source={{ uri: news.banners[0] }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        )}
         <Text style={styles.title}>{news.title}</Text>
 
         <Text style={styles.description} numberOfLines={4}>
-          {news.description}
+          {news.subtitle}
         </Text>
-
-        {/* <View style={styles.userContainer}>
-        <Image
-        source={{ uri: "https://picsum.photos/20" }}
-        style={styles.avatar}
-        resizeMode="contain"
-        />
-        <Text style={styles.username}>acao.comunitaria.unilasalle</Text>
-      </View> */}
       </View>
     </TouchableOpacity>
   );

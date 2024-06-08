@@ -1,27 +1,61 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { ItemById } from "@/@types/app";
 
-const AddDecrease = ({handleRemoveItem}: {handleRemoveItem: () => void}) => {
-  const [count, setCount] = useState(1);
+const AddDecrease = ({
+  handleRemoveItem,
+  setDonationItems,
+  currentItem,
+}: {
+  handleRemoveItem: () => void;
+  setDonationItems: Dispatch<SetStateAction<ItemById[]>>;
+  currentItem: ItemById;
+}) => {
+
+
+  const addItem = () => {
+    setDonationItems((prev) =>
+      prev.map((item) => {
+        if (item.id === currentItem.id) {
+          return { ...item, quantity: item?.quantity + 1 };
+        } else {
+          return item;
+        }
+      })
+    );
+  };
+
+  const removeItem = () => {
+    setDonationItems((prev) =>
+      prev.map((item) => {
+        if (item.id === currentItem.id) {
+          return { ...item, quantity: item?.quantity - 1 };
+        } else {
+          return item;
+        }
+      })
+    );
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        disabled={count === 0}
+        disabled={currentItem?.quantity === 0}
         onPress={
-          count > 1
+          currentItem?.quantity > 1
             ? () => {
-              setCount((prev) => prev - 1);}
+                removeItem();
+              }
             : handleRemoveItem
         }
       >
         <FontAwesome name="minus" color={"#0D62AD"} size={17} />
       </TouchableOpacity>
-      <Text style={{ fontSize: 17, fontFamily: 'Montserrat_500Medium' }}>
-        {count}
+      <Text style={{ fontSize: 17, fontFamily: "Montserrat_500Medium" }}>
+        {currentItem?.quantity}
       </Text>
-      <TouchableOpacity onPress={() => setCount((prev) => prev + 1)}>
+      <TouchableOpacity onPress={() => addItem()}>
         <FontAwesome name="plus" color={"#0D62AD"} size={17} />
       </TouchableOpacity>
     </View>

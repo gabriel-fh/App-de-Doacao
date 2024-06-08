@@ -1,7 +1,10 @@
+import { theme } from "@/Theme/theme";
+import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
 import LoadingFullScreen from "@/components/LoadingFullScreen";
 import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -22,46 +25,73 @@ const Institution = () => {
 
   return (
     <View style={{ position: "relative", flex: 1 }}>
-      <StatusBar hidden />
-
       <CloseModalButton />
+
       <ScrollView style={styles.container}>
-        <View style={{ ...styles.container, ...styles.wrapper }}>
+        {institutionInfo.banner && (
           <Image
-            source={{ uri: institutionInfo.avatar }}
-            style={styles.image}
+            source={{ uri: institutionInfo.banner }}
+            style={styles.banner}
             resizeMode="cover"
           />
-          <Text
-            style={styles.title}
-            children={"Ação Comunitária - Unilasalle RJ"}
-          />
+        )}
+        <View style={{ ...styles.container, ...styles.wrapper }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 15,
+            }}
+          >
+            <LinearGradient
+              colors={[theme.acaoUni.blue, theme.acaoUni.red]}
+              style={styles.imageBorder}
+            >
+              <Image
+                source={{ uri: institutionInfo.avatar }}
+                style={styles.image}
+              />
+            </LinearGradient>
 
-          <View style={{ gap: 12 }}>
-            <IconText text={"Niterói, Rio de Janeiro"}>
+            <Text
+              style={styles.title}
+              children={"Ação Comunitária - Unilasalle RJ"}
+              numberOfLines={2}
+            />
+          </View>
+
+          <View style={{ gap: 12, marginVertical: 10 }}>
+            <IconText
+              text={
+                institutionInfo.address?.street +
+                " - " +
+                institutionInfo.address?.city
+              }
+            >
               <Entypo name={"location"} size={20} color={"#0D62AD"} />
             </IconText>
 
-            <IconText text="(21) 99999-9999">
+            <IconText
+              text={institutionInfo.phone
+                .replace("+55", "")
+                .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
+            >
               <Foundation name={"telephone"} size={22} color={"#0D62AD"} />
             </IconText>
           </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
-              Lorem Ipsum simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make.
+              {institutionInfo.description}
             </Text>
           </View>
           <View>
             <Text style={styles.subtitle}>Campanhas Ativas</Text>
-            {/* <View style={{ marginTop: 10 }}>
-              {Array.from({ length: 3 }).map((_, idx) => (
-                <CampaignCard key={idx} />
+            <View style={{ marginTop: 10 }}>
+              {institutionInfo.campaigns.map((item, idx) => (
+                <CampaignCard key={idx} campaign={item} />
               ))}
-            </View> */}
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -73,9 +103,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  banner: {
+    height: 200,
+    width: "100%",
+  },
   image: {
-    height: 80,
-    width: 80,
+    width: "100%",
+    height: "100%",
+    borderRadius: 10000,
+  },
+  imageBorder: {
+    width: 60,
+    height: 60,
+    borderRadius: 10000,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 4,
+    overflow: "hidden",
   },
   wrapper: {
     paddingHorizontal: 12,
@@ -85,6 +129,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: "Montserrat_600SemiBold",
+    flex: 1,
   },
   subtitle: {
     fontSize: 18,
@@ -95,6 +140,8 @@ const styles = StyleSheet.create({
     color: "#595959",
     fontFamily: "Montserrat_500Medium",
     marginVertical: 5,
+    textAlign: "justify",
+    marginTop: 10,
   },
 });
 

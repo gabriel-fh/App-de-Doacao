@@ -1,15 +1,18 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
-import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
+import React from "react";
 import NewsCard from "@/components/NewsCard";
-import CampaignCard from "@/components/CampaignCard";
-import api from "@/setup/api";
-import { useFetchCampaign } from "@/hooks/Campaign/useFetchCampaign";
 import { useFetchNews } from "@/hooks/News/useFetchNews";
-// import Carousel from "react-native-reanimated-carousel";
+import CampaignCarousel from "@/components/CampaignCarousel";
+import { theme } from "@/Theme/theme";
 
 const index = () => {
-  const { data: campaigns, isLoading: isLoadingCampaign } = useFetchCampaign();
-
   const { data: news, isLoading: isLoadingNews } = useFetchNews();
 
   return (
@@ -20,25 +23,20 @@ const index = () => {
         paddingVertical: 20,
       }}
     >
-      <View style={{ gap: 10 }}>
-        <Text style={styles.title} children="Campanhas" />
-        {isLoadingCampaign ? (
-          <Text>Loading...</Text>
-        ) : (
-          campaigns.map((item) => (
-            <CampaignCard key={item.id} campaign={item} />
-          ))
-        )}
-      </View>
+      <CampaignCarousel />
 
-      <View style={{ gap: 10 }}>
-        <Text style={styles.title} children="Notícias" />
-        {isLoadingNews ? (
-          <Text>Loading...</Text>
-        ) : (
-          news.map((item) => <NewsCard key={item.id} news={item} />)
-        )}
-      </View>
+      {news && news?.length > 0 && (
+        <View style={{ gap: 10 }}>
+          <Text style={styles.title} children="Notícias" />
+          {isLoadingNews ? (
+            <View style={{ marginTop: 20 }}>
+              <ActivityIndicator size="large" color={theme.primary} />
+            </View>
+          ) : (
+            news.map((item) => <NewsCard key={item.id} news={item} />)
+          )}
+        </View>
+      )}
     </ScrollView>
   );
 };

@@ -3,12 +3,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { Children } from "react";
+import React from "react";
 import { Modal } from "react-native";
 import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
-import DonateDetails from "./DonateDetails";
 
 
 const PopUp = ({
