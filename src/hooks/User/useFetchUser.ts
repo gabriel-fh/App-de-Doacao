@@ -10,9 +10,9 @@ const fetchData = async (): Promise<User> => {
   if (!storagedData) {
     return null;
   }
-  
+
   const response = await authedApi.get(`/donator`);
-  
+
   return response.data;
 };
 
@@ -26,5 +26,9 @@ export function useFetchUser() {
     refetchOnMount: true,
   });
 
-  return query;
+  const invalidateRefresh = () => {
+    query.refetch();
+  };
+
+  return { ...query, invalidateRefresh };
 }

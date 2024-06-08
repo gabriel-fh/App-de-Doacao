@@ -1,20 +1,32 @@
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import { useFetchDonation } from "@/hooks/Donation/useFetchDonation";
 import DonationCard from "@/components/DonationCard";
 import Button from "@/components/Button";
 import { router } from "expo-router";
+import { theme } from "@/Theme/theme";
 
 const MyDonations = () => {
   const { data: donations, isLoading } = useFetchDonation();
 
+  // const a = donations.map((donation) => donation.campaign.name);
+
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={donations?.length < 0 && styles.center}
+      contentContainerStyle={
+        (donations?.length < 0 || isLoading) && styles.center
+      }
     >
       {isLoading ? (
-        <Text>Carregando...</Text>
+        <ActivityIndicator size="large" color={theme.primary} />
       ) : donations?.length > 0 ? (
         <View style={{ gap: 10, flex: 1 }}>
           {donations.map((donation) => (
@@ -48,7 +60,10 @@ const MyDonations = () => {
                 alignSelf: "center",
               }}
             />
-            <Button text="Doar agora" onPress={() => router.navigate("Campaign/Campaign")}/>
+            <Button
+              text="Doar agora"
+              onPress={() => router.navigate("Campaign/Campaign")}
+            />
           </View>
         </View>
       )}

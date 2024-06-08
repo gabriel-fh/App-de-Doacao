@@ -22,7 +22,7 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
       <Image
         source={{ uri: campaign.avatar }}
         style={styles.img}
-        resizeMode="center"
+        resizeMode="cover"
       />
       <View style={styles.info}>
         <Text numberOfLines={1} style={styles.title}>

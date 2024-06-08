@@ -165,16 +165,27 @@ const Donation = () => {
     <View style={{ position: "relative", flex: 1 }}>
       <ScrollView style={{ backgroundColor: "#fff" }}>
         <View style={styles.container}>
-          <View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <Image
+              source={{ uri: parsedCampaignInfo.avatar }}
+              style={styles.avatar}
+              resizeMode="contain"
+            />
             <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
-            <View style={styles.userContainer}>
+            {/* <View style={styles.userContainer}>
               <Image
                 source={{ uri: parsedCampaignInfo.avatar }}
                 style={styles.avatar}
                 resizeMode="contain"
               />
               <Text style={styles.username}>{parsedCampaignInfo.name}</Text>
-            </View>
+            </View> */}
           </View>
           <View style={{ gap: 25 }}>
             <View style={{ gap: 10 }}>
@@ -329,8 +340,18 @@ const Donation = () => {
                 onPress={() => console.log}
               />
             </View>
-            <View style={{ paddingBottom: 70 }}>
-              <IconText text="R. Gastão Gonçalves, 79 - Santa Rosa, Niterói - RJ, 24240-030">
+            <View style={{ paddingBottom: 70, width: 300 }}>
+              <IconText
+                text={
+                  parsedCampaignInfo.addressess[0]?.street +
+                  ", " +
+                  parsedCampaignInfo.addressess[0]?.city +
+                  ", " +
+                  parsedCampaignInfo.addressess[0]?.state +
+                  " - " +
+                  parsedCampaignInfo.addressess[0]?.zipcode
+                }
+              >
                 <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
               </IconText>
             </View>
@@ -383,8 +404,8 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   avatar: {
-    height: 22,
-    width: 22,
+    height: 40,
+    width: 40,
     borderRadius: 50,
     borderWidth: 1,
     borderColor: "#0D62AD",

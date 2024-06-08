@@ -10,9 +10,6 @@ type PostData = {
 
 const postData = async (postData: PostData) => {
   const response = await api.post(`/login`, postData);
-
-  console.log(response.data);
-
   return response.data;
 };
 
@@ -33,7 +30,6 @@ export function useMutateUser() {
   return {
     mutate: async (data: PostData): Promise<Data> => {
       const result = await mutateAsync(data);
-      console.log(result);
       return result;
     },
   };
@@ -51,7 +47,6 @@ export const useMutateRegisterUser = () => {
   return {
     mutate: async (data: UserRegister): Promise<Data> => {
       const result = await mutateAsync(data);
-      console.log(result);
       return result;
     },
   };

@@ -71,7 +71,7 @@ const Campaign = () => {
           <FilterSelect donationItems={donationItems} selectItem={selectItem} />
         </View>
 
-        <View style={{ gap: 10, flex: 1 }}>
+        <View style={{ gap: 10, flex: 1, height: isLoading && 500 }}>
           {isLoading ? (
             <View
               style={{

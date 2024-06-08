@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -19,6 +20,7 @@ import { StatusBar } from "expo-status-bar";
 import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
+import { theme } from "@/Theme/theme";
 
 const CampaignModal = () => {
   const { campaignId } = useLocalSearchParams();
@@ -29,7 +31,17 @@ const CampaignModal = () => {
   );
 
   if (isLoading) {
-    return <Text>Carregando...</Text>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
   }
 
   return (
@@ -42,9 +54,18 @@ const CampaignModal = () => {
           resizeMode="cover"
         />
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <View>
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+          }}>
+            <Image
+              source={{ uri: campaignInfo.avatar }}
+              style={styles.avatar}
+              resizeMode="contain"
+            />
             <Text style={styles.title}>{campaignInfo.name}</Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.userContainer}
               onPress={() => router.navigate("Institution/Institution")}
             >
@@ -54,7 +75,7 @@ const CampaignModal = () => {
                 resizeMode="contain"
               />
               <Text style={styles.username}>{campaignInfo.name}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View style={{ gap: 4 }}>
@@ -197,6 +218,8 @@ const styles = StyleSheet.create({
     color: "#595959",
     fontFamily: "Montserrat_500Medium",
     marginVertical: 5,
+    textAlign: "justify",
+    marginTop: 10,
   },
   userContainer: {
     flexDirection: "row",
@@ -205,8 +228,8 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   avatar: {
-    height: 22,
-    width: 22,
+    height: 40,
+    width: 40,
     borderRadius: 50,
     borderWidth: 1,
     borderColor: "#0D62AD",
