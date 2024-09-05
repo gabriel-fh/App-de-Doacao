@@ -1,3 +1,4 @@
+import { InstitutionById as InstitutionType } from "@/@types/app";
 import { theme } from "@/Theme/theme";
 import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
@@ -13,6 +14,48 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
 
 const Institution = () => {
+
+  const DATA : InstitutionType = {
+    id: 1,
+    name: "Ação Comunitária - Unilasalle RJ",
+    status: "active",
+    description: "A Ação Comunitária é uma instituição que tem como objetivo ajudar a comunidade local, promovendo ações sociais e campanhas de arrecadação de alimentos e roupas.",
+    phone: "+5521988888888",
+    avatar: "https://picsum.photos/150",
+    banner: "https://picsum.photos/500/210",
+    address: {
+      id: 1,
+      street: "Rua 1",
+      city: "Cidade 1",
+      state: "Estado 1",
+      zipcode: "00000-000",
+      latitude: 0.0,
+      longitude: 0.0,
+    },
+    campaigns: [
+      {
+        id: 1,
+        name: "Campanha 1",
+        description: "Descrição da campanha 1",
+        avatar: "https://picsum.photos/150",
+        donated_items_quantity: 10,
+        donated_items_objective: 100,
+        date: "2021-09-01",
+        banner: "https://picsum.photos/500/210",
+      },
+      {
+        id: 2,
+        name: "Campanha 2",
+        description: "Descrição da campanha 2",
+        avatar: "https://picsum.photos/150",
+        donated_items_quantity: 20,
+        donated_items_objective: 100,
+        date: "2021-05-15",
+        banner: "https://picsum.photos/500/210",
+      },
+    ]
+  }
+
   const { institutionId } = useLocalSearchParams();
 
   const { data: institutionInfo, isLoading } = useFetchInstitutionById(
@@ -28,9 +71,9 @@ const Institution = () => {
       <CloseModalButton />
 
       <ScrollView style={styles.container}>
-        {institutionInfo.banner && (
+        {DATA.banner && (
           <Image
-            source={{ uri: institutionInfo.banner }}
+            source={{ uri: DATA.banner }}
             style={styles.banner}
             resizeMode="cover"
           />
@@ -48,7 +91,7 @@ const Institution = () => {
               style={styles.imageBorder}
             >
               <Image
-                source={{ uri: institutionInfo.avatar }}
+                source={{ uri: DATA.avatar }}
                 style={styles.image}
               />
             </LinearGradient>
@@ -63,16 +106,16 @@ const Institution = () => {
           <View style={{ gap: 12, marginVertical: 10 }}>
             <IconText
               text={
-                institutionInfo.address?.street +
+                DATA.address?.street +
                 " - " +
-                institutionInfo.address?.city
+                DATA.address?.city
               }
             >
               <Entypo name={"location"} size={20} color={"#0D62AD"} />
             </IconText>
 
             <IconText
-              text={institutionInfo.phone
+              text={DATA.phone
                 .replace("+55", "")
                 .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
             >
@@ -82,13 +125,13 @@ const Institution = () => {
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
-              {institutionInfo.description}
+              {DATA.description}
             </Text>
           </View>
           <View>
             <Text style={styles.subtitle}>Campanhas Ativas</Text>
             <View style={{ marginTop: 10 }}>
-              {institutionInfo.campaigns.map((item, idx) => (
+              {DATA.campaigns.map((item, idx) => (
                 <CampaignCard key={idx} campaign={item} />
               ))}
             </View>

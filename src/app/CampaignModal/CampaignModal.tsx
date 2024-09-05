@@ -21,8 +21,51 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
+import { CampaignById } from "@/@types/app";
 
 const CampaignModal = () => {
+  const DATA: CampaignById = {
+    id: 1,
+    name: "Campanha 1",
+    description: "Descrição da campanha 1",
+    avatar: "https://picsum.photos/150",
+    donated_items_quantity: 10,
+    donated_items_objective: 100,
+    date: "2021-09-01",
+    banner: "https://picsum.photos/500/210",
+    necessary_items: [
+      {
+        id: 1,
+        name: "item 1",
+        status: "active",
+        donated_total: 15,
+        quantity_objective: 20,
+        quantity: 5,
+      },
+      {
+        id: 2,
+        name: "item 2",
+        status: "active",
+        donated_total: 10,
+        quantity_objective: 20,
+        quantity: 10,
+      },
+    ],
+    addressess: [
+      {
+        id: 1,
+        street: "Rua 1",
+        city: "Cidade 1",
+        state: "Estado 1",
+        zipcode: "00000-000",
+        latitude: 0.0,
+        longitude: 0.0,
+      },
+    ],
+    start_date: "2021-09-01",
+    end_date: "2021-09-30",
+  };
+
   const { campaignId } = useLocalSearchParams();
   const authContext = useAuth();
 
@@ -49,22 +92,24 @@ const CampaignModal = () => {
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <Image
-          source={{ uri: campaignInfo.banner }}
+          source={{ uri: DATA.banner }}
           style={styles.image}
           resizeMode="cover"
         />
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <View style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 10,
-          }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
             <Image
-              source={{ uri: campaignInfo.avatar }}
+              source={{ uri: DATA.avatar }}
               style={styles.avatar}
               resizeMode="contain"
             />
-            <Text style={styles.title}>{campaignInfo.name}</Text>
+            <Text style={styles.title}>{DATA.name}</Text>
             {/* <TouchableOpacity
               style={styles.userContainer}
               onPress={() => router.navigate("Institution/Institution")}
@@ -80,8 +125,8 @@ const CampaignModal = () => {
 
           <View style={{ gap: 4 }}>
             <ProgressBar
-              objective={campaignInfo.donated_items_objective}
-              donated={campaignInfo.donated_items_quantity}
+              objective={DATA.donated_items_objective}
+              donated={DATA.donated_items_quantity}
             />
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -100,7 +145,7 @@ const CampaignModal = () => {
                     fontFamily: "Montserrat_600SemiBold",
                   }}
                 >
-                  {campaignInfo.donated_items_quantity} Doações{" "}
+                  {DATA.donated_items_quantity} Doações{" "}
                 </Text>
                 <Text
                   style={{
@@ -115,12 +160,12 @@ const CampaignModal = () => {
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
-              {campaignInfo.description}
+              {DATA.description}
             </Text>
           </View>
           <View style={{ gap: 8, width: "80%" }}>
             <Text style={styles.subtitle}>O que doar?</Text>
-            {campaignInfo.necessary_items.map((item) => {
+            {DATA.necessary_items.map((item) => {
               return (
                 <ProgressBarTitle
                   key={item.id}
@@ -152,7 +197,7 @@ const CampaignModal = () => {
                   />
                 </IconText>
                 <View style={{ paddingLeft: 8 }}>
-                  {campaignInfo.addressess.map((item) => {
+                  {DATA.addressess.map((item) => {
                     return (
                       <Text style={styles.addressess} key={item.id}>
                         {item.street} - {item.city}
@@ -172,7 +217,7 @@ const CampaignModal = () => {
             router.navigate({
               pathname: "Donation/Donation",
               params: {
-                campaignInfo: JSON.stringify(campaignInfo),
+                campaignInfo: JSON.stringify(DATA),
               },
             });
           } else {
