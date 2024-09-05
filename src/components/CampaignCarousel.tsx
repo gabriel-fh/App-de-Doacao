@@ -27,7 +27,7 @@ const CampaignCarousel = () => {
     );
   }
 
-  if (campaigns.length === 0) {
+  if (campaigns?.length === 0) {
     return null
   }
 

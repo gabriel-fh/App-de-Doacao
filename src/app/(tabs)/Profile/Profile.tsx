@@ -124,7 +124,7 @@ const Profile = () => {
           <Text style={styles.title}>Você não está logado!</Text>
 
           <Image
-            source={require("assets/Mobile-login-amico.png")}
+            source={require("../../../../assets/Mobile-login-amico.png")}
             style={{
               width: 230,
               height: 230,
