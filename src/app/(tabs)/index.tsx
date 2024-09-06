@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
@@ -12,13 +11,9 @@ import { useFetchNews } from "@/hooks/News/useFetchNews";
 import CampaignCarousel from "@/components/CampaignCarousel";
 import { theme } from "@/Theme/theme";
 import { News } from "@/@types/app";
+import { Skeleton } from "moti/skeleton";
 
 const DATA: News[] = [
-  // id: number;
-  // title: string;
-  // subtitle: string;
-  // description: string;
-  // banners: string[];
   {
     id: 1,
     title: "Notícia 1",
@@ -54,7 +49,7 @@ const DATA: News[] = [
     subtitle: "Subtítulo da notícia 5",
     banners: ["https://picsum.photos/500/210"],
   },
-]
+];
 
 const index = () => {
   const { data: news, isLoading: isLoadingNews } = useFetchNews();
@@ -69,18 +64,47 @@ const index = () => {
     >
       <CampaignCarousel />
 
-      {DATA && DATA?.length > 0 && (
-        <View style={{ gap: 10 }}>
-          <Text style={styles.title} children="Notícias" />
-          {isLoadingNews ? (
+      <View style={{ gap: 10, marginTop: 20 }}>
+        {isLoadingNews ? (
+          <View style={{marginTop: 20}}>
+            <Skeleton
+              colorMode="light"
+              colors={theme.skeletonColors}
+              width={120}
+            />
             <View style={{ marginTop: 20 }}>
-              <ActivityIndicator size="large" color={theme.primary} />
+              <Skeleton
+                colorMode="light"
+                height={220}
+                width={"100%"}
+                colors={theme.skeletonColors}
+              />
             </View>
-          ) : (
-            DATA.map((item) => <NewsCard key={item.id} news={item} />)
-          )}
-        </View>
-      )}
+          </View>
+        ) : !isLoadingNews && DATA && DATA.length > 0 ? (
+          <>
+            <Text style={styles.title} children="Notícias" />
+            {DATA.map((news) => (
+              <TouchableOpacity
+                key={news.id}
+                onPress={() => console.log("Notícia clicada", news)}
+              >
+                <NewsCard news={news} />
+              </TouchableOpacity>
+            ))}
+          </>
+        ) : (
+          <Text
+            style={{
+              textAlign: "center",
+              marginTop: 20,
+              fontFamily: "Montserrat_600SemiBold",
+              fontSize: 16,
+            }}
+            children="Nenhuma notícia encontrada"
+          />
+        )}
+      </View>
     </ScrollView>
   );
 };
@@ -92,6 +116,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: "Montserrat_600SemiBold",
+    marginBottom: 10,
   },
 });
 

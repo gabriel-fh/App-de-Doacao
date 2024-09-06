@@ -44,7 +44,7 @@ const NewsModal = () => {
       <CloseModalButton />
 
       <ScrollView style={styles.container}>
-        {newsInfo.banners.length > 0 && (
+        {newsInfo?.banners.length > 0 && (
           <FlatList
             data={newsInfo.banners}
             horizontal

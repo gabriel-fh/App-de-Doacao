@@ -121,7 +121,7 @@ const Profile = () => {
         }}
       >
         <View style={styles.loginContainer}>
-          <Text style={styles.title}>Você não está logado!</Text>
+          <Text style={styles.title}>Você não está autenticado!</Text>
 
           <Image
             source={require("../../../../assets/Mobile-login-amico.png")}
