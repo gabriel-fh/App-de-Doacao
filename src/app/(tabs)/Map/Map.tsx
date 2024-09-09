@@ -27,8 +27,8 @@ const Map = () => {
       address: {
         city: "Cidade 1",
         id: 1,
-        latitude: -22.896994406943087, 
-        longitude: -43.106255788317554,
+        latitude: -22.8971625, 
+        longitude: -43.1067171,
         state: "RJ",
         street: "Rua 1",
         zipcode: "00000-000",

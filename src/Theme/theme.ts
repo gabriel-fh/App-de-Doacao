@@ -1,6 +1,8 @@
 export const theme = {
   primary: "#0D62AD",
   secondary: "#6da0cd",
+  background: "#f1f1f1",
+  teste: '#a59ede',
   acaoUni: {
     red: "#ec3237",
     yellow: "#ffcc29",

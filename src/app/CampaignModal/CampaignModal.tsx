@@ -4,10 +4,10 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-  TouchableOpacity,
   ActivityIndicator,
+  Linking,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Foundation from "react-native-vector-icons/Foundation";
@@ -16,7 +16,6 @@ import IconText from "@/components/IconText";
 import ProgressBarTitle from "@/components/ProgressBarTitle";
 import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
-import { StatusBar } from "expo-status-bar";
 import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
@@ -26,8 +25,8 @@ import { CampaignById } from "@/@types/app";
 const CampaignModal = () => {
   const DATA: CampaignById = {
     id: 1,
-    name: "Campanha 1",
-    description: "Descrição da campanha 1",
+    name: "Primeira Campanha",
+    description: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum",
     avatar: "https://picsum.photos/150",
     donated_items_quantity: 10,
     donated_items_objective: 100,
@@ -73,18 +72,22 @@ const CampaignModal = () => {
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
 
-  if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color={theme.primary} />
-      </View>
-    );
+  // if (isLoading) {
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //       }}
+  //     >
+  //       <ActivityIndicator size="large" color={theme.primary} />
+  //     </View>
+  //   );
+  // }
+
+  const openTelephone = () => {
+    Linking.openURL(`tel: (21) 99999-9999`);
   }
 
   return (
@@ -96,21 +99,24 @@ const CampaignModal = () => {
           style={styles.image}
           resizeMode="cover"
         />
+        <View style={styles.textImage}>
+          <Image
+            source={{ uri: DATA.avatar }}
+            style={styles.avatar}
+            resizeMode="contain"
+          />
+          <Text style={styles.title}>{DATA.name}</Text>
+        </View>
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               gap: 10,
             }}
           >
-            <Image
-              source={{ uri: DATA.avatar }}
-              style={styles.avatar}
-              resizeMode="contain"
-            />
             <Text style={styles.title}>{DATA.name}</Text>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.userContainer}
               onPress={() => router.navigate("Institution/Institution")}
             >
@@ -120,8 +126,8 @@ const CampaignModal = () => {
                 resizeMode="contain"
               />
               <Text style={styles.username}>{campaignInfo.name}</Text>
-            </TouchableOpacity> */}
-          </View>
+            </TouchableOpacity>
+          </View> */}
 
           <View style={{ gap: 4 }}>
             <ProgressBar
@@ -159,11 +165,9 @@ const CampaignModal = () => {
           </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text style={{ ...styles.description }}>
-              {DATA.description}
-            </Text>
+            <Text style={{ ...styles.description }}>{DATA.description}</Text>
           </View>
-          <View style={{ gap: 8, width: "80%" }}>
+          <View style={{ gap: 12, width: "80%", marginTop: -9 }}>
             <Text style={styles.subtitle}>O que doar?</Text>
             {DATA.necessary_items.map((item) => {
               return (
@@ -176,15 +180,15 @@ const CampaignModal = () => {
               );
             })}
           </View>
-          <View style={{ gap: 8 }}>
+          <View style={{ gap: 12, marginTop: 9 }}>
             <Text style={styles.subtitle}>Onde realizar as Doações?</Text>
 
-            <View style={{ gap: 10, marginTop: 4 }}>
-              <IconText text="07:00 - 16:30">
+            <View style={{ gap: 16, marginTop: 6 }}>
+              <IconText text="07:00 - 16:30" >
                 <AntDesign name="clockcircle" size={20} color="#0D62AD" />
               </IconText>
 
-              <IconText text="(21) 99999-9999">
+              <IconText text="(21) 99999-9999" onPress={openTelephone} >
                 <Foundation name="telephone" size={28} color="#0D62AD" />
               </IconText>
 
@@ -196,7 +200,7 @@ const CampaignModal = () => {
                     color="#0D62AD"
                   />
                 </IconText>
-                <View style={{ paddingLeft: 8 }}>
+                <View style={{ paddingLeft: 8, marginTop: 10 }}>
                   {DATA.addressess.map((item) => {
                     return (
                       <Text style={styles.addressess} key={item.id}>
@@ -233,6 +237,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 100,
+    position: "relative",
   },
   image: {
     height: 200,
@@ -243,9 +248,21 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     gap: 15,
   },
+  textImage: {
+    // position: "absolute",
+    // top: 120,
+    left: 0,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    width: "100%",
+    paddingHorizontal: 12,
+  },
   title: {
     fontSize: 20,
     fontFamily: "Montserrat_600SemiBold",
+    marginTop: 70,
   },
   subtitle: {
     fontSize: 18,
@@ -262,9 +279,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#595959",
     fontFamily: "Montserrat_500Medium",
-    marginVertical: 5,
+    marginTop: 5,
     textAlign: "justify",
-    marginTop: 10,
+    // backgroundColor: 'red'
   },
   userContainer: {
     flexDirection: "row",
@@ -273,11 +290,17 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   avatar: {
-    height: 40,
-    width: 40,
+    height: 90,
+    width: 90,
     borderRadius: 50,
-    borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderWidth: 3,
+    borderColor: "white",
+    position: "absolute",
+    top: -35,
+    left: 12,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   username: {
     fontSize: 14,

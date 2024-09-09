@@ -26,7 +26,7 @@ function InstitutionMarker({ institution }: { institution: Institution }) {
       onPress={handlePress}
     >
       <LinearGradient
-        colors={[theme.acaoUni.blue, theme.acaoUni.red]}
+        colors={['#000000', '#000000']}
         style={{
           width: 40,
           height: 40,
