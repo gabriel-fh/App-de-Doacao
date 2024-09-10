@@ -6,36 +6,11 @@ import {
   LocationAccuracy,
   getCurrentPositionAsync,
 } from "expo-location";
-import { router } from "expo-router";
 import { useFetchInstitutions } from "@/hooks/Institutions/useFetchInstitution";
 import { theme } from "@/Theme/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import InstitutionMarker from "@/components/InstitutionMarker";
-import { Institution } from "@/@types/app";
 
 const Map = () => {
-
-  const DATA: Institution[] = [
-    {
-      id: 1,
-      name: "Instituição 1",
-      description: "Descrição da instituição 1",
-      avatar: "https://picsum.photos/150",
-      banner: "https://picsum.photos/500/210",
-      phone: "0000-0000",
-      status: "active",
-      address: {
-        city: "Cidade 1",
-        id: 1,
-        latitude: -22.8971625, 
-        longitude: -43.1067171,
-        state: "RJ",
-        street: "Rua 1",
-        zipcode: "00000-000",
-      }
-    }
-  ]
-
 
   const mapRef = useRef<MapView>(null);
   const [region, setRegion] = useState(null);
@@ -63,13 +38,13 @@ const Map = () => {
     })();
   }, []);
 
-  // if (isLoading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <ActivityIndicator size="large" color={theme.primary} />
-  //     </View>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -82,8 +57,8 @@ const Map = () => {
         loadingIndicatorColor={theme.primary}
         loadingBackgroundColor="#f1f1f1"
       >
-        {DATA &&
-          DATA.map((institution) => {
+        {institutions &&
+          institutions.map((institution) => {
             return (
               <InstitutionMarker
                 key={institution.id}
