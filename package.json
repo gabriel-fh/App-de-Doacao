@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.6.0",
     "@marceloterreiro/flash-calendar": "^0.0.9",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-community/netinfo": "^11.3.2",
     "@shopify/flash-list": "1.6.4",
     "@tanstack/query-async-storage-persister": "^5.40.0",
     "@tanstack/react-query": "^5.40.0",

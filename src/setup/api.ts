@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
+import NetInfo from '@react-native-community/netinfo';
 
 const base_url = "http://167.172.158.244/api";
 
@@ -21,6 +22,11 @@ authedApi.interceptors.request.use(
         return config;
     },
     (error) => {
+        NetInfo.fetch().then(state => {
+            if (!state.isConnected) {
+                throw new Error('Sem conexão com a internet')
+            }
+        })
         return Promise.reject(error);
     }
 );

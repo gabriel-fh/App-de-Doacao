@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
@@ -11,13 +11,18 @@ import {
   Montserrat_800ExtraBold,
   Montserrat_900Black,
 } from "@expo-google-fonts/montserrat";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  onlineManager,
+} from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { theme } from "@/Theme/theme";
 import { AuthProvider } from "@/contexts/Auth";
 import FlashMessage from "react-native-flash-message";
+import { useVerifyConnetion } from "@/hooks/Verifications/Connection";
 
 const RootLayoutNav = () => {
   const [fontsLoaded] = useFonts({
@@ -29,10 +34,6 @@ const RootLayoutNav = () => {
     Montserrat_900Black,
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
   const queryClient = new QueryClient();
 
   const asyncStoragePersistor = createAsyncStoragePersister({
@@ -43,6 +44,21 @@ const RootLayoutNav = () => {
     queryClient,
     persister: asyncStoragePersistor,
   });
+
+  const { isConnected, showFlashMessage } = useVerifyConnetion();
+
+  useEffect(() => {
+    if (!isConnected) {
+      showFlashMessage();
+    }
+    onlineManager.setEventListener(
+      (setOnline) => () => setOnline(!!isConnected)
+    );
+  }, [isConnected]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <>
