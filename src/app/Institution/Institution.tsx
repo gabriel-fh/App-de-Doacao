@@ -1,4 +1,3 @@
-import { InstitutionById as InstitutionType } from "@/@types/app";
 import { theme } from "@/Theme/theme";
 import CacheImage from "@/components/CacheImage";
 import CampaignCard from "@/components/CampaignCard";
@@ -8,54 +7,12 @@ import LoadingFullScreen from "@/components/LoadingFullScreen";
 import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
 
 const Institution = () => {
-
-  const DATA : InstitutionType = {
-    id: 1,
-    name: "Ação Comunitária - Unilasalle RJ",
-    status: "active",
-    description: "A Ação Comunitária é uma instituição que tem como objetivo ajudar a comunidade local, promovendo ações sociais e campanhas de arrecadação de alimentos e roupas.",
-    phone: "+5521988888888",
-    avatar: "https://picsum.photos/150",
-    banner: "https://picsum.photos/500/210",
-    address: {
-      id: 1,
-      street: "Rua 1",
-      city: "Cidade 1",
-      state: "Estado 1",
-      zipcode: "00000-000",
-      latitude: 0.0,
-      longitude: 0.0,
-    },
-    campaigns: [
-      {
-        id: 1,
-        name: "Campanha 1",
-        description: "Descrição da campanha 1",
-        avatar: "https://picsum.photos/150",
-        donated_items_quantity: 10,
-        donated_items_objective: 100,
-        date: "2021-09-01",
-        banner: "https://picsum.photos/500/210",
-      },
-      {
-        id: 2,
-        name: "Campanha 2",
-        description: "Descrição da campanha 2",
-        avatar: "https://picsum.photos/150",
-        donated_items_quantity: 20,
-        donated_items_objective: 100,
-        date: "2021-05-15",
-        banner: "https://picsum.photos/500/210",
-      },
-    ]
-  }
 
   const { institutionId } = useLocalSearchParams();
 

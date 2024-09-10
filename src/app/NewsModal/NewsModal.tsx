@@ -9,11 +9,9 @@ import {
 } from "react-native";
 import React from "react";
 import CloseModalButton from "@/components/CloseModalButton";
-import { StatusBar } from "expo-status-bar";
 import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
 import { theme } from "@/Theme/theme";
-import { News } from "@/@types/app";
 import CacheImage from "@/components/CacheImage";
 
 const NewsModal = () => {
@@ -23,42 +21,33 @@ const NewsModal = () => {
     Array.isArray(newsId) ? newsId[0] : newsId
   );
 
-  const DATA: News = {
-    id: 1,
-    title: "Titulo da noticia",
-    subtitle: "Subtitulo da noticia",
-    description:
-      "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum.",
-    banners: ["https://picsum.photos/200/300", "https://picsum.photos/201/300"],
-  };
-
-  // if (isLoading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <ActivityIndicator
-  //         size={"large"}
-  //         color={theme.primary}
-  //       ></ActivityIndicator>
-  //     </View>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator
+          size={"large"}
+          color={theme.primary}
+        ></ActivityIndicator>
+      </View>
+    );
+  }
 
   return false ? (
     <Text> loading...</Text>
-  ) : DATA ? (
+  ) : newsInfo ? (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
 
       <ScrollView style={styles.container}>
-        {DATA?.banners.length > 0 && (
+        {newsInfo?.banners.length > 0 && (
           <CacheImage
-            source={{ uri: DATA.banners[0] }}
+            source={{ uri: newsInfo.banners[0] }}
             style={styles.banner}
             resizeMode="cover"
           />
@@ -69,17 +58,17 @@ const NewsModal = () => {
               gap: 12,
             }}
           >
-            <Text style={styles.title}>{DATA.title}</Text>
-            {DATA.subtitle && (
-              <Text style={styles.subtitle}>{DATA.subtitle}</Text>
+            <Text style={styles.title}>{newsInfo.title}</Text>
+            {newsInfo.subtitle && (
+              <Text style={styles.subtitle}>{newsInfo.subtitle}</Text>
             )}
-            <Text style={{ ...styles.description }}>{DATA.description}</Text>
+            <Text style={{ ...styles.description }}>{newsInfo.description}</Text>
           </View>
-          {DATA?.banners.length > 1 && (
+          {newsInfo?.banners.length > 1 && (
             <View>
               <Text style={{ ...styles.subtitle, fontSize: 18 }}>Galeria</Text>
               <FlatList
-                data={DATA.banners}
+                data={newsInfo.banners}
                 keyExtractor={(item) => item}
                 horizontal
                 style={{ marginTop: 10 }}
