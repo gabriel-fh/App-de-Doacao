@@ -23,47 +23,6 @@ import { CampaignById } from "@/@types/app";
 import CacheImage from "@/components/CacheImage";
 
 const CampaignModal = () => {
-  const DATA: CampaignById = {
-    id: 1,
-    name: "Primeira Campanha",
-    description: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum",
-    avatar: "https://picsum.photos/150",
-    donated_items_quantity: 10,
-    donated_items_objective: 100,
-    date: "2021-09-01",
-    banner: "https://picsum.photos/500/210",
-    necessary_items: [
-      {
-        id: 1,
-        name: "item 1",
-        status: "active",
-        donated_total: 15,
-        quantity_objective: 20,
-        quantity: 5,
-      },
-      {
-        id: 2,
-        name: "item 2",
-        status: "active",
-        donated_total: 10,
-        quantity_objective: 20,
-        quantity: 10,
-      },
-    ],
-    addressess: [
-      {
-        id: 1,
-        street: "Rua 1",
-        city: "Cidade 1",
-        state: "Estado 1",
-        zipcode: "00000-000",
-        latitude: 0.0,
-        longitude: 0.0,
-      },
-    ],
-    start_date: "2021-09-01",
-    end_date: "2021-09-30",
-  };
 
   const { campaignId } = useLocalSearchParams();
   const authContext = useAuth();
@@ -72,19 +31,19 @@ const CampaignModal = () => {
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
 
-  // if (isLoading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <ActivityIndicator size="large" color={theme.primary} />
-  //     </View>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
+  }
 
   const openTelephone = () => {
     Linking.openURL(`tel: (21) 99999-9999`);
@@ -95,17 +54,17 @@ const CampaignModal = () => {
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <CacheImage
-          source={{ uri: DATA.banner }}
+          source={{ uri: campaignInfo?.banner }}
           style={styles.image}
           resizeMode="cover"
         />
         <View style={styles.textImage}>
           <CacheImage
-            source={{ uri: DATA.avatar }}
+            source={{ uri: campaignInfo?.avatar }}
             style={styles.avatar}
             resizeMode="contain"
           />
-          <Text style={styles.title}>{DATA.name}</Text>
+          <Text style={styles.title}>{campaignInfo.name}</Text>
         </View>
         <View style={{ ...styles.container, ...styles.wrapper }}>
           {/* <View
@@ -131,8 +90,8 @@ const CampaignModal = () => {
 
           <View style={{ gap: 4 }}>
             <ProgressBar
-              objective={DATA.donated_items_objective}
-              donated={DATA.donated_items_quantity}
+              objective={campaignInfo.donated_items_objective}
+              donated={campaignInfo.donated_items_quantity}
             />
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -151,7 +110,7 @@ const CampaignModal = () => {
                     fontFamily: "Montserrat_600SemiBold",
                   }}
                 >
-                  {DATA.donated_items_quantity} Doações{" "}
+                  {campaignInfo.donated_items_quantity} Doações{" "}
                 </Text>
                 <Text
                   style={{
@@ -165,11 +124,11 @@ const CampaignModal = () => {
           </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text style={{ ...styles.description }}>{DATA.description}</Text>
+            <Text style={{ ...styles.description }}>{campaignInfo.description}</Text>
           </View>
           <View style={{ gap: 12, width: "80%", marginTop: -9 }}>
             <Text style={styles.subtitle}>O que doar?</Text>
-            {DATA.necessary_items.map((item) => {
+            {campaignInfo.necessary_items.map((item) => {
               return (
                 <ProgressBarTitle
                   key={item.id}
@@ -201,7 +160,7 @@ const CampaignModal = () => {
                   />
                 </IconText>
                 <View style={{ paddingLeft: 8, marginTop: 10 }}>
-                  {DATA.addressess.map((item) => {
+                  {campaignInfo.addressess.map((item) => {
                     return (
                       <Text style={styles.addressess} key={item.id}>
                         {item.street} - {item.city}
@@ -221,7 +180,7 @@ const CampaignModal = () => {
             router.navigate({
               pathname: "Donation/Donation",
               params: {
-                campaignInfo: JSON.stringify(DATA),
+                campaignInfo: JSON.stringify(campaignInfo),
               },
             });
           } else {
