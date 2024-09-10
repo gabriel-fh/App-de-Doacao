@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   ActivityIndicator,
 } from "react-native";
 import React from "react";
@@ -12,6 +11,7 @@ import DonationCard from "@/components/DonationCard";
 import Button from "@/components/Button";
 import { router } from "expo-router";
 import { theme } from "@/Theme/theme";
+import CacheImage from "@/components/CacheImage";
 
 const MyDonations = () => {
   const { data: donations, isLoading } = useFetchDonation();
@@ -52,7 +52,7 @@ const MyDonations = () => {
         >
           <View style={styles.wrapper}>
             <Text style={styles.title}>Você não possui doações</Text>
-            <Image
+            <CacheImage
               source={require("assets/Charity-rafiki.png")}
               style={{
                 width: 230,

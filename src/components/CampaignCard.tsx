@@ -1,8 +1,9 @@
-import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import { router } from "expo-router";
 import { Campaign } from "@/@types/app";
+import CacheImage from "./CacheImage";
 
 const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
   const handlePress = () => {
@@ -19,7 +20,7 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
       onPress={handlePress}
       style={{ ...styles.container, ...styles.shadow }}
     >
-      <Image
+      <CacheImage
         source={{ uri: campaign.avatar }}
         style={styles.img}
         resizeMode="cover"

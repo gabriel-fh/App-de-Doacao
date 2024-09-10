@@ -2,7 +2,6 @@ import {
   View,
   Text,
   ScrollView,
-  Image,
   StyleSheet,
   ActivityIndicator,
   Linking,
@@ -21,6 +20,7 @@ import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
 import { CampaignById } from "@/@types/app";
+import CacheImage from "@/components/CacheImage";
 
 const CampaignModal = () => {
   const DATA: CampaignById = {
@@ -94,13 +94,13 @@ const CampaignModal = () => {
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
       <ScrollView style={styles.container}>
-        <Image
+        <CacheImage
           source={{ uri: DATA.banner }}
           style={styles.image}
           resizeMode="cover"
         />
         <View style={styles.textImage}>
-          <Image
+          <CacheImage
             source={{ uri: DATA.avatar }}
             style={styles.avatar}
             resizeMode="contain"
@@ -120,7 +120,7 @@ const CampaignModal = () => {
               style={styles.userContainer}
               onPress={() => router.navigate("Institution/Institution")}
             >
-              <Image
+              <CacheImage
                 source={{ uri: campaignInfo.avatar }}
                 style={styles.avatar}
                 resizeMode="contain"
@@ -268,12 +268,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 4,
     fontFamily: "Montserrat_600SemiBold",
-  },
-  iconText: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "flex-end",
-    gap: 8,
   },
   description: {
     fontSize: 14,

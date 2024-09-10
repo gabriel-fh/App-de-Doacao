@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React from "react";
 import { Marker } from "react-native-maps";
-import { Image } from "react-native";
+import CacheImage from "./CacheImage";
 
 function InstitutionMarker({ institution }: { institution: Institution }) {
   const handlePress = () => {
@@ -37,7 +37,7 @@ function InstitutionMarker({ institution }: { institution: Institution }) {
           overflow: "hidden",
         }}
       >
-        <Image
+        <CacheImage
           source={{ uri: institution.avatar }}
           style={{
             width: "100%",

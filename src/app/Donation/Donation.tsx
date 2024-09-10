@@ -3,7 +3,6 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Image,
   TouchableOpacity,
   TextInput,
   Keyboard,
@@ -23,6 +22,7 @@ import Picker from "@/components/Picker";
 import { CampaignById, ItemById } from "@/@types/app";
 import { useMutateDonation } from "@/hooks/Donation/useMutateDonation";
 import { showMessage } from "react-native-flash-message";
+import CacheImage from "@/components/CacheImage";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -172,14 +172,14 @@ const Donation = () => {
               gap: 10,
             }}
           >
-            <Image
+            <CacheImage
               source={{ uri: parsedCampaignInfo.avatar }}
               style={styles.avatar}
               resizeMode="contain"
             />
             <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
             {/* <View style={styles.userContainer}>
-              <Image
+              <CacheImage
                 source={{ uri: parsedCampaignInfo.avatar }}
                 style={styles.avatar}
                 resizeMode="contain"

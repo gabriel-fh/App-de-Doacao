@@ -2,7 +2,6 @@ import {
   View,
   Text,
   ScrollView,
-  Image,
   StyleSheet,
   ActivityIndicator,
   Dimensions,
@@ -15,6 +14,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
 import { theme } from "@/Theme/theme";
 import { News } from "@/@types/app";
+import CacheImage from "@/components/CacheImage";
 
 const NewsModal = () => {
   const { newsId } = useLocalSearchParams();
@@ -57,7 +57,7 @@ const NewsModal = () => {
 
       <ScrollView style={styles.container}>
         {DATA?.banners.length > 0 && (
-          <Image
+          <CacheImage
             source={{ uri: DATA.banners[0] }}
             style={styles.banner}
             resizeMode="cover"
@@ -84,7 +84,7 @@ const NewsModal = () => {
                 horizontal
                 style={{ marginTop: 10 }}
                 renderItem={({ item }) => (
-                  <Image
+                  <CacheImage
                     source={{ uri: item }}
                     style={styles.galleryImage}
                     resizeMode="cover"
