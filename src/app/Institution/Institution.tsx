@@ -72,9 +72,9 @@ const Institution = () => {
       <CloseModalButton />
 
       <ScrollView style={styles.container}>
-        {DATA.banner && (
+        {institutionInfo.banner && (
           <CacheImage
-            source={{ uri: DATA.banner }}
+            source={{ uri: institutionInfo.banner }}
             style={styles.banner}
             resizeMode="cover"
           />
@@ -92,7 +92,7 @@ const Institution = () => {
               style={styles.imageBorder}
             >
               <CacheImage
-                source={{ uri: DATA.avatar }}
+                source={{ uri: institutionInfo.avatar }}
                 style={styles.image}
               />
             </LinearGradient>
@@ -107,16 +107,16 @@ const Institution = () => {
           <View style={{ gap: 12, marginVertical: 10 }}>
             <IconText
               text={
-                DATA.address?.street +
+                institutionInfo.address?.street +
                 " - " +
-                DATA.address?.city
+                institutionInfo.address?.city
               }
             >
               <Entypo name={"location"} size={20} color={"#0D62AD"} />
             </IconText>
 
             <IconText
-              text={DATA.phone
+              text={institutionInfo.phone
                 .replace("+55", "")
                 .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
             >
@@ -126,13 +126,13 @@ const Institution = () => {
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
-              {DATA.description}
+              {institutionInfo.description}
             </Text>
           </View>
           <View>
             <Text style={styles.subtitle}>Campanhas Ativas</Text>
             <View style={{ marginTop: 10 }}>
-              {DATA.campaigns.map((item, idx) => (
+              {institutionInfo.campaigns.map((item, idx) => (
                 <CampaignCard key={idx} campaign={item} />
               ))}
             </View>

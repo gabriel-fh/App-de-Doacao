@@ -19,7 +19,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
-import { CampaignById } from "@/@types/app";
 import CacheImage from "@/components/CacheImage";
 
 const CampaignModal = () => {

@@ -12,10 +12,9 @@ import Searchbar from "@/components/Searchbar";
 import FilterSelect from "@/components/FilterSelect";
 import { useSearchCampaign } from "@/hooks/Campaign/useSearchCampaigns";
 import { theme } from "@/Theme/theme";
-import { Campaign as TypeCampaign, Item } from "@/@types/app";
+import { Item } from "@/@types/app";
 
 const Campaign = () => {
-
   const scrollViewRef = useRef<ScrollView>(null);
   const [showButton, setShowButton] = useState(false);
   const [donationItems, setDonationItems] = useState<Item[]>([]);
