@@ -10,46 +10,7 @@ import NewsCard from "@/components/NewsCard";
 import { useFetchNews } from "@/hooks/News/useFetchNews";
 import CampaignCarousel from "@/components/CampaignCarousel";
 import { theme } from "@/Theme/theme";
-import { News } from "@/@types/app";
 import { Skeleton } from "moti/skeleton";
-
-const DATA: News[] = [
-  {
-    id: 1,
-    title: "Notícia 1",
-    description: "Descrição da notícia 1",
-    subtitle: "Subtítulo da notícia 1",
-    banners: ["https://picsum.photos/500/210"],
-  },
-  {
-    id: 2,
-    title: "Notícia 2",
-    description: "Descrição da notícia 2",
-    subtitle: "Subtítulo da notícia 2",
-    banners: ["https://picsum.photos/500/210"],
-  },
-  {
-    id: 3,
-    title: "Notícia 3",
-    description: "Descrição da notícia 3",
-    subtitle: "Subtítulo da notícia 3",
-    banners: ["https://picsum.photos/500/210"],
-  },
-  {
-    id: 4,
-    title: "Notícia 4",
-    description: "Descrição da notícia 4",
-    subtitle: "Subtítulo da notícia 4",
-    banners: ["https://picsum.photos/500/210"],
-  },
-  {
-    id: 5,
-    title: "Notícia 5",
-    description: "Descrição da notícia 5",
-    subtitle: "Subtítulo da notícia 5",
-    banners: ["https://picsum.photos/500/210"],
-  },
-];
 
 const index = () => {
   const { data: news, isLoading: isLoadingNews } = useFetchNews();
@@ -81,10 +42,10 @@ const index = () => {
               />
             </View>
           </View>
-        ) : !isLoadingNews && DATA && DATA.length > 0 ? (
+        ) : !isLoadingNews && news && news.length > 0 ? (
           <>
             <Text style={styles.title} children="Notícias" />
-            {DATA.map((news) => (
+            {news.map((news) => (
               <TouchableOpacity
                 key={news.id}
                 onPress={() => console.log("Notícia clicada", news)}

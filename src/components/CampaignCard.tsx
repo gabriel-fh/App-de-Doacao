@@ -15,6 +15,8 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
     });
   };
 
+  console.log(campaign);
+  
   return (
     <TouchableOpacity
       onPress={handlePress}
