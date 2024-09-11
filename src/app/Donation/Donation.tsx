@@ -23,7 +23,8 @@ type routeParams = {
 const Donation = () => {
   const { campaignInfo } = useLocalSearchParams<routeParams>();
   const parsedCampaignInfo: CampaignById = JSON.parse(campaignInfo);
-
+  console.log(parsedCampaignInfo);
+  
   const [donationItems, setDonationItems] = useState<ItemById[]>([]);
   const [commentary, setCommentary] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -110,6 +111,8 @@ const Donation = () => {
                 formatedDate={formatedDate}
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
+                startDate={parsedCampaignInfo.start_date}
+                endDate={parsedCampaignInfo.end_date}
               />
 
               <TimePicker />
@@ -117,7 +120,11 @@ const Donation = () => {
 
             {parsedCampaignInfo.addressess &&
               parsedCampaignInfo.addressess.map((address, idx) => {
-                return <AddressInfo addressess={address} />;
+                return (
+                  <React.Fragment key={idx}>
+                    <AddressInfo address={address} />
+                  </React.Fragment>
+                );
               })}
           </View>
         </View>

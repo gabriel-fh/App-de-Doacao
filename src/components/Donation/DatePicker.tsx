@@ -7,10 +7,14 @@ function DatePicker({
   formatedDate,
   selectedDate,
   setSelectedDate,
+  startDate,
+  endDate,
 }: {
   formatedDate: (date: string) => string;
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
+  startDate: string;
+  endDate: string;
 }) {
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -32,6 +36,8 @@ function DatePicker({
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             setShowCalendar={setShowCalendar}
+            startDate={startDate}
+            endDate={endDate}
           />
         </PopUp>
       )}

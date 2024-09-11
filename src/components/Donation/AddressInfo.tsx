@@ -4,18 +4,18 @@ import IconText from "../IconText";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Address } from "@/@types/app";
 
-function AddressInfo({ addressess }: { addressess: Address }) {
+function AddressInfo({ address }: { address: Address }) {
   return (
     <View style={{ paddingBottom: 70, width: 300 }}>
       <IconText
         text={
-          addressess[0]?.street +
+          address?.street +
           ", " +
-          addressess[0]?.city +
+          address?.city +
           ", " +
-          addressess[0]?.state +
+          address?.state +
           " - " +
-          addressess[0]?.zipcode
+          address?.zipcode
         }
       >
         <MaterialIcons name="location-pin" size={30} color="#0D62AD" />

@@ -1,34 +1,22 @@
-import { View, Text } from "react-native";
 import React, { useRef, useState } from "react";
 import Button from "./Button";
-import {
-  // Calendar,
-  CalendarListRef,
-  CalendarTheme,
-  toDateId,
-} from "@marceloterreiro/flash-calendar";
-import { addMonths, subMonths, startOfMonth } from "date-fns";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { theme } from "@/Theme/theme";
 import moment from "moment";
 
-const CustomCalendar = ({ selectedDate, setSelectedDate, setShowCalendar }) => {
-  const getDisabledDates = () => {
-    const today = moment().format("YYYY-MM-DD");
-    const disabledDates = {};
-    const startDate = moment("2020-01-01"); // Ajuste a data de início conforme necessário
-    const endDate = moment(today);
-
-    for (let m = startDate; m.isBefore(endDate); m.add(1, "days")) {
-      const date = m.format("YYYY-MM-DD");
-      disabledDates[date] = { disabled: true, disableTouchEvent: true };
-    }
-
-    return disabledDates;
-  };
-
-  const disabledDates = getDisabledDates();
-
+const CustomCalendar = ({
+  selectedDate,
+  setSelectedDate,
+  setShowCalendar,
+  startDate,
+  endDate,
+}: {
+  selectedDate: string;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
+  setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
+  startDate: string;
+  endDate: string;
+}) => {
   LocaleConfig.locales["pt-BR"] = {
     monthNames: [
       "Janeiro",
@@ -91,8 +79,9 @@ const CustomCalendar = ({ selectedDate, setSelectedDate, setShowCalendar }) => {
         }}
         markedDates={{
           [selected]: { selected: true, disableTouchEvent: true },
-          ...disabledDates,
         }}
+        minDate={startDate}
+        maxDate={endDate}
         hideExtraDays
         theme={{
           arrowColor: theme.primary,
