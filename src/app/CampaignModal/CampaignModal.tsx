@@ -20,9 +20,9 @@ import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
 import CacheImage from "@/components/CacheImage";
+import BannerAvatar from "@/components/CapaingModalComponents/BannerAvatar";
 
 const CampaignModal = () => {
-
   const { campaignId } = useLocalSearchParams();
   const authContext = useAuth();
 
@@ -46,25 +46,17 @@ const CampaignModal = () => {
 
   const openTelephone = () => {
     Linking.openURL(`tel: (21) 99999-9999`);
-  }
+  };
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
       <ScrollView style={styles.container}>
-        <CacheImage
-          source={{ uri: campaignInfo?.banner }}
-          style={styles.image}
-          resizeMode="cover"
+        <BannerAvatar
+          banner={campaignInfo.banner}
+          avatar={campaignInfo.avatar}
+          name={campaignInfo.name}
         />
-        <View style={styles.textImage}>
-          <CacheImage
-            source={{ uri: campaignInfo?.avatar }}
-            style={styles.avatar}
-            resizeMode="contain"
-          />
-          <Text style={styles.title}>{campaignInfo.name}</Text>
-        </View>
         <View style={{ ...styles.container, ...styles.wrapper }}>
           {/* <View
             style={{
@@ -123,7 +115,9 @@ const CampaignModal = () => {
           </View>
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text style={{ ...styles.description }}>{campaignInfo.description}</Text>
+            <Text style={{ ...styles.description }}>
+              {campaignInfo.description}
+            </Text>
           </View>
           <View style={{ gap: 12, width: "80%", marginTop: -9 }}>
             <Text style={styles.subtitle}>O que doar?</Text>
@@ -142,11 +136,11 @@ const CampaignModal = () => {
             <Text style={styles.subtitle}>Onde realizar as Doações?</Text>
 
             <View style={{ gap: 16, marginTop: 6 }}>
-              <IconText text="07:00 - 16:30" >
+              <IconText text="07:00 - 16:30">
                 <AntDesign name="clockcircle" size={20} color="#0D62AD" />
               </IconText>
 
-              <IconText text="(21) 99999-9999" onPress={openTelephone} >
+              <IconText text="(21) 99999-9999" onPress={openTelephone}>
                 <Foundation name="telephone" size={28} color="#0D62AD" />
               </IconText>
 

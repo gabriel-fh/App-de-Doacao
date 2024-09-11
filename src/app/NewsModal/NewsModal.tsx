@@ -21,25 +21,19 @@ const NewsModal = () => {
     Array.isArray(newsId) ? newsId[0] : newsId
   );
 
-  if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator
-          size={"large"}
-          color={theme.primary}
-        ></ActivityIndicator>
-      </View>
-    );
-  }
-
-  return false ? (
-    <Text> loading...</Text>
+  return isLoading ? (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ActivityIndicator
+        size={"large"}
+        color={theme.primary}
+      ></ActivityIndicator>
+    </View>
   ) : newsInfo ? (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
@@ -62,7 +56,9 @@ const NewsModal = () => {
             {newsInfo.subtitle && (
               <Text style={styles.subtitle}>{newsInfo.subtitle}</Text>
             )}
-            <Text style={{ ...styles.description }}>{newsInfo.description}</Text>
+            <Text style={{ ...styles.description }}>
+              {newsInfo.description}
+            </Text>
           </View>
           {newsInfo?.banners.length > 1 && (
             <View>
@@ -121,24 +117,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlign: "justify",
   },
-  userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 7,
-  },
-  avatar: {
-    height: 22,
-    width: 22,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: "#0D62AD",
-  },
-  username: {
-    fontSize: 14,
-    fontFamily: "Montserrat_600SemiBold",
-  },
-
   galleryImage: {
     height: 200,
     width: 300,
