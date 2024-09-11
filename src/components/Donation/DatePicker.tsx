@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Picker from "../Picker";
 import CustomCalendar from "../CustomCalendar";
 import PopUp from "../PopUp";
@@ -7,16 +7,13 @@ function DatePicker({
   formatedDate,
   selectedDate,
   setSelectedDate,
-  showCalendar,
-  setShowCalendar,
 }: {
   formatedDate: (date: string) => string;
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
-  showCalendar: boolean;
-  setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-    
+  const [showCalendar, setShowCalendar] = useState(false);
+
   return (
     <>
       <Picker

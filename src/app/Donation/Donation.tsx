@@ -2,7 +2,6 @@ import { Text, StyleSheet, ScrollView, View } from "react-native";
 import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import FloatButton from "@/components/FloatButton";
-import Picker from "@/components/Picker";
 import { CampaignById, ItemById } from "@/@types/app";
 import { useMutateDonation } from "@/hooks/Donation/useMutateDonation";
 import CacheImage from "@/components/CacheImage";
@@ -13,6 +12,7 @@ import Observation from "@/components/Donation/Observation";
 import DatePicker from "@/components/Donation/DatePicker";
 import AvailableItems from "@/components/Donation/AvailableItems";
 import AddressInfo from "@/components/Donation/AddressInfo";
+import TimePicker from "@/components/Donation/TimePicker";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -25,7 +25,6 @@ const Donation = () => {
   const parsedCampaignInfo: CampaignById = JSON.parse(campaignInfo);
 
   const [donationItems, setDonationItems] = useState<ItemById[]>([]);
-  const [showCalendar, setShowCalendar] = useState(false);
   const [commentary, setCommentary] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedDate, setSelectedDate] = useState();
@@ -59,6 +58,7 @@ const Donation = () => {
               style={styles.avatar}
               resizeMode="contain"
             />
+
             <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
           </View>
           <View style={{ gap: 25 }}>
@@ -110,17 +110,9 @@ const Donation = () => {
                 formatedDate={formatedDate}
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
-                showCalendar={showCalendar}
-                setShowCalendar={setShowCalendar}
               />
 
-              <Picker
-                title="Hora"
-                placeholder="HH:MM"
-                icon="clock-o"
-                iconSize={20}
-                onPress={() => console.log("batom")}
-              />
+              <TimePicker />
             </View>
 
             {parsedCampaignInfo.addressess &&
