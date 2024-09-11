@@ -13,8 +13,10 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
-import BannerAvatar from "@/components/CapaingModal/BannerAvatar";
-import CampaignInfo from "@/components/CapaingModal/CampaignInfo";
+import BannerAvatar from "@/components/CampaignModal/BannerAvatar";
+import CampaignInfo from "@/components/CampaignModal/CampaignInfo";
+import CampaignSkeleton from "@/components/CampaignModal/CampaignSkeleton";
+import SomethingWrong from "@/components/SomethingWrong";
 
 const CampaignModal = () => {
   const { campaignId } = useLocalSearchParams();
@@ -38,15 +40,7 @@ const CampaignModal = () => {
   };
 
   return isLoading ? (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <ActivityIndicator size="large" color={theme.primary} />
-    </View>
+    <CampaignSkeleton />
   ) : campaignInfo ? (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
@@ -84,7 +78,13 @@ const CampaignModal = () => {
       <FloatButton text="Doar Agora" onPress={makeADonation} />
     </View>
   ) : (
-    <Text>Não foi possível carregar</Text>
+    <View style={{
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <SomethingWrong />
+    </View>
   );
 };
 
@@ -110,11 +110,6 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_500Medium",
     marginTop: 5,
     textAlign: "justify",
-  },
-  addressess: {
-    fontFamily: "Montserrat_500Medium",
-    fontSize: 14,
-    color: "#595959",
   },
 });
 
