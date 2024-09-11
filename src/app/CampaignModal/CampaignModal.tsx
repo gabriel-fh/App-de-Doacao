@@ -19,7 +19,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
-import CacheImage from "@/components/CacheImage";
 import BannerAvatar from "@/components/CapaingModalComponents/BannerAvatar";
 
 const CampaignModal = () => {
@@ -47,6 +46,8 @@ const CampaignModal = () => {
   const openTelephone = () => {
     Linking.openURL(`tel: (21) 99999-9999`);
   };
+
+  console.log(campaignInfo);
 
   return (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
@@ -79,40 +80,10 @@ const CampaignModal = () => {
             </TouchableOpacity>
           </View> */}
 
-          <View style={{ gap: 4 }}>
-            <ProgressBar
-              objective={campaignInfo.donated_items_objective}
-              donated={campaignInfo.donated_items_quantity}
-            />
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "flex-end",
-                  gap: 2,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#0D62AD",
-                    fontFamily: "Montserrat_600SemiBold",
-                  }}
-                >
-                  {campaignInfo.donated_items_quantity} Doações{" "}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "Montserrat_500Medium",
-                  }}
-                >
-                  Coletadas
-                </Text>
-              </View>
-            </View>
-          </View>
+          <ProgressBar
+            objective={campaignInfo.donated_items_objective}
+            donated={campaignInfo.donated_items_quantity}
+          />
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
             <Text style={{ ...styles.description }}>
@@ -123,7 +94,7 @@ const CampaignModal = () => {
             <Text style={styles.subtitle}>O que doar?</Text>
             {campaignInfo.necessary_items.map((item) => {
               return (
-                <ProgressBarTitle
+                <ProgressBar
                   key={item.id}
                   title={item.name}
                   objective={item.quantity_objective}
@@ -191,30 +162,10 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
     position: "relative",
   },
-  image: {
-    height: 200,
-    width: "100%",
-  },
   wrapper: {
     paddingHorizontal: 12,
     paddingVertical: 20,
     gap: 15,
-  },
-  textImage: {
-    // position: "absolute",
-    // top: 120,
-    left: 0,
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-    width: "100%",
-    paddingHorizontal: 12,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: "Montserrat_600SemiBold",
-    marginTop: 70,
   },
   subtitle: {
     fontSize: 18,
@@ -227,30 +178,6 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_500Medium",
     marginTop: 5,
     textAlign: "justify",
-    // backgroundColor: 'red'
-  },
-  userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 7,
-  },
-  avatar: {
-    height: 90,
-    width: 90,
-    borderRadius: 50,
-    borderWidth: 3,
-    borderColor: "white",
-    position: "absolute",
-    top: -35,
-    left: 12,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  username: {
-    fontSize: 14,
-    fontFamily: "Montserrat_600SemiBold",
   },
   addressess: {
     fontFamily: "Montserrat_500Medium",
