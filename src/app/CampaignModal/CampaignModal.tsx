@@ -4,22 +4,17 @@ import {
   ScrollView,
   StyleSheet,
   ActivityIndicator,
-  Linking,
 } from "react-native";
 import React from "react";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Foundation from "react-native-vector-icons/Foundation";
 import ProgressBar from "@/components/ProgressBar";
-import IconText from "@/components/IconText";
-import ProgressBarTitle from "@/components/ProgressBarTitle";
 import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
-import BannerAvatar from "@/components/CapaingModalComponents/BannerAvatar";
+import BannerAvatar from "@/components/CapaingModal/BannerAvatar";
+import CampaignInfo from "@/components/CapaingModal/CampaignInfo";
 
 const CampaignModal = () => {
   const { campaignId } = useLocalSearchParams();
@@ -29,28 +24,31 @@ const CampaignModal = () => {
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
 
-  if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color={theme.primary} />
-      </View>
-    );
-  }
-
-  const openTelephone = () => {
-    Linking.openURL(`tel: (21) 99999-9999`);
+  const makeADonation = () => {
+    if (authContext.authData) {
+      router.navigate({
+        pathname: "Donation/Donation",
+        params: {
+          campaignInfo: JSON.stringify(campaignInfo),
+        },
+      });
+    } else {
+      router.navigate("Login/Login");
+    }
   };
 
-  console.log(campaignInfo);
-
-  return (
-    <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
+  return isLoading ? (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ActivityIndicator size="large" color={theme.primary} />
+    </View>
+  ) : campaignInfo ? (
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
       <ScrollView style={styles.container}>
         <BannerAvatar
@@ -59,100 +57,34 @@ const CampaignModal = () => {
           name={campaignInfo.name}
         />
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          {/* <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <Text style={styles.title}>{DATA.name}</Text>
-            <TouchableOpacity
-              style={styles.userContainer}
-              onPress={() => router.navigate("Institution/Institution")}
-            >
-              <CacheImage
-                source={{ uri: campaignInfo.avatar }}
-                style={styles.avatar}
-                resizeMode="contain"
-              />
-              <Text style={styles.username}>{campaignInfo.name}</Text>
-            </TouchableOpacity>
-          </View> */}
-
           <ProgressBar
             objective={campaignInfo.donated_items_objective}
             donated={campaignInfo.donated_items_quantity}
           />
+
           <View>
             <Text style={styles.subtitle}>Descrição</Text>
-            <Text style={{ ...styles.description }}>
-              {campaignInfo.description}
-            </Text>
+            <Text style={styles.description}>{campaignInfo.description}</Text>
           </View>
-          <View style={{ gap: 12, width: "80%", marginTop: -9 }}>
+
+          <View style={{ gap: 12, width: "80%" }}>
             <Text style={styles.subtitle}>O que doar?</Text>
-            {campaignInfo.necessary_items.map((item) => {
-              return (
-                <ProgressBar
-                  key={item.id}
-                  title={item.name}
-                  objective={item.quantity_objective}
-                  donated={item.donated_total}
-                />
-              );
-            })}
+            {campaignInfo.necessary_items.map((item) => (
+              <ProgressBar
+                key={item.id}
+                title={item.name}
+                objective={item.quantity_objective}
+                donated={item.donated_total}
+              />
+            ))}
           </View>
-          <View style={{ gap: 12, marginTop: 9 }}>
-            <Text style={styles.subtitle}>Onde realizar as Doações?</Text>
-
-            <View style={{ gap: 16, marginTop: 6 }}>
-              <IconText text="07:00 - 16:30">
-                <AntDesign name="clockcircle" size={20} color="#0D62AD" />
-              </IconText>
-
-              <IconText text="(21) 99999-9999" onPress={openTelephone}>
-                <Foundation name="telephone" size={28} color="#0D62AD" />
-              </IconText>
-
-              <View>
-                <IconText text="Endereços de entrega" arrow>
-                  <MaterialIcons
-                    name="location-pin"
-                    size={30}
-                    color="#0D62AD"
-                  />
-                </IconText>
-                <View style={{ paddingLeft: 8, marginTop: 10 }}>
-                  {campaignInfo.addressess.map((item) => {
-                    return (
-                      <Text style={styles.addressess} key={item.id}>
-                        {item.street} - {item.city}
-                      </Text>
-                    );
-                  })}
-                </View>
-              </View>
-            </View>
-          </View>
+          <CampaignInfo addressess={campaignInfo.addressess} />
         </View>
       </ScrollView>
-      <FloatButton
-        text="Doar Agora"
-        onPress={() => {
-          if (authContext.authData) {
-            router.navigate({
-              pathname: "Donation/Donation",
-              params: {
-                campaignInfo: JSON.stringify(campaignInfo),
-              },
-            });
-          } else {
-            router.navigate("Login/Login");
-          }
-        }}
-      />
+      <FloatButton text="Doar Agora" onPress={makeADonation} />
     </View>
+  ) : (
+    <Text>Não foi possível carregar</Text>
   );
 };
 

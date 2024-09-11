@@ -7,7 +7,6 @@ type ProgressBarProps = {
   objective: number;
   donated: number;
   title?: string;
-  caption?: string;
   isCard?: boolean;
 };
 
@@ -46,8 +45,12 @@ const ProgressBar = (progressProperty: ProgressBarProps) => {
       {!isCard && (
         <View style={styles.captionContainer}>
           <View style={styles.captionWrapper}>
-            <Text style={styles.bold}>{donated} Doações </Text>
-            <Text style={styles.text}>coletadas</Text>
+            <Text style={styles.bold}>
+              {donated} {donated > 0 && donated < 2 ? "Doação" : "Doações"}{" "}
+            </Text>
+            <Text style={styles.text}>
+              {donated > 0 && donated < 2 ? "coletada" : "coletadas"}
+            </Text>
           </View>
         </View>
       )}
@@ -57,7 +60,7 @@ const ProgressBar = (progressProperty: ProgressBarProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 4,
+    gap: 6,
   },
   title: {
     fontSize: 14.5,
