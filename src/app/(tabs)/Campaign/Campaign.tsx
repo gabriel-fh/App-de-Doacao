@@ -106,47 +106,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 20,
   },
-  searchbar: {
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
-    borderColor: "#8e98de",
-    borderWidth: 2,
-    borderRadius: 10,
-    maxHeight: 50,
-    flex: 1,
-    paddingLeft: 12,
-    marginBottom: 12,
-  },
-  textInput: {
-    marginVertical: 8,
-    fontSize: 16,
-    flex: 1,
-  },
-  iconView: {
-    backgroundColor: "#8e98de",
-    borderRadius: 10,
-    height: "110%",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 12,
-  },
-  itemFilter: {
-    flexDirection: "row",
-    gap: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#8e98de",
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    maxHeight: 50,
-  },
-  itemText: {
-    fontSize: 16,
-    color: "#fff",
-  },
 });
 
 export default Campaign;

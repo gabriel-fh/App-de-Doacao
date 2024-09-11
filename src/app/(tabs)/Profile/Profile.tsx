@@ -4,7 +4,6 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import React, { useEffect } from "react";
 import UserInfos from "@/components/UserInfos";
@@ -16,6 +15,7 @@ import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Button";
+import CacheImage from "@/components/CacheImage";
 
 const Profile = () => {
   const authContext = useAuth();
@@ -121,10 +121,10 @@ const Profile = () => {
         }}
       >
         <View style={styles.loginContainer}>
-          <Text style={styles.title}>Você não está logado!</Text>
+          <Text style={styles.title}>Você não está autenticado!</Text>
 
-          <Image
-            source={require("assets/Mobile-login-amico.png")}
+          <CacheImage
+            source={require("../../../../assets/Mobile-login-amico.png")}
             style={{
               width: 230,
               height: 230,

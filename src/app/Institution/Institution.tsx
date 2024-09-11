@@ -1,4 +1,5 @@
 import { theme } from "@/Theme/theme";
+import CacheImage from "@/components/CacheImage";
 import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
@@ -6,13 +7,13 @@ import LoadingFullScreen from "@/components/LoadingFullScreen";
 import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View, Image, StyleSheet, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
 
 const Institution = () => {
+
   const { institutionId } = useLocalSearchParams();
 
   const { data: institutionInfo, isLoading } = useFetchInstitutionById(
@@ -29,7 +30,7 @@ const Institution = () => {
 
       <ScrollView style={styles.container}>
         {institutionInfo.banner && (
-          <Image
+          <CacheImage
             source={{ uri: institutionInfo.banner }}
             style={styles.banner}
             resizeMode="cover"
@@ -47,7 +48,7 @@ const Institution = () => {
               colors={[theme.acaoUni.blue, theme.acaoUni.red]}
               style={styles.imageBorder}
             >
-              <Image
+              <CacheImage
                 source={{ uri: institutionInfo.avatar }}
                 style={styles.image}
               />

@@ -2,7 +2,6 @@ import {
   View,
   Text,
   ScrollView,
-  Image,
   StyleSheet,
   ActivityIndicator,
   Dimensions,
@@ -10,10 +9,10 @@ import {
 } from "react-native";
 import React from "react";
 import CloseModalButton from "@/components/CloseModalButton";
-import { StatusBar } from "expo-status-bar";
 import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
 import { theme } from "@/Theme/theme";
+import CacheImage from "@/components/CacheImage";
 
 const NewsModal = () => {
   const { newsId } = useLocalSearchParams();
@@ -22,56 +21,68 @@ const NewsModal = () => {
     Array.isArray(newsId) ? newsId[0] : newsId
   );
 
-  if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator
-          size={"large"}
-          color={theme.primary}
-        ></ActivityIndicator>
-      </View>
-    );
-  }
-
-  return (
+  return isLoading ? (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ActivityIndicator
+        size={"large"}
+        color={theme.primary}
+      ></ActivityIndicator>
+    </View>
+  ) : newsInfo ? (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
 
       <ScrollView style={styles.container}>
-        {newsInfo.banners.length > 0 && (
-          <FlatList
-            data={newsInfo.banners}
-            horizontal
-            keyExtractor={(item) => item}
-            pagingEnabled
-            renderItem={({ item }) => (
-              <Image
-                source={{ uri: item }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            )}
+        {newsInfo?.banners.length > 0 && (
+          <CacheImage
+            source={{ uri: newsInfo.banners[0] }}
+            style={styles.banner}
+            resizeMode="cover"
           />
         )}
         <View style={{ ...styles.container, ...styles.wrapper }}>
-          <View style={{
-            gap: 12,
-          }}>
+          <View
+            style={{
+              gap: 12,
+            }}
+          >
             <Text style={styles.title}>{newsInfo.title}</Text>
-            <Text style={styles.subtitle}>{newsInfo.subtitle}</Text>
+            {newsInfo.subtitle && (
+              <Text style={styles.subtitle}>{newsInfo.subtitle}</Text>
+            )}
             <Text style={{ ...styles.description }}>
               {newsInfo.description}
             </Text>
           </View>
+          {newsInfo?.banners.length > 1 && (
+            <View>
+              <Text style={{ ...styles.subtitle, fontSize: 18 }}>Galeria</Text>
+              <FlatList
+                data={newsInfo.banners}
+                keyExtractor={(item) => item}
+                horizontal
+                style={{ marginTop: 10 }}
+                renderItem={({ item }) => (
+                  <CacheImage
+                    source={{ uri: item }}
+                    style={styles.galleryImage}
+                    resizeMode="cover"
+                  />
+                )}
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
+  ) : (
+    <Text>Ocorreu um erro ao carregar a noticia</Text>
   );
 };
 const { width } = Dimensions.get("window");
@@ -81,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 100,
   },
-  image: {
+  banner: {
     height: 200,
     width: width,
   },
@@ -99,12 +110,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontFamily: "Montserrat_600SemiBold",
   },
-  iconText: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "flex-end",
-    gap: 8,
-  },
   description: {
     fontSize: 14,
     color: "#595959",
@@ -112,22 +117,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlign: "justify",
   },
-  userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 7,
-  },
-  avatar: {
-    height: 22,
-    width: 22,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: "#0D62AD",
-  },
-  username: {
-    fontSize: 14,
-    fontFamily: "Montserrat_600SemiBold",
+  galleryImage: {
+    height: 200,
+    width: 300,
+    marginRight: 10,
+    borderRadius: 10,
   },
 });
 

@@ -37,8 +37,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     const response = await authContext.signIn(data);
     if (response) {
-      router.canGoBack() ? router.back() : router.navigate("/");
-
+      router.navigate("/");
       showMessage({
         message: "Conectado com sucesso!",
         type: "none",

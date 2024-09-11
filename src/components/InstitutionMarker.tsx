@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React from "react";
 import { Marker } from "react-native-maps";
-import { Image } from "react-native";
+import CacheImage from "./CacheImage";
 
 function InstitutionMarker({ institution }: { institution: Institution }) {
   const handlePress = () => {
@@ -26,7 +26,7 @@ function InstitutionMarker({ institution }: { institution: Institution }) {
       onPress={handlePress}
     >
       <LinearGradient
-        colors={[theme.acaoUni.blue, theme.acaoUni.red]}
+        colors={['#000000', '#000000']}
         style={{
           width: 40,
           height: 40,
@@ -37,7 +37,7 @@ function InstitutionMarker({ institution }: { institution: Institution }) {
           overflow: "hidden",
         }}
       >
-        <Image
+        <CacheImage
           source={{ uri: institution.avatar }}
           style={{
             width: "100%",

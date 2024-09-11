@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { theme } from "@/Theme/theme";
 import { router } from "expo-router";
+import CacheImage from "./CacheImage";
 
 type DonationCardProps = {
   title: string;
@@ -32,7 +33,7 @@ const DonationCard = ({
           width: "100%",
         }}
       >
-        <Image source={{ uri: image }} style={styles.img} resizeMode="cover" />
+        <CacheImage source={{ uri: image }} style={styles.img} resizeMode="cover" />
         <View style={{ gap: 8 }}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description} numberOfLines={1}>

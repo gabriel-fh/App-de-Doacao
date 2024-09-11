@@ -1,8 +1,9 @@
-import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import { router } from "expo-router";
 import { Campaign } from "@/@types/app";
+import CacheImage from "./CacheImage";
 
 const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
   const handlePress = () => {
@@ -19,7 +20,7 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
       onPress={handlePress}
       style={{ ...styles.container, ...styles.shadow }}
     >
-      <Image
+      <CacheImage
         source={{ uri: campaign.avatar }}
         style={styles.img}
         resizeMode="cover"
@@ -31,16 +32,12 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
         <Text numberOfLines={2} style={styles.description}>
           {campaign.description}
         </Text>
-        <View style={styles.goal}>
-          <Text style={styles.current}>
-            Meta {campaign.donated_items_quantity} /{" "}
-            {campaign.donated_items_objective}
-          </Text>
-          <ProgressBar
-            donated={campaign.donated_items_quantity}
-            objective={campaign.donated_items_objective}
-          />
-        </View>
+        <ProgressBar
+          donated={campaign.donated_items_quantity}
+          objective={campaign.donated_items_objective}
+          isCard
+          title={`Meta ${campaign.donated_items_quantity} / ${campaign.donated_items_objective}`}
+        />
       </View>
     </TouchableOpacity>
   );
@@ -81,16 +78,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#595959",
     overflow: "hidden",
-    fontFamily: "Montserrat_500Medium",
-  },
-  goal: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 5,
-  },
-  current: {
-    fontSize: 14,
-    color: "#0D62AD",
     fontFamily: "Montserrat_500Medium",
   },
   shadow: {

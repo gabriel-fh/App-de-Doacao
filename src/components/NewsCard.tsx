@@ -1,13 +1,13 @@
 import {
   Text,
   View,
-  Image,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { News } from "@/@types/app";
 import { router } from "expo-router";
+import CacheImage from "./CacheImage";
 
 const NewsCard = ({ news }: { news: News }) => {
   const handlePress = () => {
@@ -23,7 +23,7 @@ const NewsCard = ({ news }: { news: News }) => {
     <TouchableOpacity onPress={handlePress}>
       <View style={[styles.container, styles.shadow]}>
         {news.banners && (
-          <Image
+          <CacheImage
             source={{ uri: news.banners[0] }}
             style={styles.image}
             resizeMode="cover"
