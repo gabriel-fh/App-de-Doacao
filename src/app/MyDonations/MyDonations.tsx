@@ -18,16 +18,43 @@ const MyDonations = () => {
 
   // const a = donations.map((donation) => donation.campaign.name);
 
+  if (isLoading) {
+    return <ActivityIndicator size="large" color={theme.primary} />;
+  }
+
+  if (!isLoading && donations?.length === 0) {
+    return (
+      <View
+        style={{
+          width: "100%",
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+        }}
+      >
+        <View style={styles.wrapper}>
+          <Text style={styles.title}>Você não possui doações</Text>
+          <CacheImage
+            source={require("assets/Charity-rafiki.png")}
+            style={{
+              width: 230,
+              height: 230,
+              alignSelf: "center",
+            }}
+          />
+          <Button
+            text="Doar agora"
+            onPress={() => router.navigate("Campaign/Campaign")}
+          />
+        </View>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={
-        (donations?.length < 0 || isLoading) && styles.center
-      }
-    >
-      {isLoading ? (
-        <ActivityIndicator size="large" color={theme.primary} />
-      ) : donations?.length > 0 ? (
+    <ScrollView style={styles.container}>
+      {
         <View style={{ gap: 10, flex: 1 }}>
           {donations.map((donation) => (
             <DonationCard
@@ -40,33 +67,7 @@ const MyDonations = () => {
             />
           ))}
         </View>
-      ) : (
-        <View
-          style={{
-            width: "100%",
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <View style={styles.wrapper}>
-            <Text style={styles.title}>Você não possui doações</Text>
-            <CacheImage
-              source={require("assets/Charity-rafiki.png")}
-              style={{
-                width: 230,
-                height: 230,
-                alignSelf: "center",
-              }}
-            />
-            <Button
-              text="Doar agora"
-              onPress={() => router.navigate("Campaign/Campaign")}
-            />
-          </View>
-        </View>
-      )}
+      }
     </ScrollView>
   );
 };
