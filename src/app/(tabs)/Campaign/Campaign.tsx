@@ -13,6 +13,8 @@ import FilterSelect from "@/components/FilterSelect";
 import { useSearchCampaign } from "@/hooks/Campaign/useSearchCampaigns";
 import { theme } from "@/Theme/theme";
 import { Item } from "@/@types/app";
+import SomethingWrong from "@/components/SomethingWrong";
+import CampaingScreenSkeleton from "@/components/CampaignScreen/CampaingScreenSkeleton";
 
 const Campaign = () => {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -48,7 +50,9 @@ const Campaign = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <CampaingScreenSkeleton />
+  ) : campaigns && campaigns.length > 0 ? (
     <View style={{ position: "relative", flex: 1 }}>
       <ScrollView
         style={styles.container}
@@ -91,6 +95,16 @@ const Campaign = () => {
         </View>
       </ScrollView>
       <BackToTopButton scrollViewRef={scrollViewRef} showButton={showButton} />
+    </View>
+  ) : (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <SomethingWrong />
     </View>
   );
 };
