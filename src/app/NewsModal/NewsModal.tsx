@@ -3,7 +3,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  ActivityIndicator,
   Dimensions,
   FlatList,
 } from "react-native";
@@ -11,9 +10,9 @@ import React from "react";
 import CloseModalButton from "@/components/CloseModalButton";
 import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
-import { theme } from "@/Theme/theme";
 import CacheImage from "@/components/CacheImage";
 import NewsModalSkeleton from "@/components/NewsModal/NewsModalSkeleton";
+import SomethingWrong from "@/components/SomethingWrong";
 
 const NewsModal = () => {
   const { newsId } = useLocalSearchParams();
@@ -72,7 +71,13 @@ const NewsModal = () => {
       </ScrollView>
     </View>
   ) : (
-    <Text>Ocorreu um erro ao carregar a noticia</Text>
+    <View style={{
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <SomethingWrong />
+    </View>
   );
 };
 const { width } = Dimensions.get("window");
