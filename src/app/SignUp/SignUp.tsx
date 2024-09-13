@@ -75,7 +75,7 @@ const SignUp = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.wrapper}>
-        <FormHeader title={"Cadastrar"} />
+        <FormHeader title={"Cadastre-se"} subtitle="Insira suas informações nos campos abaixossssssssssssss" />
         <View style={styles.inputContainer}>
           <Controller
             control={control}
@@ -164,6 +164,7 @@ const SignUp = () => {
               />
             )}
           />
+          
           <Button text="Continuar" onPress={handleSubmit(onSubmit)}></Button>
         </View>
       </View>
@@ -173,9 +174,11 @@ const SignUp = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    minHeight: "90%",
+    display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center",    
   },
   title: {
     fontSize: 22,
@@ -187,7 +190,9 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "90%",
     padding: 20,
-    alignItems: "center",
+    alignSelf: "center",
+    // height: "100%",
+    // alignItems: "center",
     // gap: 30,
   },
   inputContainer: {

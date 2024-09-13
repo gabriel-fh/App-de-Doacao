@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Platform,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import Input from "@/components/Input";
@@ -59,10 +60,7 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={styles.container}
-    >
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.loginContainer}>
         <FormHeader title="Login" />
         <View
@@ -126,15 +124,16 @@ const Login = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    minHeight: "90%",
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
   loginContainer: {
     width: "90%",
