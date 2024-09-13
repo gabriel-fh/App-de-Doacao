@@ -13,6 +13,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useFetchNewsById } from "@/hooks/News/useFetchNewsById";
 import { theme } from "@/Theme/theme";
 import CacheImage from "@/components/CacheImage";
+import NewsModalSkeleton from "@/components/NewsModal/NewsModalSkeleton";
 
 const NewsModal = () => {
   const { newsId } = useLocalSearchParams();
@@ -22,18 +23,7 @@ const NewsModal = () => {
   );
 
   return isLoading ? (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <ActivityIndicator
-        size={"large"}
-        color={theme.primary}
-      ></ActivityIndicator>
-    </View>
+    <NewsModalSkeleton />
   ) : newsInfo ? (
     <View style={{ position: "relative", flex: 1, backgroundColor: "#fff" }}>
       <CloseModalButton />
