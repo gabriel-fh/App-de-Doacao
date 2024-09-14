@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Picker from "../Picker";
+import Picker from "./Picker";
 import PopUp from "../PopUp";
 import { Text } from "react-native";
 import Button from "../Button";

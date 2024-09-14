@@ -7,8 +7,8 @@ import {
 } from "react-native";
 import React, { useRef, useState } from "react";
 import CampaignCard from "@/components/CampaignCard";
-import BackToTopButton from "@/components/BackToTopButton";
-import Searchbar from "@/components/Searchbar";
+import BackToTopButton from "@/components/CampaignScreen/BackToTopButton";
+import Searchbar from "@/components/CampaignScreen/Searchbar";
 import FilterSelect from "@/components/FilterSelect";
 import { useSearchCampaign } from "@/hooks/Campaign/useSearchCampaigns";
 import { theme } from "@/Theme/theme";

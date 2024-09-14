@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import AddDecrease from "../AddDecrease";
+import AddDecrease from "./AddDecrease";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ItemById } from "@/@types/app";
 

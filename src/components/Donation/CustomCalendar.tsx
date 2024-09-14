@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Button from "./Button";
+import Button from "../Button";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { theme } from "@/Theme/theme";
 import moment from "moment";
