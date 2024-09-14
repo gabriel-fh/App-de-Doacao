@@ -13,7 +13,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
 import { theme } from "@/Theme/theme";
-import BannerAvatar from "@/components/CampaignModal/BannerAvatar";
+import BannerAvatar from "@/components/BannerAvatar";
 import CampaignInfo from "@/components/CampaignModal/CampaignInfo";
 import CampaignSkeleton from "@/components/CampaignModal/CampaignSkeleton";
 import SomethingWrong from "@/components/SomethingWrong";
