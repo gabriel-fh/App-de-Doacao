@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { createContext, useContext } from "react";
+import { Alert } from "react-native";
 import { showMessage } from "react-native-flash-message";
 
 interface AuthContextData {
@@ -42,6 +43,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return true;
     } catch (err) {
+      Alert.alert(
+        "Ops! Ocorreu um erro ao entrar na sua conta: ",
+        `${err?.response?.data.message}`
+      );
       console.error(err?.response?.data);
       return false;
     }

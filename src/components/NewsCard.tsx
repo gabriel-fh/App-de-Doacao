@@ -31,7 +31,7 @@ const NewsCard = ({ news }: { news: News }) => {
         )}
         <Text style={styles.title}>{news.title}</Text>
 
-        <Text style={styles.description} numberOfLines={4}>
+        <Text style={styles.description} numberOfLines={3}>
           {news.subtitle}
         </Text>
       </View>
