@@ -21,7 +21,7 @@ const Settings = () => {
       icon: (
         <MaterialIcons name={"privacy-tip"} size={25} color={theme.primary} />
       ),
-      onPress: () => console.log("Política de privacidade"),
+      onPress: () => router.navigate("PrivacyPolicy/PrivacyPolicy"),
     },
     {
       title: "Sobre o app",

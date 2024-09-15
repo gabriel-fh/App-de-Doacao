@@ -1,7 +1,5 @@
-import { View, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-import CloseModalButton from "@/components/CloseModalButton";
-import Markdown from "react-native-markdown-display";
+import TextScreen from "@/components/TextScreen";
 
 const Terms = () => {
   const markdown = `## Termos de Uso
@@ -30,30 +28,9 @@ Podemos suspender ou encerrar seu acesso ao aplicativo se detectarmos violação
 `;
 
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      style={{ height: "100%" }}
-    >
-      <CloseModalButton />
-      <View style={styles.container}>
-        <Markdown>{markdown}</Markdown>
-      </View>
-    </ScrollView>
+    <TextScreen markdown={markdown}/>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    paddingHorizontal: 15,
-    paddingVertical: 40,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    elevation: 5,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default Terms;
