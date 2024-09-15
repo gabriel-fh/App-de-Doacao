@@ -15,34 +15,6 @@ import { Item } from "@/@types/app";
 import { theme } from "@/Theme/theme";
 import PopUp from "./PopUp";
 
-const DATA: Item[] = [
-  {
-    id: 1,
-    name: "Item 1",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Item 2",
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Item 3",
-    status: "active",
-  },
-  {
-    id: 4,
-    name: "Item 4",
-    status: "active",
-  },
-  {
-    id: 5,
-    name: "Item 5",
-    status: "active",
-  },
-]
-
 const FilterSelect = ({
   donationItems,
   selectItem,
@@ -107,7 +79,7 @@ const FilterSelect = ({
                   paddingTop: 10,
                 }}
               >
-                {DATA.map((item, idx) => (
+                {items.map((item, idx) => (
                   <TouchableOpacity key={idx} onPress={() => selectItem(item)}>
                     <Badge
                       text={item.name}

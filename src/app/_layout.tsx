@@ -133,6 +133,32 @@ const RootLayoutNav = () => {
                 headerTintColor: "#fff",
               }}
             />
+            <Stack.Screen
+              name="Settings/Settings"
+              options={{
+                title: "Configurações",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="Terms/Terms"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="PrivacyPolicy/PrivacyPolicy"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
           </Stack>
         </AuthProvider>
       </QueryClientProvider>

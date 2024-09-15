@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Picker from "../Picker";
-import CustomCalendar from "../CustomCalendar";
+import Picker from "./Picker";
+import CustomCalendar from "./CustomCalendar";
 import PopUp from "../PopUp";
 
 function DatePicker({

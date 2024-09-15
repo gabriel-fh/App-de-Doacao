@@ -12,14 +12,15 @@ import Button from "@/components/Button";
 import { router } from "expo-router";
 import { theme } from "@/Theme/theme";
 import CacheImage from "@/components/CacheImage";
+import MyDonationsSkeleton from "@/components/MyDonations/MyDonationsSkeleton";
 
 const MyDonations = () => {
   const { data: donations, isLoading } = useFetchDonation();
 
-  // const a = donations.map((donation) => donation.campaign.name);
+  console.log(donations);
 
   if (isLoading) {
-    return <ActivityIndicator size="large" color={theme.primary} />;
+    return <MyDonationsSkeleton />;
   }
 
   if (!isLoading && donations?.length === 0) {

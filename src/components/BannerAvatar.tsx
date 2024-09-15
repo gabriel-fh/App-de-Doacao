@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import CacheImage from "../CacheImage";
+import CacheImage from "./CacheImage";
 
 type BannerAvatarProps = {
   banner: string;
@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
     height: 90,
     width: 90,
     borderRadius: 50,
-    borderWidth: 3,
-    borderColor: "white",
+    borderWidth: 3.5,
+    borderColor: "#f3f3f2",
     position: "absolute",
     top: -35,
-    left: 12,
+    left: 15,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
