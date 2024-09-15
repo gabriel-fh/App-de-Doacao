@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
@@ -10,7 +9,6 @@ import React from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { theme } from "@/Theme/theme";
-import { KeyboardAvoidingView } from "react-native";
 import { router } from "expo-router";
 import FormHeader from "@/components/FormHeader";
 import { useForm, Controller } from "react-hook-form";

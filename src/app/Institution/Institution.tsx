@@ -1,14 +1,10 @@
-import { theme } from "@/Theme/theme";
 import BannerAvatar from "@/components/BannerAvatar";
-import CacheImage from "@/components/CacheImage";
 import CampaignCard from "@/components/CampaignCard";
 import CloseModalButton from "@/components/CloseModalButton";
 import IconText from "@/components/IconText";
 import InstitutionSkeleton from "@/components/Institution/InstitutionSkeleton";
-import LoadingFullScreen from "@/components/LoadingFullScreen";
 import SomethingWrong from "@/components/SomethingWrong";
 import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";

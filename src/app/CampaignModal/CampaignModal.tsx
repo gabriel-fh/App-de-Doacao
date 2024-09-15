@@ -3,7 +3,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import ProgressBar from "@/components/ProgressBar";
@@ -12,7 +11,6 @@ import FloatButton from "@/components/FloatButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useFetchCampaignById } from "@/hooks/Campaign/useFetchCampaignById";
 import { useAuth } from "@/contexts/Auth";
-import { theme } from "@/Theme/theme";
 import BannerAvatar from "@/components/BannerAvatar";
 import CampaignInfo from "@/components/CampaignModal/CampaignInfo";
 import CampaignSkeleton from "@/components/CampaignModal/CampaignSkeleton";

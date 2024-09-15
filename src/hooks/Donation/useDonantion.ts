@@ -5,7 +5,6 @@ import { showMessage } from "react-native-flash-message";
 function useDonantion({ donationItems, setDonationItems, selectedDate, parsedCampaignInfo, mutateDonation, setErrorMsg }) {
 
     const selectItem = (newItem: ItemById) => {
-        // Se o item já estiver na lista, remove ele se não adiciona
         if (donationItems.find((item) => item.id === newItem.id)) {
             setDonationItems((prevItems) =>
                 prevItems.filter((item) => item.id !== newItem.id)

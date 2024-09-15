@@ -3,8 +3,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Modal,
-  TouchableWithoutFeedback,
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";

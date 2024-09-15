@@ -3,14 +3,12 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import { useFetchDonation } from "@/hooks/Donation/useFetchDonation";
 import DonationCard from "@/components/DonationCard";
 import Button from "@/components/Button";
 import { router } from "expo-router";
-import { theme } from "@/Theme/theme";
 import CacheImage from "@/components/CacheImage";
 import MyDonationsSkeleton from "@/components/MyDonations/MyDonationsSkeleton";
 
