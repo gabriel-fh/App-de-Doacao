@@ -1,40 +1,12 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { theme } from "@/Theme/theme";
-import { router } from "expo-router";
 
 const Settings = () => {
   const tabs = [
     {
-      title: "Termos de uso",
-      icon: (
-        <FontAwesome5 name={"clipboard-list"} size={25} color={theme.primary} />
-      ),
-      onPress: () => router.navigate("Terms/Terms"),
-    },
-    {
-      title: "Política de privacidade",
-      icon: (
-        <MaterialIcons name={"privacy-tip"} size={25} color={theme.primary} />
-      ),
-      onPress: () => router.navigate("PrivacyPolicy/PrivacyPolicy"),
-    },
-    {
-      title: "Sobre o app",
-      icon: (
-        <FontAwesome6 name={"circle-info"} size={25} color={theme.primary} />
-      ),
-      onPress: () => console,
-    },
-    {
       title: "Exclur conta",
-      icon: (
-        <FontAwesome name={"trash"} size={25} color={'#f00'} />
-      ),
+      icon: <FontAwesome name={"trash"} size={25} color={"#f00"} />,
       onPress: () => console,
     },
   ];
@@ -82,7 +54,7 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     width: "90%",
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
     elevation: 5,
