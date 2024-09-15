@@ -18,6 +18,8 @@ const MyDonations = () => {
 
   // const a = donations.map((donation) => donation.campaign.name);
 
+  console.log(donations)
+
   if (isLoading) {
     return <ActivityIndicator size="large" color={theme.primary} />;
   }

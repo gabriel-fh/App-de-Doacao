@@ -21,7 +21,7 @@ import { showMessage } from "react-native-flash-message";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, insira um e-mail válido"),
-  password: z.string(),
+  password: z.string().min(1, "Por favor, digite senha"),
 });
 
 const Login = () => {
@@ -89,13 +89,14 @@ const Login = () => {
           <Controller
             control={control}
             name={"password"}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Input
                 placeholder={"Digite sua senha"}
                 password
                 title={"Senha"}
                 value={value}
                 onChangeText={onChange}
+                errorMessage={error?.message}
               />
             )}
           />

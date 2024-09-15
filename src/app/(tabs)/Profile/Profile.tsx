@@ -26,20 +26,15 @@ const Profile = () => {
       title: "Minhas Doações",
       onPress: () => router.navigate("MyDonations/MyDonations"),
     },
-    {
-      icon: <FontAwesome name={"trophy"} size={27} color={"#0D62AD"} />,
-      title: "Conquistas",
-      onPress: () => console.log,
-    },
+    // {
+    //   icon: <FontAwesome name={"trophy"} size={27} color={"#0D62AD"} />,
+    //   title: "Conquistas",
+    //   onPress: () => console.log,
+    // },
     {
       icon: <Ionicons name={"settings"} size={27} color={"#0D62AD"} />,
       title: "Configurações",
-      onPress: () => console.log,
-    },
-    {
-      icon: <FontAwesome6 name={"circle-info"} size={25} color={"#0D62AD"} />,
-      title: "Sobre",
-      onPress: () => console.log,
+      onPress: () => router.navigate("Settings/Settings"),
     },
     {
       icon: <FontAwesome name={"sign-out"} size={30} color={"#f00"} />,
