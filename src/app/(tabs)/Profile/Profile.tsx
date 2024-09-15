@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
     alignSelf: "center",
-    marginTop: 10,
   },
   item: {
     flexDirection: "row",
