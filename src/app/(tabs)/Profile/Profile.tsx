@@ -4,6 +4,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React from "react";
 import UserInfos from "@/components/UserInfos";
@@ -17,6 +18,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import ActionButton from "@/components/Profile/ActionButton";
 
 const Profile = () => {
   const authContext = useAuth();
@@ -70,60 +72,20 @@ const Profile = () => {
       <ScrollView
         style={styles.container}
         scrollEventThrottle={16}
-        contentContainerStyle={{
-          paddingVertical: 20,
-          paddingHorizontal: 12,
-        }}
       >
-        <View style={styles.wrapper}>
+        <View style={styles.header}>
           <UserInfos data={authContext.authData} />
-
-          <View
-            style={{
-              marginTop: 20,
-              paddingHorizontal: 15,
-            }}
-          >
-            {profileTabs.map((tab, idx) => {
-              return (
-                <TouchableOpacity
-                  key={idx}
-                  style={[
-                    styles.item,
-                    idx < profileTabs.length - 1 && {
-                      borderBottomWidth: 1,
-                      borderBottomColor: "#ddd",
-                    },
-                  ]}
-                  onPress={() => tab?.onPress()}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 20,
-                    }}
-                  >
-                    {tab.icon}
-                    <Text
-                      style={{
-                        fontFamily: "Montserrat_600SemiBold",
-                        fontSize: 16,
-                      }}
-                    >
-                      {tab.title}
-                    </Text>
-                  </View>
-                  {idx !== profileTabs.length - 1 && (
-                    <FontAwesome
-                      name={"angle-right"}
-                      size={30}
-                      color={"#666"}
-                    />
-                  )}
-                </TouchableOpacity>
-              );
-            })}
+        </View>
+        <View style={styles.wrapperContainer}>
+          <View style={styles.wrapper}>
+            {profileTabs.map((tab, index) => (
+              <ActionButton
+                key={index}
+                index={index}
+                profileTabs={profileTabs}
+                tab={tab}
+              />
+            ))}
           </View>
         </View>
       </ScrollView>
@@ -182,31 +144,70 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header: {
+    width: "100%",
+    backgroundColor: theme.primary,
+    paddingHorizontal: 12,
+    paddingTop: 24,
+    paddingBottom: 48,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  wrapperContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    marginTop: -20, // Ajustar para garantir que a wrapper apareça sobre o cabeçalho
+    zIndex: 1,
+    height: Dimensions.get("window").height,
+  },
   wrapper: {
     width: "100%",
-    paddingVertical: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
-    elevation: 5,
-    alignSelf: "center",
-  },
-  item: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    paddingVertical: 12,
+    paddingHorizontal: 12,
     alignItems: "center",
-    paddingVertical: 20,
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 4,
   },
   loginContainer: {
     width: "90%",
     padding: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
-    elevation: 5,
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 20,
     textAlign: "center",
+  },
+  image: {
+    width: 230,
+    height: 230,
+    alignSelf: "center",
+  },
+  signupText: {
+    color: theme.primary,
+    marginTop: 10,
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  unauthenticatedContainer: {
+    flex: 1,
+    position: "relative",
+  },
+  scrollContent: {
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    flex: 1,
   },
 });
 

@@ -7,7 +7,6 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { router } from "expo-router";
 
 const UserInfos = ({ data }: { data: User }) => {
-
   return (
     <View
       style={{
@@ -31,7 +30,7 @@ const UserInfos = ({ data }: { data: User }) => {
         <FontAwesome
           name={"user-circle-o"}
           size={47}
-          color={theme.primary}
+          color={"#fff"}
           style={{
             paddingLeft: 5,
           }}
@@ -42,6 +41,7 @@ const UserInfos = ({ data }: { data: User }) => {
               fontSize: 18,
               fontFamily: "Montserrat_600SemiBold",
               width: 250,
+              color: "#fff",
             }}
             numberOfLines={1}
             ellipsizeMode="tail"
@@ -53,6 +53,7 @@ const UserInfos = ({ data }: { data: User }) => {
               fontSize: 16,
               fontFamily: "Montserrat_500Medium",
               marginTop: 4,
+              color: "#fff",
             }}
           >
             {data.phone
