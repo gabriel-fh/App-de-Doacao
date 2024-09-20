@@ -24,7 +24,6 @@ type routeParams = {
 const Donation = () => {
   const { campaignInfo } = useLocalSearchParams<routeParams>();
   const parsedCampaignInfo: CampaignById = JSON.parse(campaignInfo);
-  console.log(parsedCampaignInfo);
   
   const [donationItems, setDonationItems] = useState<ItemById[]>([]);
   const [commentary, setCommentary] = useState("");
