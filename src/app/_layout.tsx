@@ -159,6 +159,16 @@ const RootLayoutNav = () => {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="ChangeData/ChangeData"
+              options={{
+                title: "Meus Dados",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
           </Stack>
         </AuthProvider>
       </QueryClientProvider>

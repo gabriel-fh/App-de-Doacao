@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
+import { theme } from "@/Theme/theme";
 
 const Badge = ({ text, selected }: { text: string; selected: boolean }) => {
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: selected ? "#0D62AD" : "#E2E8F0" },
+        { backgroundColor: selected ? theme.primary : "#E2E8F0" },
       ]}
     >
       <Text

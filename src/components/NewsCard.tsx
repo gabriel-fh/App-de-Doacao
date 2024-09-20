@@ -8,6 +8,7 @@ import React from "react";
 import { News } from "@/@types/app";
 import { router } from "expo-router";
 import CacheImage from "./CacheImage";
+import { theme } from "@/Theme/theme";
 
 const NewsCard = ({ news }: { news: News }) => {
   const handlePress = () => {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
   },
   username: {
     fontSize: 14,

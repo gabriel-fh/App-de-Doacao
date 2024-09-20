@@ -39,7 +39,10 @@ const ProgressBar = (progressProperty: ProgressBarProps) => {
       <View style={styles.progressContainer}>
         <LinearGradient
           colors={[theme.primary, theme.secondary]}
-          style={[styles.progress, { width: `${percentage}%` }]}
+          style={[
+            styles.progress,
+            { width: `${!percentage ? 0 : percentage}%` },
+          ]}
         />
       </View>
       {!isCard && (

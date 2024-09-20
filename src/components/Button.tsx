@@ -1,5 +1,6 @@
 import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from "react-native";
 import React from "react";
+import { theme } from "@/Theme/theme";
 
 const Button = ({
   text,
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     paddingVertical: 12,
-    backgroundColor: "#0D62AD",
+    backgroundColor: theme.primary,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

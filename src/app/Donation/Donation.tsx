@@ -13,6 +13,7 @@ import DatePicker from "@/components/Donation/DatePicker";
 import AvailableItems from "@/components/Donation/AvailableItems";
 import AddressInfo from "@/components/Donation/AddressInfo";
 import TimePicker from "@/components/Donation/TimePicker";
+import { theme } from "@/Theme/theme";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
   },
   username: {
     fontSize: 14,

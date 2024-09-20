@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import AddDecrease from "./AddDecrease";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ItemById } from "@/@types/app";
+import { theme } from "@/Theme/theme";
 
 function DonationItem({
   item,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
   },
   username: {
     fontSize: 14,

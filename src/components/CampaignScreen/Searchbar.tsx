@@ -1,6 +1,7 @@
 import { View, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { theme } from "@/Theme/theme";
 
 const Searchbar = ({
   setSearchParam,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 8,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
     borderWidth: 2,
     borderRadius: 10,
     maxHeight: 50,
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_600SemiBold",
   },
   iconView: {
-    backgroundColor: "#0D62AD",
+    backgroundColor: theme.primary,
     borderRadius: 10,
     height: "110%",
     justifyContent: "center",

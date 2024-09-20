@@ -71,7 +71,7 @@ const Input = ({ ...props }: InputProps) => {
 const styles = StyleSheet.create({
   inputContainer: {
     borderWidth: 2,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
     borderRadius: 10,
     position: "relative",
   },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     left: 15,
     fontSize: 17,
-    color: "#0D62AD",
+    color: theme.primary,
     backgroundColor: "#fff",
   },
   input: {

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ItemById } from "@/@types/app";
+import { theme } from "@/Theme/theme";
 
 const AddDecrease = ({
   handleRemoveItem,
@@ -50,13 +51,13 @@ const AddDecrease = ({
             : handleRemoveItem
         }
       >
-        <FontAwesome name="minus" color={"#0D62AD"} size={17} />
+        <FontAwesome name="minus" color={theme.primary} size={17} />
       </TouchableOpacity>
       <Text style={{ fontSize: 17, fontFamily: "Montserrat_500Medium" }}>
         {currentItem?.quantity}
       </Text>
       <TouchableOpacity onPress={() => addItem()}>
-        <FontAwesome name="plus" color={"#0D62AD"} size={17} />
+        <FontAwesome name="plus" color={theme.primary} size={17} />
       </TouchableOpacity>
     </View>
   );

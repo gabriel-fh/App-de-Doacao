@@ -5,6 +5,7 @@ import IconText from "@/components/IconText";
 import InstitutionSkeleton from "@/components/Institution/InstitutionSkeleton";
 import SomethingWrong from "@/components/SomethingWrong";
 import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutionById";
+import { theme } from "@/Theme/theme";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
@@ -51,7 +52,7 @@ const Institution = () => {
                   .replace("+55", "")
                   .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
               >
-                <Foundation name={"telephone"} size={22} color={"#0D62AD"} />
+                <Foundation name={"telephone"} size={22} color={theme.primary} />
               </IconText>
               <IconText
                 text={
@@ -60,7 +61,7 @@ const Institution = () => {
                   institutionInfo.address?.city
                 }
               >
-                <Entypo name={"location"} size={20} color={"#0D62AD"} />
+                <Entypo name={"location"} size={20} color={theme.primary} />
               </IconText>
             </View>
           </View>
