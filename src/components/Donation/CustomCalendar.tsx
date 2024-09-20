@@ -80,7 +80,7 @@ const CustomCalendar = ({
         markedDates={{
           [selected]: { selected: true, disableTouchEvent: true },
         }}
-        minDate={startDate}
+        minDate={today} // Set minDate to today
         maxDate={endDate}
         hideExtraDays
         theme={{
