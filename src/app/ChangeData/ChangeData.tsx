@@ -15,6 +15,8 @@ import { useAuth } from "@/contexts/Auth";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { theme } from "@/Theme/theme";
+import { User } from "@/@types/app";
+import { router } from "expo-router";
 
 const formSchema = z.object({
   name: z
@@ -31,7 +33,7 @@ const formSchema = z.object({
 });
 
 const ChangeData = () => {
-  const { authData } = useAuth();
+  const { authData, changeData } = useAuth();
   const { control, handleSubmit } = useForm({
     defaultValues: {
       name: authData.name || "",
@@ -43,8 +45,17 @@ const ChangeData = () => {
     },
     resolver: zodResolver(formSchema),
   });
-  const onSubmit = async (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: Omit<User, 'id'>) => {
+    try {
+      const res = await changeData(data)
+      if(res) {
+        router.navigate("Profile/Profile")
+      } else {
+        router.navigate("/")
+      }
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   const renderInput = (

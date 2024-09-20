@@ -3,6 +3,7 @@ import { useFetchUser } from "@/hooks/User/useFetchUser";
 import {
   useMutateUser,
   useMutateRegisterUser,
+  useMutateEditUser,
 } from "@/hooks/User/useMutateUser";
 import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +18,7 @@ interface AuthContextData {
   isLoading: boolean;
   signIn: (data: { email: string; password: string }) => Promise<boolean>;
   signUp: (data: UserRegister) => Promise<boolean>;
+  changeData: (data: Omit<User, "id">) => Promise<boolean>;
   signOut: () => Promise<void>;
 }
 
@@ -28,6 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: authData, isLoading, invalidateRefresh } = useFetchUser();
   const { mutate: mutateUser } = useMutateUser();
   const { mutate: mutateRegisterUser } = useMutateRegisterUser();
+  const { mutate: mutateEditUser } = useMutateEditUser();
   const queryClient = useQueryClient();
 
   const signIn = async (data: { email: string; password: string }) => {
@@ -48,7 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         `${err?.response?.data.message}`
       );
       console.error(err?.response?.data);
-      return false;
+      throw err;
     }
   };
 
@@ -81,6 +84,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
     } catch (err) {
       console.error(err);
+      throw err;
     }
   };
 
@@ -97,8 +101,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return true;
     } catch (err) {
+      Alert.alert(
+        "Ops! Ocorreu um erro ao criar sua conta: ",
+        `${err?.response?.data.message}`
+      );
       console.error(err?.response?.data);
-      return false;
+      throw err;
+    }
+  };
+
+  const changeData = async (data: Omit<User, "id">): Promise<boolean> => {
+    try {
+      const res = await mutateEditUser(data);
+      return res ? true : false;
+    } catch (err) {
+      Alert.alert(
+        "Ops! Ocorreu um erro ao editar seus dados: ",
+        `${err?.response?.data.message}`
+      );
+      console.error(err?.response?.data);
+      throw err;
     }
   };
 
@@ -110,6 +132,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signIn,
         signOut,
         signUp,
+        changeData,
       }}
     >
       {children}
