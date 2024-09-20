@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { theme } from "@/Theme/theme";
 
 const Picker = ({
   title,
@@ -22,7 +23,7 @@ const Picker = ({
         <Text style={{ color: "#666", fontFamily: "Montserrat_500Medium" }}>
           {placeholder}
         </Text>
-        <FontAwesome name={icon} size={iconSize} color={"#0D62AD"} />
+        <FontAwesome name={icon} size={iconSize} color={theme.primary} />
       </View>
     </TouchableOpacity>
   );
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
     width: 140,
     height: 50,
     borderRadius: 10,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     left: 15,
     fontSize: 17,
-    color: "#0D62AD",
+    color: theme.primary,
     fontFamily: "Montserrat_600SemiBold",
   },
   iconText: {

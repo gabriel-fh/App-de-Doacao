@@ -23,12 +23,12 @@ const Profile = () => {
 
   const profileTabs = [
     {
-      icon: <FontAwesome name={"heart"} size={25} color={"#0D62AD"} />,
+      icon: <FontAwesome name={"heart"} size={25} color={theme.primary} />,
       title: "Minhas Doações",
       onPress: () => router.navigate("MyDonations/MyDonations"),
     },
     // {
-    //   icon: <FontAwesome name={"trophy"} size={27} color={"#0D62AD"} />,
+    //   icon: <FontAwesome name={"trophy"} size={27} color={theme.primary} />,
     //   title: "Conquistas",
     //   onPress: () => console.log,
     // },
@@ -54,7 +54,7 @@ const Profile = () => {
       onPress: () => console,
     },
     {
-      icon: <Ionicons name={"settings"} size={27} color={"#0D62AD"} />,
+      icon: <Ionicons name={"settings"} size={27} color={theme.primary} />,
       title: "Configurações",
       onPress: () => router.navigate("Settings/Settings"),
     },

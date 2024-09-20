@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "acme",
+    "scheme": "com.doacao",
     "userInterfaceStyle": "automatic",
     "orientation": "portrait",
     "web": {
@@ -23,10 +23,10 @@
         }
       ]
     ],
-    "name": "app-de-doacao",
-    "slug": "app-de-doacao",
+    "name": "DoaAção",
+    "slug": "doacao",
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#0D62AD"
     }

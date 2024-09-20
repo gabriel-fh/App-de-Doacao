@@ -3,8 +3,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Modal,
-  TouchableWithoutFeedback,
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
@@ -101,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-    backgroundColor: "#0D62AD",
+    backgroundColor: theme.primary,
     borderRadius: 10,
     paddingHorizontal: 18,
     maxHeight: 50,

@@ -3,7 +3,6 @@ import React from "react";
 import { Skeleton } from "moti/skeleton";
 import { theme } from "@/Theme/theme";
 
-const { width } = Dimensions.get("window");
 
 const SkeletonBlock = ({ height }) => (
   <View style={styles.skeletonBlock}>

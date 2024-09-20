@@ -1,5 +1,4 @@
 import { Institution } from "@/@types/app";
-import { theme } from "@/Theme/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React from "react";

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
@@ -75,7 +75,7 @@ const SignUp = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.wrapper}>
-        <FormHeader title={"Cadastre-se"} subtitle="Insira suas informações nos campos abaixossssssssssssss" />
+        <FormHeader title={"Cadastre-se"} subtitle="Insira suas informações nos campos abaixo" />
         <View style={styles.inputContainer}>
           <Controller
             control={control}

@@ -3,6 +3,7 @@ import { View } from "react-native";
 import IconText from "../IconText";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Address } from "@/@types/app";
+import { theme } from "@/Theme/theme";
 
 function AddressInfo({ address }: { address: Address }) {
   return (
@@ -18,7 +19,7 @@ function AddressInfo({ address }: { address: Address }) {
           address?.zipcode
         }
       >
-        <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
+        <MaterialIcons name="location-pin" size={30} color={theme.primary} />
       </IconText>
     </View>
   );

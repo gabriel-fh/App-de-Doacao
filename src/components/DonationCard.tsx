@@ -1,7 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import { theme } from "@/Theme/theme";
-import { router } from "expo-router";
 import CacheImage from "./CacheImage";
 
 type DonationCardProps = {

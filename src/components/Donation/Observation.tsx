@@ -1,3 +1,4 @@
+import { theme } from "@/Theme/theme";
 import React from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 
@@ -12,7 +13,7 @@ function Observation({
     <View
       style={{
         borderWidth: 2,
-        borderColor: "#0D62AD",
+        borderColor: theme.primary,
         borderRadius: 10,
         paddingTop: 10,
         position: "relative",
@@ -28,7 +29,7 @@ function Observation({
             paddingHorizontal: 5,
             left: 15,
             fontSize: 17,
-            color: "#0D62AD",
+            color: theme.primary,
           },
         ]}
       >
@@ -49,7 +50,7 @@ function Observation({
         keyboardType={"default"}
         value={commentary}
         onChangeText={(text) => setCommentary(text)}
-        selectionColor={"#0D62AD"}
+        selectionColor={theme.primary}
         numberOfLines={5}
         multiline={true}
         maxLength={250}
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
   },
   username: {
     fontSize: 14,

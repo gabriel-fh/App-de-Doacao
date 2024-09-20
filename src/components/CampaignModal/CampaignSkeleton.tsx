@@ -1,4 +1,4 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import React from "react";
 import { Skeleton } from "moti/skeleton";
 import { theme } from "@/Theme/theme";

@@ -5,6 +5,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Foundation from "react-native-vector-icons/Foundation";
 import { Address } from "@/@types/app";
+import { theme } from "@/Theme/theme";
 
 const CampaignInfo = ({ addressess }: { addressess: Address[] }) => {
   const openTelephone = () => {
@@ -16,16 +17,16 @@ const CampaignInfo = ({ addressess }: { addressess: Address[] }) => {
       <Text style={styles.subtitle}>Onde realizar as Doações?</Text>
       <View style={{ gap: 16, marginTop: 6 }}>
         <IconText text="07:00 - 16:30">
-          <AntDesign name="clockcircle" size={20} color="#0D62AD" />
+          <AntDesign name="clockcircle" size={20} color={theme.primary} />
         </IconText>
 
         <IconText text="(21) 99999-9999" onPress={openTelephone}>
-          <Foundation name="telephone" size={28} color="#0D62AD" />
+          <Foundation name="telephone" size={28} color={theme.primary} />
         </IconText>
 
         <View>
           <IconText text="Endereços de entrega" arrow>
-            <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
+            <MaterialIcons name="location-pin" size={30} color={theme.primary} />
           </IconText>
           <View style={{ paddingLeft: 8, marginTop: 10 }}>
             {addressess.map((item) => (
