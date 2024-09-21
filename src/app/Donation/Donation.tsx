@@ -1,5 +1,5 @@
 import { Text, StyleSheet, ScrollView, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import FloatButton from "@/components/FloatButton";
 import { CampaignById, ItemById } from "@/@types/app";
@@ -14,6 +14,7 @@ import AvailableItems from "@/components/Donation/AvailableItems";
 import AddressInfo from "@/components/Donation/AddressInfo";
 import TimePicker from "@/components/Donation/TimePicker";
 import { theme } from "@/Theme/theme";
+import { IndexPath } from "@ui-kitten/components";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -29,6 +30,10 @@ const Donation = () => {
   const [commentary, setCommentary] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedDate, setSelectedDate] = useState();
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [items, setItems] = useState<{ label: string; value: string }[] | null>(
+    []
+  );
 
   const { mutate: mutateDonation } = useMutateDonation();
 
@@ -38,10 +43,53 @@ const Donation = () => {
     selectedDate,
     donationItems,
     parsedCampaignInfo,
+    selectedTime,
     setErrorMsg,
     mutateDonation,
     setDonationItems,
   });
+
+  function generateTimeRange(start, end, selectedDate) {
+    const times = [];
+    let current = new Date(start);
+    const endTime = new Date(end);
+    const now = new Date(); 
+
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      timeZone: "America/Sao_Paulo",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+
+    const currentDate = now.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+    const isToday = currentDate === selectedDate?.split("-")?.reverse()?.join("/");
+
+    console.log(isToday);
+
+    while (current < endTime) {
+      let next = new Date(current.getTime() + 30 * 60000);
+
+      if (!isToday || next > now) {
+        const startTime = current.toLocaleTimeString("pt-BR", timeOptions);
+        const endTimeFormatted = next.toLocaleTimeString("pt-BR", timeOptions);
+
+        times.push(`${startTime} - ${endTimeFormatted}`);
+      }
+
+      current = next;
+    }
+
+    return times.map((time) => ({ label: time, value: time }));
+  }
+  useEffect(() => {
+    const timeData = generateTimeRange(
+      parsedCampaignInfo.donation_start_time,
+      parsedCampaignInfo.donation_end_time,
+      selectedDate 
+    );
+    setItems(timeData);
+  }, [selectedDate]);
 
   return (
     <View style={{ position: "relative", flex: 1 }}>
@@ -115,7 +163,13 @@ const Donation = () => {
                 endDate={parsedCampaignInfo.end_date}
               />
 
-              <TimePicker />
+              <TimePicker
+                setValue={setSelectedTime}
+                value={selectedTime}
+                items={items}
+                setItems={setItems}
+                disabled={!selectedDate}
+              />
             </View>
 
             {parsedCampaignInfo.addressess &&

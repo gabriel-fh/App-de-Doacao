@@ -39,6 +39,8 @@ export interface CampaignById extends Campaign {
   end_date: string;
   addressess: Address[];
   necessary_items: ItemById[];
+  donation_end_time: string;
+  donation_start_time: string;
 }
 
 // Endereço
