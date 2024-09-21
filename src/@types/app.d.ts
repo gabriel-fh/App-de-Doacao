@@ -41,6 +41,11 @@ export interface CampaignById extends Campaign {
   necessary_items: ItemById[];
   donation_end_time: string;
   donation_start_time: string;
+  institution: {
+    id: number;
+    avatar: string;
+    name: string;
+  };
 }
 
 // Endereço
@@ -97,7 +102,7 @@ export interface InstitutionById extends Institution {
 export interface Donation {
   id: number;
   campaign: Campaign;
-  donation_time: string
+  donation_time: string;
   items: {
     id: number;
     name: string;

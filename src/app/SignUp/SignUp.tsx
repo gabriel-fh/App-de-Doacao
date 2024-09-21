@@ -73,9 +73,15 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.wrapper}>
-        <FormHeader title={"Cadastre-se"} subtitle="Insira suas informações nos campos abaixo" />
+        <FormHeader
+          title={"Cadastre-se"}
+          subtitle="Insira suas informações nos campos abaixo"
+        />
         <View style={styles.inputContainer}>
           <Controller
             control={control}
@@ -164,7 +170,7 @@ const SignUp = () => {
               />
             )}
           />
-          
+
           <Button text="Continuar" onPress={handleSubmit(onSubmit)}></Button>
         </View>
       </View>
@@ -178,7 +184,7 @@ const styles = StyleSheet.create({
     minHeight: "90%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",    
+    justifyContent: "center",
   },
   title: {
     fontSize: 22,

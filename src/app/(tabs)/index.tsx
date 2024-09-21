@@ -54,17 +54,7 @@ const index = () => {
               </TouchableOpacity>
             ))}
           </>
-        ) : (
-          <Text
-            style={{
-              textAlign: "center",
-              marginTop: 20,
-              fontFamily: "Montserrat_600SemiBold",
-              fontSize: 16,
-            }}
-            children="Nenhuma notícia encontrada"
-          />
-        )}
+        ) : null}
       </View>
     </ScrollView>
   );

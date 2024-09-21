@@ -83,7 +83,6 @@ function DonationDetails() {
           eventEndTime
         );
 
-        console.log("Res" + res);
         if (res) {
           Alert.alert(
             "Evento adicionado",
