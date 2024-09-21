@@ -169,6 +169,16 @@ const RootLayoutNav = () => {
                 headerTintColor: "#fff",
               }}
             />
+            <Stack.Screen
+              name="DonationDetails/DonationDetails"
+              options={{
+                title: "Acompanhar Doação",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
           </Stack>
         </AuthProvider>
       </QueryClientProvider>

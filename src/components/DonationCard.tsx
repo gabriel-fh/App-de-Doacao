@@ -1,62 +1,65 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import React from "react";
 import CacheImage from "./CacheImage";
+import { router } from "expo-router";
+import { Donation } from "@/@types/app";
 
-type DonationCardProps = {
-  title: string;
-  status: string;
-  donatedItems: number;
-  image: string;
-  description: string;
-};
-
-const DonationCard = ({
-  title,
-  status,
-  donatedItems,
-  image,
-  description,
-}: DonationCardProps) => {
+const DonationCard = ({ donation }: { donation: Donation }) => {
   const donationStatus = {
-    agended: "agendada",
-    concluded: "completa",
+    agended: "Agendada",
+    concluded: "Completa",
   };
+
+  const handlePress = () => {
+    router.navigate({
+      pathname: "DonationDetails/DonationDetails",
+      params: {
+        donation: JSON.stringify(donation),
+      },
+    });
+  };
+
   return (
-    <View style={[styles.container, styles.shadow]}>
-      <View
-        style={{
-          gap: 8,
-          flexDirection: "row",
-          //   alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <CacheImage source={{ uri: image }} style={styles.img} resizeMode="cover" />
-        <View style={{ gap: 8 }}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description} numberOfLines={1}>
-            {description}
-          </Text>
-          <Text style={{ fontFamily: "Montserrat_500Medium" }}>
-            Status:{" "}
-            <Text
-              style={{
-                fontFamily: "Montserrat_600SemiBold",
-                color: status === "agended" ? "#d18d0f" : "#32CD32",
-              }}
-            >
-              {donationStatus[status]}
+    <TouchableWithoutFeedback onPress={handlePress}>
+      <View style={[styles.container, styles.shadow]}>
+        <View
+          style={{
+            gap: 8,
+            flexDirection: "row",
+            //   alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <CacheImage
+            source={{ uri: donation.campaign.avatar }}
+            style={styles.img}
+            resizeMode="cover"
+          />
+          <View style={{ gap: 8 }}>
+            <Text style={styles.title}>{donation.campaign.name}</Text>
+            <Text style={styles.description} numberOfLines={1}>
+              {donation.campaign.description}
             </Text>
-          </Text>
-          <Text style={{ fontFamily: "Montserrat_500Medium" }}>
-            Itens para doação:{" "}
             <Text style={{ fontFamily: "Montserrat_500Medium" }}>
-              {donatedItems}
+              Situação:{" "}
+              <Text
+                style={{
+                  fontFamily: "Montserrat_600SemiBold",
+                  color: donation.status === "agended" ? "#d18d0f" : "#32CD32",
+                }}
+              >
+                {donationStatus[donation.status]}
+              </Text>
             </Text>
-          </Text>
+            <Text style={{ fontFamily: "Montserrat_500Medium" }}>
+              Itens para doação:{" "}
+              <Text style={{ fontFamily: "Montserrat_500Medium" }}>
+                {donation.items.length}
+              </Text>
+            </Text>
+          </View>
         </View>
-      </View>
-      {/* <View
+        {/* <View
         style={{
           width: "100%",
           height: 1,
@@ -64,7 +67,7 @@ const DonationCard = ({
           marginVertical: 8,
         }}
       /> */}
-      {/* <View>
+        {/* <View>
         <TouchableOpacity
           style={{
             padding: 8,
@@ -87,7 +90,8 @@ const DonationCard = ({
           </Text>
         </TouchableOpacity>
       </View> */}
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

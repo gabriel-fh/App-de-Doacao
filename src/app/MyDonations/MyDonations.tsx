@@ -15,8 +15,6 @@ import MyDonationsSkeleton from "@/components/MyDonations/MyDonationsSkeleton";
 const MyDonations = () => {
   const { data: donations, isLoading } = useFetchDonation();
 
-  console.log(donations);
-
   if (isLoading) {
     return <MyDonationsSkeleton />;
   }
@@ -58,11 +56,7 @@ const MyDonations = () => {
           {donations.map((donation) => (
             <DonationCard
               key={donation.id}
-              status={donation.status}
-              title={donation.campaign.name}
-              donatedItems={donation.items.length}
-              image={donation.campaign.avatar}
-              description={donation.campaign.description}
+              donation={donation}
             />
           ))}
         </View>

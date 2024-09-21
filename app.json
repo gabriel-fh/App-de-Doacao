@@ -21,6 +21,12 @@
           "locationAlwaysPermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização.",
           "locationWhenInUsePermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização."
         }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "Permitir que $(PRODUCT_NAME) acesse sua agenda para salvar agendamentos de doações."
+        }
       ]
     ],
     "name": "DoaAção",

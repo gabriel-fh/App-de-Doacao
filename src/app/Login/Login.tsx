@@ -58,7 +58,10 @@ const Login = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.loginContainer}>
         <FormHeader title="Login" />
         <View

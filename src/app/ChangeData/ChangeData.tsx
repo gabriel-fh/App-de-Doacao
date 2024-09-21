@@ -17,6 +17,7 @@ import Button from "@/components/Button";
 import { theme } from "@/Theme/theme";
 import { User } from "@/@types/app";
 import { router } from "expo-router";
+import { showMessage } from "react-native-flash-message";
 
 const formSchema = z.object({
   name: z
@@ -34,27 +35,46 @@ const formSchema = z.object({
 
 const ChangeData = () => {
   const { authData, changeData } = useAuth();
+  const formatedPhone = authData.phone
+    .replace("+55", "")
+    .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       name: authData.name || "",
       email: authData.email || "",
-      phone:
-        authData.phone
-          .replace("+55", "")
-          .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3") || "",
+      phone: formatedPhone || "",
     },
     resolver: zodResolver(formSchema),
   });
-  const onSubmit = async (data: Omit<User, 'id'>) => {
+
+  const onSubmit = async (data: Omit<User, "id">) => {
     try {
-      const res = await changeData(data)
-      if(res) {
-        router.navigate("Profile/Profile")
+      const res = await changeData(data);
+      if (res) {
+        router.navigate("Profile/Profile");
+        showMessage({
+          message: "Dados alterados com sucesso!",
+          type: "none",
+          style: {
+            backgroundColor: "#13a709",
+            height: 60,
+            marginTop: 20,
+          },
+          floating: true,
+          titleStyle: {
+            color: "white",
+            fontSize: 18,
+            fontFamily: "Montserrat_600SemiBold",
+            marginTop: 7,
+            textAlign: "center",
+          },
+        });
       } else {
-        router.navigate("/")
+        router.navigate("/");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -100,11 +120,7 @@ const ChangeData = () => {
           <View style={styles.userDetails}>
             <Text style={styles.userName}>{authData.name}</Text>
             <Text style={styles.userEmail}>{authData.email}</Text>
-            <Text style={styles.userPhone}>
-              {authData.phone
-                .replace("+55", "")
-                .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
-            </Text>
+            <Text style={styles.userPhone}>{formatedPhone}</Text>
           </View>
         </View>
         <View style={styles.separator} />

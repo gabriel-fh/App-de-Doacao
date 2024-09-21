@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@eva-design/eva": "^2.2.0",
     "@expo-google-fonts/montserrat": "^0.2.3",
     "@gorhom/bottom-sheet": "^4.6.3",
     "@hookform/resolvers": "^3.6.0",
@@ -22,6 +23,7 @@
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "expo": "^51.0.0",
+    "expo-calendar": "^13.0.5",
     "expo-constants": "~16.0.1",
     "expo-linear-gradient": "~13.0.2",
     "expo-linking": "~6.3.1",
@@ -36,6 +38,7 @@
     "react-native": "^0.74.5",
     "react-native-animated-splash-screen": "^2.0.5",
     "react-native-calendars": "^1.1305.0",
+    "react-native-dropdown-picker": "^5.4.6",
     "react-native-flash-message": "^0.4.2",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-maps": "^1.14.0",

@@ -1,15 +1,16 @@
-import { User, UserRegister } from "@/@types/app";
+import { AuthStorageData, User, UserRegister } from "@/@types/app";
 import { useFetchUser } from "@/hooks/User/useFetchUser";
 import {
   useMutateUser,
   useMutateRegisterUser,
   useMutateEditUser,
 } from "@/hooks/User/useMutateUser";
+import { authedApi } from "@/setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { Alert } from "react-native";
 import { showMessage } from "react-native-flash-message";
 
@@ -32,6 +33,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { mutate: mutateRegisterUser } = useMutateRegisterUser();
   const { mutate: mutateEditUser } = useMutateEditUser();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
 
   const signIn = async (data: { email: string; password: string }) => {
     try {
@@ -123,6 +128,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       throw err;
     }
   };
+
+  async function verifyToken() {
+    const _auth_data = await AsyncStorage.getItem("@app-doacao:AuthToken");
+
+    const { expiration_date, token } = JSON.parse(
+      _auth_data
+    ) as AuthStorageData;
+
+    if (!expiration_date || !token) {
+      return null;
+    }
+
+    const expirationDate = new Date(expiration_date);
+    const now = new Date();
+
+    if (expirationDate < now) {
+      try {
+        const response = await authedApi.post("/clientes/refresh");
+
+        if (response.data) {
+          const { token, expiration_date } = response.data;
+
+          await AsyncStorage.setItem(
+            "@app-doacao:AuthToken",
+            JSON.stringify({ token, expiration_date })
+          );
+
+          return response.data;
+        }
+      } catch (error) {
+        console.log("AuthContext error: verifyToken", error.response.data);
+        return null;
+      }
+    }
+  }
 
   return (
     <AuthContext.Provider
