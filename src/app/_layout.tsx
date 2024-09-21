@@ -23,8 +23,7 @@ import { theme } from "@/Theme/theme";
 import { AuthProvider } from "@/contexts/Auth";
 import FlashMessage from "react-native-flash-message";
 import { useVerifyConnetion } from "@/hooks/Verifications/Connection";
-import * as eva from "@eva-design/eva";
-import { ApplicationProvider } from "@ui-kitten/components";
+
 const RootLayoutNav = () => {
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -64,116 +63,124 @@ const RootLayoutNav = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <AuthProvider>
-            <FlashMessage position="top" />
-            <StatusBar style="light" />
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen
-                name="Institution/Institution"
-                options={{
-                  presentation: "modal",
-                  animation: "slide_from_bottom",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="CampaignModal/CampaignModal"
-                options={{
-                  presentation: "modal",
-                  animation: "slide_from_bottom",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="Donation/Donation"
-                options={{
-                  presentation: "modal",
-                  headerTitle: "Quero Doar",
-                  headerStyle: { backgroundColor: theme.primary },
-                  headerTitleStyle: { color: "#fff" },
-                  headerTitleAlign: "center",
-                  headerTintColor: "#fff",
-                }}
-              />
-              <Stack.Screen
-                name="NewsModal/NewsModal"
-                options={{
-                  presentation: "modal",
-                  animation: "slide_from_bottom",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="Login/Login"
-                options={{
-                  title: "Login",
-                  headerStyle: { backgroundColor: theme.primary },
-                  headerTitleStyle: { color: "#fff" },
-                  headerTitleAlign: "center",
-                  headerTintColor: "#fff",
-                }}
-              />
-              <Stack.Screen
-                name="SignUp/SignUp"
-                options={{
-                  title: "Cadastre-se",
-                  headerStyle: { backgroundColor: theme.primary },
-                  headerTitleStyle: { color: "#fff" },
-                  headerTitleAlign: "center",
-                  headerTintColor: "#fff",
-                }}
-              />
-              <Stack.Screen
-                name="MyDonations/MyDonations"
-                options={{
-                  title: "Minhas Doações",
-                  headerStyle: { backgroundColor: theme.primary },
-                  headerTitleStyle: { color: "#fff" },
-                  headerTitleAlign: "center",
-                  headerTintColor: "#fff",
-                }}
-              />
-              <Stack.Screen
-                name="Settings/Settings"
-                options={{
-                  title: "Configurações",
-                  headerStyle: { backgroundColor: theme.primary },
-                  headerTitleStyle: { color: "#fff" },
-                  headerTitleAlign: "center",
-                  headerTintColor: "#fff",
-                }}
-              />
-              <Stack.Screen
-                name="Terms/Terms"
-                options={{
-                  presentation: "modal",
-                  animation: "slide_from_bottom",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="PrivacyPolicy/PrivacyPolicy"
-                options={{
-                  presentation: "modal",
-                  animation: "slide_from_bottom",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ChangeData/ChangeData"
-                options={{
-                  title: "Meus Dados",
-                  headerStyle: { backgroundColor: theme.primary },
-                  headerTitleStyle: { color: "#fff" },
-                  headerTitleAlign: "center",
-                  headerTintColor: "#fff",
-                }}
-              />
-            </Stack>
-          </AuthProvider>
-        </ApplicationProvider>
+        <AuthProvider>
+          <FlashMessage position="top" />
+          <StatusBar style="light" />
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Institution/Institution"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="CampaignModal/CampaignModal"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Donation/Donation"
+              options={{
+                presentation: "modal",
+                headerTitle: "Quero Doar",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="NewsModal/NewsModal"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Login/Login"
+              options={{
+                title: "Login",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="SignUp/SignUp"
+              options={{
+                title: "Cadastre-se",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="MyDonations/MyDonations"
+              options={{
+                title: "Minhas Doações",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="Settings/Settings"
+              options={{
+                title: "Configurações",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="Terms/Terms"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="PrivacyPolicy/PrivacyPolicy"
+              options={{
+                presentation: "modal",
+                animation: "slide_from_bottom",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ChangeData/ChangeData"
+              options={{
+                title: "Meus Dados",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+            <Stack.Screen
+              name="DonationDetails/DonationDetails"
+              options={{
+                title: "Ver Doação",
+                headerStyle: { backgroundColor: theme.primary },
+                headerTitleStyle: { color: "#fff" },
+                headerTitleAlign: "center",
+                headerTintColor: "#fff",
+              }}
+            />
+          </Stack>
+        </AuthProvider>
       </QueryClientProvider>
     </>
   );
