@@ -172,7 +172,7 @@ const RootLayoutNav = () => {
             <Stack.Screen
               name="DonationDetails/DonationDetails"
               options={{
-                title: "Ver Doação",
+                title: "Acompanhar Doação",
                 headerStyle: { backgroundColor: theme.primary },
                 headerTitleStyle: { color: "#fff" },
                 headerTitleAlign: "center",

@@ -41,7 +41,7 @@ const DonationCard = ({ donation }: { donation: Donation }) => {
               {donation.campaign.description}
             </Text>
             <Text style={{ fontFamily: "Montserrat_500Medium" }}>
-              Status:{" "}
+              Situação:{" "}
               <Text
                 style={{
                   fontFamily: "Montserrat_600SemiBold",

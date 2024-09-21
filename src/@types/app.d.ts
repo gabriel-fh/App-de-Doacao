@@ -97,8 +97,10 @@ export interface InstitutionById extends Institution {
 export interface Donation {
   id: number;
   campaign: Campaign;
+  donation_time: string
   items: {
     id: number;
+    name: string;
     quantity: number;
   }[];
   status: string;

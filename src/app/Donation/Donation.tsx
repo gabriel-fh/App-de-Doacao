@@ -14,7 +14,6 @@ import AvailableItems from "@/components/Donation/AvailableItems";
 import AddressInfo from "@/components/Donation/AddressInfo";
 import TimePicker from "@/components/Donation/TimePicker";
 import { theme } from "@/Theme/theme";
-import { IndexPath } from "@ui-kitten/components";
 
 type routeParams = {
   necessary_items: string | string[];
