@@ -13,8 +13,6 @@ type ProgressBarProps = {
 const ProgressBar = (progressProperty: ProgressBarProps) => {
   const { objective, donated, title, isCard } = progressProperty;
 
-  console.log("objective" + objective)
-
   const percentage =
     (donated / objective) * 100 > 100 ? 100 : (donated / objective) * 100;
 
