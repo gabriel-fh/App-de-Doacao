@@ -68,7 +68,7 @@ const UserInfos = ({ data }: { data: User }) => {
         }}
         onPress={() => router.navigate("ChangeData/ChangeData")}
       >
-        <FontAwesome5 name={"user-cog"} size={25} color={theme.primary} />
+        <FontAwesome5 name={"user-cog"} size={25} color={'#fff'} />
       </TouchableOpacity>
     </View>
   );
