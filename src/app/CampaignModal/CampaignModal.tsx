@@ -24,7 +24,7 @@ const CampaignModal = () => {
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
 
-  console.log(campaignInfo)
+  // console.log(campaignInfo)
 
   const makeADonation = () => {
     if (authContext.authData) {
