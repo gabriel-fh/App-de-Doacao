@@ -1,8 +1,8 @@
 {
   "expo": {
-    "scheme": "acme",
+    "scheme": "com.doacao",
     "userInterfaceStyle": "automatic",
-    "orientation": "default",
+    "orientation": "portrait",
     "web": {
       "output": "static",
       "bundler": "metro"
@@ -21,12 +21,18 @@
           "locationAlwaysPermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização.",
           "locationWhenInUsePermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização."
         }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "Permitir que $(PRODUCT_NAME) acesse sua agenda para salvar agendamentos de doações."
+        }
       ]
     ],
-    "name": "app-de-doacao",
-    "slug": "app-de-doacao",
+    "name": "DoaAção",
+    "slug": "doacao",
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#0D62AD"
     }

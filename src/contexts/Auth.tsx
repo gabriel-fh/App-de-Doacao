@@ -1,14 +1,17 @@
-import { User, UserRegister } from "@/@types/app";
+import { AuthStorageData, User, UserRegister } from "@/@types/app";
 import { useFetchUser } from "@/hooks/User/useFetchUser";
 import {
   useMutateUser,
   useMutateRegisterUser,
+  useMutateEditUser,
 } from "@/hooks/User/useMutateUser";
+import { authedApi } from "@/setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
+import { Alert } from "react-native";
 import { showMessage } from "react-native-flash-message";
 
 interface AuthContextData {
@@ -16,6 +19,7 @@ interface AuthContextData {
   isLoading: boolean;
   signIn: (data: { email: string; password: string }) => Promise<boolean>;
   signUp: (data: UserRegister) => Promise<boolean>;
+  changeData: (data: Omit<User, "id">) => Promise<boolean>;
   signOut: () => Promise<void>;
 }
 
@@ -27,7 +31,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: authData, isLoading, invalidateRefresh } = useFetchUser();
   const { mutate: mutateUser } = useMutateUser();
   const { mutate: mutateRegisterUser } = useMutateRegisterUser();
+  const { mutate: mutateEditUser } = useMutateEditUser();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
 
   const signIn = async (data: { email: string; password: string }) => {
     try {
@@ -42,8 +51,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return true;
     } catch (err) {
+      Alert.alert(
+        "Ops! Ocorreu um erro ao entrar na sua conta: ",
+        `${err?.response?.data.message}`
+      );
       console.error(err?.response?.data);
-      return false;
+      throw err;
     }
   };
 
@@ -76,6 +89,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
     } catch (err) {
       console.error(err);
+      throw err;
     }
   };
 
@@ -92,10 +106,63 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return true;
     } catch (err) {
+      Alert.alert(
+        "Ops! Ocorreu um erro ao criar sua conta: ",
+        `${err?.response?.data.message}`
+      );
       console.error(err?.response?.data);
-      return false;
+      throw err;
     }
   };
+
+  const changeData = async (data: Omit<User, "id">): Promise<boolean> => {
+    try {
+      const res = await mutateEditUser(data);
+      return res ? true : false;
+    } catch (err) {
+      Alert.alert(
+        "Ops! Ocorreu um erro ao editar seus dados: ",
+        `${err?.response?.data.message}`
+      );
+      console.error(err?.response?.data);
+      throw err;
+    }
+  };
+
+  async function verifyToken() {
+    const _auth_data = await AsyncStorage.getItem("@app-doacao:AuthToken");
+
+    const { expiration_date, token } = JSON.parse(
+      _auth_data
+    ) as AuthStorageData;
+
+    if (!expiration_date || !token) {
+      return null;
+    }
+
+    const expirationDate = new Date(expiration_date);
+    const now = new Date();
+
+    if (expirationDate < now) {
+      try {
+        const response = await authedApi.post("/clientes/refresh");
+
+        if (response.data) {
+          const { token, expiration_date } = response.data;
+
+          await AsyncStorage.setItem(
+            "@app-doacao:AuthToken",
+            JSON.stringify({ token, expiration_date })
+          );
+
+          return response.data;
+        }
+      } catch (error) {
+        console.log("AuthContext error: verifyToken", error.response.data);
+        return null;
+      }
+    }
+  }
 
   return (
     <AuthContext.Provider
@@ -105,6 +172,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signIn,
         signOut,
         signUp,
+        changeData,
       }}
     >
       {children}

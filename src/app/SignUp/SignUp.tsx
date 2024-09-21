@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
@@ -73,9 +73,15 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.wrapper}>
-        <FormHeader title={"Cadastrar"} />
+        <FormHeader
+          title={"Cadastre-se"}
+          subtitle="Insira suas informações nos campos abaixo"
+        />
         <View style={styles.inputContainer}>
           <Controller
             control={control}
@@ -164,6 +170,7 @@ const SignUp = () => {
               />
             )}
           />
+
           <Button text="Continuar" onPress={handleSubmit(onSubmit)}></Button>
         </View>
       </View>
@@ -173,7 +180,9 @@ const SignUp = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    minHeight: "90%",
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -187,7 +196,9 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "90%",
     padding: 20,
-    alignItems: "center",
+    alignSelf: "center",
+    // height: "100%",
+    // alignItems: "center",
     // gap: 30,
   },
   inputContainer: {

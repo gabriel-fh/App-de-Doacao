@@ -1,28 +1,19 @@
-import {
-  Text,
-  StyleSheet,
-  ScrollView,
-  View,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  Keyboard,
-} from "react-native";
+import { Text, StyleSheet, ScrollView, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import AddDecrease from "@/components/AddDecrease";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import IconText from "@/components/IconText";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import FloatButton from "@/components/FloatButton";
-import Institution from "./../Institution/Institution";
-import Badge from "@/components/Badge";
-import CustomCalendar from "@/components/CustomCalendar";
-import PopUp from "@/components/PopUp";
-import Picker from "@/components/Picker";
 import { CampaignById, ItemById } from "@/@types/app";
 import { useMutateDonation } from "@/hooks/Donation/useMutateDonation";
-import { showMessage } from "react-native-flash-message";
+import CacheImage from "@/components/CacheImage";
+import DonationItem from "@/components/Donation/DonationItem";
+import useKeyboard from "@/hooks/Keyboard/useKeyboard";
+import useDonantion from "@/hooks/Donation/useDonantion";
+import Observation from "@/components/Donation/Observation";
+import DatePicker from "@/components/Donation/DatePicker";
+import AvailableItems from "@/components/Donation/AvailableItems";
+import AddressInfo from "@/components/Donation/AddressInfo";
+import TimePicker from "@/components/Donation/TimePicker";
+import { theme } from "@/Theme/theme";
 
 type routeParams = {
   necessary_items: string | string[];
@@ -33,133 +24,71 @@ type routeParams = {
 const Donation = () => {
   const { campaignInfo } = useLocalSearchParams<routeParams>();
   const parsedCampaignInfo: CampaignById = JSON.parse(campaignInfo);
-
+  
   const [donationItems, setDonationItems] = useState<ItemById[]>([]);
-  const [showCalendar, setShowCalendar] = useState(false);
   const [commentary, setCommentary] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedDate, setSelectedDate] = useState();
-
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [items, setItems] = useState<{ label: string; value: string }[] | null>(
+    []
+  );
 
   const { mutate: mutateDonation } = useMutateDonation();
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setIsKeyboardOpen(true);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setIsKeyboardOpen(false);
-      }
-    );
+  const { isKeyboardOpen } = useKeyboard();
 
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
+  const { selectItem, deleteItem, formatedDate, handleConfirm } = useDonantion({
+    selectedDate,
+    donationItems,
+    parsedCampaignInfo,
+    selectedTime,
+    setErrorMsg,
+    mutateDonation,
+    setDonationItems,
+  });
+
+  function generateTimeRange(start, end, selectedDate) {
+    const times = [];
+    let current = new Date(start);
+    const endTime = new Date(end);
+    const now = new Date(); 
+
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      timeZone: "America/Sao_Paulo",
+      hour: "2-digit",
+      minute: "2-digit",
     };
-  }, []);
 
-  const selectItem = (newItem: ItemById) => {
-    // Se o item já estiver na lista, remove ele se não adiciona
-    if (donationItems.find((item) => item.id === newItem.id)) {
-      setDonationItems((prevItems) =>
-        prevItems.filter((item) => item.id !== newItem.id)
-      );
-      return;
-    } else {
-      setDonationItems((prevItems) => [
-        ...prevItems,
-        { ...newItem, quantity: 1 },
-      ]);
-    }
-  };
+    const currentDate = now.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
-  const deleteItem = (item) => {
-    setDonationItems((prevItems) => prevItems.filter((i) => i.id !== item.id));
-    if (donationItems.length === 0) {
-      router.canGoBack();
-    }
-  };
+    const isToday = currentDate === selectedDate?.split("-")?.reverse()?.join("/");
 
-  const formatedDate = (date) => {
-    return date?.split("-").reverse().join("/");
-  };
+    console.log(isToday);
 
-  const validateFields = () => {
-    if (donationItems.length === 0 && !selectedDate) {
-      setErrorMsg(
-        "Selecione pelo menos um item para doação e escolha uma data"
-      );
-      return false;
-    }
+    while (current < endTime) {
+      let next = new Date(current.getTime() + 30 * 60000);
 
-    if (donationItems.length === 0) {
-      setErrorMsg("Selecione pelo menos um item para doação");
-      return false;
-    }
+      if (!isToday || next > now) {
+        const startTime = current.toLocaleTimeString("pt-BR", timeOptions);
+        const endTimeFormatted = next.toLocaleTimeString("pt-BR", timeOptions);
 
-    if (!selectedDate) {
-      setErrorMsg("Selecione uma data para a doação");
-      return false;
-    }
-
-    setErrorMsg("");
-    return true;
-  };
-
-  const sendDonation = async (sendItems) => {
-    try {
-      const postData = {
-        campaign_id: parsedCampaignInfo.id,
-        donation_time: selectedDate + " 11:56:33",
-        items: sendItems,
-      };
-
-      await mutateDonation(postData);
-      return true;
-    } catch (err) {
-      console.error(err?.response?.data);
-      return false;
-    }
-  };
-
-  const handleConfirm = async () => {
-    if (validateFields()) {
-      const sendItems = donationItems.map((item) => {
-        const { id, quantity } = item;
-        return { id, quantity };
-      });
-      const response = await sendDonation(sendItems);
-
-      if (response) {
-        router.navigate("/");
-        showMessage({
-          message: "Doação realizada com sucesso!",
-          type: "none",
-          style: {
-            backgroundColor: "#13a709",
-            height: 60,
-            marginTop: 20,
-          },
-          floating: true,
-          titleStyle: {
-            color: "white",
-            fontSize: 18,
-            fontFamily: "Montserrat_600SemiBold",
-            marginTop: 7,
-            textAlign: "center",
-          },
-        });
+        times.push(`${startTime} - ${endTimeFormatted}`);
       }
 
-      console.log("Donation response: " + response);
+      current = next;
     }
-  };
+
+    return times.map((time) => ({ label: time, value: time }));
+  }
+  useEffect(() => {
+    const timeData = generateTimeRange(
+      parsedCampaignInfo.donation_start_time,
+      parsedCampaignInfo.donation_end_time,
+      selectedDate 
+    );
+    setItems(timeData);
+  }, [selectedDate]);
 
   return (
     <View style={{ position: "relative", flex: 1 }}>
@@ -172,46 +101,22 @@ const Donation = () => {
               gap: 10,
             }}
           >
-            <Image
+            <CacheImage
               source={{ uri: parsedCampaignInfo.avatar }}
               style={styles.avatar}
               resizeMode="contain"
             />
+
             <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
-            {/* <View style={styles.userContainer}>
-              <Image
-                source={{ uri: parsedCampaignInfo.avatar }}
-                style={styles.avatar}
-                resizeMode="contain"
-              />
-              <Text style={styles.username}>{parsedCampaignInfo.name}</Text>
-            </View> */}
           </View>
           <View style={{ gap: 25 }}>
             <View style={{ gap: 10 }}>
-              <View>
-                <Text style={styles.subTitle}>
-                  Itens disponíveis para a doação:{" "}
-                </Text>
-                <ScrollView
-                  style={{ maxHeight: 190 }}
-                  nestedScrollEnabled={true}
-                >
-                  <View style={styles.badgeContainer}>
-                    {parsedCampaignInfo.necessary_items.map((item) => (
-                      <TouchableOpacity
-                        key={item?.id}
-                        onPress={() => selectItem(item)}
-                      >
-                        <Badge
-                          text={item.name}
-                          selected={donationItems.some((i) => i.id === item.id)}
-                        />
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </ScrollView>
-              </View>
+              <AvailableItems
+                donationItems={donationItems}
+                parsedCampaignInfo={parsedCampaignInfo}
+                selectItem={selectItem}
+              />
+
               {donationItems.length > 0 && (
                 <ScrollView
                   style={{
@@ -224,87 +129,23 @@ const Donation = () => {
                   nestedScrollEnabled={true}
                 >
                   {donationItems.map((item, idx) => (
-                    <View key={idx} style={styles.item}>
-                      <Text
-                        style={[styles.text, { maxWidth: "50%" }]}
-                        numberOfLines={2}
-                      >
-                        {item?.name}
-                      </Text>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: 50,
-                          alignItems: "center",
-                        }}
-                      >
-                        <View>
-                          <AddDecrease
-                            handleRemoveItem={() => deleteItem(item)}
-                            setDonationItems={setDonationItems}
-                            currentItem={item}
-                          />
-                        </View>
-                        <TouchableOpacity onPress={() => deleteItem(item)}>
-                          <FontAwesome
-                            name="trash"
-                            color={"#ff0000"}
-                            size={20}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
+                    <React.Fragment key={idx}>
+                      <DonationItem
+                        item={item}
+                        deleteItem={deleteItem}
+                        setDonationItems={setDonationItems}
+                      />
+                    </React.Fragment>
                   ))}
                 </ScrollView>
               )}
             </View>
-            <View
-              style={{
-                borderWidth: 2,
-                borderColor: "#0D62AD",
-                borderRadius: 10,
-                paddingTop: 10,
-                position: "relative",
-              }}
-            >
-              <Text
-                style={[
-                  styles.subTitle,
-                  {
-                    position: "absolute",
-                    top: -14,
-                    backgroundColor: "#ffffff",
-                    paddingHorizontal: 5,
-                    left: 15,
-                    fontSize: 17,
-                    color: "#0D62AD",
-                  },
-                ]}
-              >
-                Observações:
-              </Text>
 
-              <TextInput
-                placeholder={"Digite suas observações aqui (opcional)"}
-                style={{
-                  flex: 1,
-                  marginRight: 4,
-                  padding: 10,
-                  borderRadius: 10,
-                  textAlignVertical: "top",
-                  fontFamily: "Montserrat_500Medium",
-                }}
-                placeholderTextColor="#545454"
-                keyboardType={"default"}
-                value={commentary}
-                onChangeText={(text) => setCommentary(text)}
-                selectionColor={"#0D62AD"}
-                numberOfLines={5}
-                multiline={true}
-                maxLength={250}
-              />
-            </View>
+            <Observation
+              commentary={commentary}
+              setCommentary={setCommentary}
+            />
+
             <View
               style={{
                 display: "flex",
@@ -313,48 +154,31 @@ const Donation = () => {
                 gap: 20,
               }}
             >
-              <Picker
-                title="Data"
-                placeholder={formatedDate(selectedDate) || "DD/MM/YY"}
-                icon="calendar"
-                iconSize={20}
-                onPress={() => setShowCalendar(!showCalendar)}
+              <DatePicker
+                formatedDate={formatedDate}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                startDate={parsedCampaignInfo.start_date}
+                endDate={parsedCampaignInfo.end_date}
               />
-              {showCalendar && (
-                <PopUp
-                  isVisible={showCalendar}
-                  closePopUp={() => setShowCalendar(false)}
-                >
-                  <CustomCalendar
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    setShowCalendar={setShowCalendar}
-                  />
-                </PopUp>
-              )}
-              <Picker
-                title="Hora"
-                placeholder="HH:MM"
-                icon="clock-o"
-                iconSize={20}
-                onPress={() => console.log}
+
+              <TimePicker
+                setValue={setSelectedTime}
+                value={selectedTime}
+                items={items}
+                setItems={setItems}
+                disabled={!selectedDate}
               />
             </View>
-            <View style={{ paddingBottom: 70, width: 300 }}>
-              <IconText
-                text={
-                  parsedCampaignInfo.addressess[0]?.street +
-                  ", " +
-                  parsedCampaignInfo.addressess[0]?.city +
-                  ", " +
-                  parsedCampaignInfo.addressess[0]?.state +
-                  " - " +
-                  parsedCampaignInfo.addressess[0]?.zipcode
-                }
-              >
-                <MaterialIcons name="location-pin" size={30} color="#0D62AD" />
-              </IconText>
-            </View>
+
+            {parsedCampaignInfo.addressess &&
+              parsedCampaignInfo.addressess.map((address, idx) => {
+                return (
+                  <React.Fragment key={idx}>
+                    <AddressInfo address={address} />
+                  </React.Fragment>
+                );
+              })}
           </View>
         </View>
       </ScrollView>
@@ -408,7 +232,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
   },
   username: {
     fontSize: 14,

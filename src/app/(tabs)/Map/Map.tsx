@@ -6,13 +6,12 @@ import {
   LocationAccuracy,
   getCurrentPositionAsync,
 } from "expo-location";
-import { router } from "expo-router";
 import { useFetchInstitutions } from "@/hooks/Institutions/useFetchInstitution";
 import { theme } from "@/Theme/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import InstitutionMarker from "@/components/InstitutionMarker";
 
 const Map = () => {
+
   const mapRef = useRef<MapView>(null);
   const [region, setRegion] = useState(null);
 

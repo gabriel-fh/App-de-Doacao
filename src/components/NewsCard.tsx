@@ -1,13 +1,14 @@
 import {
   Text,
   View,
-  Image,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { News } from "@/@types/app";
 import { router } from "expo-router";
+import CacheImage from "./CacheImage";
+import { theme } from "@/Theme/theme";
 
 const NewsCard = ({ news }: { news: News }) => {
   const handlePress = () => {
@@ -23,7 +24,7 @@ const NewsCard = ({ news }: { news: News }) => {
     <TouchableOpacity onPress={handlePress}>
       <View style={[styles.container, styles.shadow]}>
         {news.banners && (
-          <Image
+          <CacheImage
             source={{ uri: news.banners[0] }}
             style={styles.image}
             resizeMode="cover"
@@ -31,7 +32,7 @@ const NewsCard = ({ news }: { news: News }) => {
         )}
         <Text style={styles.title}>{news.title}</Text>
 
-        <Text style={styles.description} numberOfLines={4}>
+        <Text style={styles.description} numberOfLines={3}>
           {news.subtitle}
         </Text>
       </View>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "#0D62AD",
+    borderColor: theme.primary,
   },
   username: {
     fontSize: 14,

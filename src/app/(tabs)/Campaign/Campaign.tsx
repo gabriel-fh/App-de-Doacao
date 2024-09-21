@@ -7,12 +7,14 @@ import {
 } from "react-native";
 import React, { useRef, useState } from "react";
 import CampaignCard from "@/components/CampaignCard";
-import BackToTopButton from "@/components/BackToTopButton";
-import Searchbar from "@/components/Searchbar";
+import BackToTopButton from "@/components/CampaignScreen/BackToTopButton";
+import Searchbar from "@/components/CampaignScreen/Searchbar";
 import FilterSelect from "@/components/FilterSelect";
 import { useSearchCampaign } from "@/hooks/Campaign/useSearchCampaigns";
 import { theme } from "@/Theme/theme";
 import { Item } from "@/@types/app";
+import SomethingWrong from "@/components/SomethingWrong";
+import CampaingScreenSkeleton from "@/components/CampaignScreen/CampaingScreenSkeleton";
 
 const Campaign = () => {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -48,7 +50,9 @@ const Campaign = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <CampaingScreenSkeleton />
+  ) : campaigns && campaigns.length > 0 ? (
     <View style={{ position: "relative", flex: 1 }}>
       <ScrollView
         style={styles.container}
@@ -92,6 +96,16 @@ const Campaign = () => {
       </ScrollView>
       <BackToTopButton scrollViewRef={scrollViewRef} showButton={showButton} />
     </View>
+  ) : (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <SomethingWrong />
+    </View>
   );
 };
 
@@ -105,47 +119,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 20,
-  },
-  searchbar: {
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
-    borderColor: "#8e98de",
-    borderWidth: 2,
-    borderRadius: 10,
-    maxHeight: 50,
-    flex: 1,
-    paddingLeft: 12,
-    marginBottom: 12,
-  },
-  textInput: {
-    marginVertical: 8,
-    fontSize: 16,
-    flex: 1,
-  },
-  iconView: {
-    backgroundColor: "#8e98de",
-    borderRadius: 10,
-    height: "110%",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 12,
-  },
-  itemFilter: {
-    flexDirection: "row",
-    gap: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#8e98de",
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    maxHeight: 50,
-  },
-  itemText: {
-    fontSize: 16,
-    color: "#fff",
   },
 });
 

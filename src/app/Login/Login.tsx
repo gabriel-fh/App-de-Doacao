@@ -2,14 +2,13 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { theme } from "@/Theme/theme";
-import { KeyboardAvoidingView } from "react-native";
 import { router } from "expo-router";
 import FormHeader from "@/components/FormHeader";
 import { useForm, Controller } from "react-hook-form";
@@ -20,7 +19,7 @@ import { showMessage } from "react-native-flash-message";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, insira um e-mail válido"),
-  password: z.string(),
+  password: z.string().min(1, "Por favor, digite senha"),
 });
 
 const Login = () => {
@@ -37,8 +36,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     const response = await authContext.signIn(data);
     if (response) {
-      router.canGoBack() ? router.back() : router.navigate("/");
-
+      router.navigate("/");
       showMessage({
         message: "Conectado com sucesso!",
         type: "none",
@@ -60,9 +58,9 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={styles.container}
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
     >
       <View style={styles.loginContainer}>
         <FormHeader title="Login" />
@@ -92,13 +90,14 @@ const Login = () => {
           <Controller
             control={control}
             name={"password"}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Input
                 placeholder={"Digite sua senha"}
                 password
                 title={"Senha"}
                 value={value}
                 onChangeText={onChange}
+                errorMessage={error?.message}
               />
             )}
           />
@@ -127,15 +126,16 @@ const Login = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    minHeight: "90%",
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
   loginContainer: {
     width: "90%",
