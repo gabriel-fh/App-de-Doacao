@@ -48,13 +48,13 @@ const Profile = () => {
       ),
       onPress: () => router.navigate("PrivacyPolicy/PrivacyPolicy"),
     },
-    {
-      title: "Sobre o app",
-      icon: (
-        <FontAwesome6 name={"circle-info"} size={25} color={theme.primary} />
-      ),
-      onPress: () => console,
-    },
+    // {
+    //   title: "Sobre o app",
+    //   icon: (
+    //     <FontAwesome6 name={"circle-info"} size={25} color={theme.primary} />
+    //   ),
+    //   onPress: () => console,
+    // },
     {
       icon: <Ionicons name={"settings"} size={27} color={theme.primary} />,
       title: "Configurações",
