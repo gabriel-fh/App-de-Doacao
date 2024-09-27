@@ -21,7 +21,12 @@
         {
           "calendarPermission": "Permitir que $(PRODUCT_NAME) acesse sua agenda para salvar agendamentos de doações."
         }
-      ]
+      ],
+      ["expo-build-properties", {
+        "android": {
+          "usesCleartextTraffic": true
+        }
+      }]
     ],
     "name": "DoaAção",
     "slug": "doacao",
@@ -39,6 +44,7 @@
         }
       },
       "permissions": [
+        "INTERNET",
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.READ_CALENDAR",
