@@ -4,9 +4,11 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "prod-build": "eas build --profile production --platform android",
+    "dev-build": "eas build --profile development --platform android"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
@@ -51,7 +53,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "~0.19.10",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "expo-dev-client": "~4.0.26"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

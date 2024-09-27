@@ -9,11 +9,14 @@ import {
 import { useFetchInstitutions } from "@/hooks/Institutions/useFetchInstitution";
 import { theme } from "@/Theme/theme";
 import InstitutionMarker from "@/components/InstitutionMarker";
+import Constants from 'expo-constants';
 
 const Map = () => {
 
   const mapRef = useRef<MapView>(null);
   const [region, setRegion] = useState(null);
+
+  // const googleMapsApiKey = Constants.expoConfig.android.config.googleMaps.apiKey;
 
   const { data: institutions, isLoading } = useFetchInstitutions();
 
