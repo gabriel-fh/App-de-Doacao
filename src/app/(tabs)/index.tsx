@@ -16,14 +16,21 @@ import axios from "axios";
 const index = () => {
   const { data: news, isLoading: isLoadingNews } = useFetchNews();
 
-  const [test, setTest] = React.useState(null);
-  const [err, setErr] = React.useState(null);
+  const [test, setTest] = React.useState([]);
+  const [err, setErr] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get("https://admin.doacao.tech/api/news").then((response) => {
-      setTest(response.data);
+    axios.get("https://jsonplaceholder.typicode.com/todos/1").then((response) => {
+      setTest((prev) => [...prev, response.data]);
     }).catch((error) => {
-      setErr(error);
+      setErr((prev) => [...prev, error?.response?.data]);
+    });
+  }, []);
+  React.useEffect(() => {
+    axios.get("https://admin.doacao.tech/api/news").then((response) => {
+      setTest(prev => [...prev, response.data]);
+    }).catch((error) => {
+      setErr(prev => [...prev, error?.response?.data]);
     });
   }, []);
 
@@ -36,8 +43,10 @@ const index = () => {
       }}
     >
       <CampaignCarousel />
-      <Text>{JSON.stringify(test)}</Text>
-      <Text>{JSON.stringify(err)}</Text>
+      <Text>{JSON.stringify(test[0])}</Text>
+      <Text>{JSON.stringify(err[0])}</Text>
+      <Text>{JSON.stringify(test[1])}</Text>
+      <Text>{JSON.stringify(err[1])}</Text>
       <View style={{ gap: 10, marginTop: 20 }}>
         {isLoadingNews ? (
           <View style={{marginTop: 20}}>
