@@ -9,12 +9,6 @@
     },
     "plugins": [
       [
-        "expo-router",
-        {
-          "origin": "https://n"
-        }
-      ],
-      [
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Permitir que $(PRODUCT_NAME) use sua localização para localizar instituições proximas a sua localização.",
@@ -54,9 +48,6 @@
       "versionCode": 1
     },
     "extra": {
-      "router": {
-        "origin": "https://n"
-      },
       "eas": {
         "projectId": "c11438e0-f378-4766-b63d-7037722cbde1"
       }
