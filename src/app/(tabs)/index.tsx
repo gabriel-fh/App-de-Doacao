@@ -11,9 +11,21 @@ import { useFetchNews } from "@/hooks/News/useFetchNews";
 import CampaignCarousel from "@/components/CampaignCarousel";
 import { theme } from "@/Theme/theme";
 import { Skeleton } from "moti/skeleton";
+import axios from "axios";
 
 const index = () => {
   const { data: news, isLoading: isLoadingNews } = useFetchNews();
+
+  const [test, setTest] = React.useState(null);
+  const [err, setErr] = React.useState(null);
+
+  React.useEffect(() => {
+    axios.get("https://admin.doacao.tech/api/news").then((response) => {
+      setTest(response.data);
+    }).catch((error) => {
+      setErr(error);
+    });
+  }, []);
 
   return (
     <ScrollView
@@ -24,7 +36,8 @@ const index = () => {
       }}
     >
       <CampaignCarousel />
-
+      <Text>{JSON.stringify(test)}</Text>
+      <Text>{JSON.stringify(err)}</Text>
       <View style={{ gap: 10, marginTop: 20 }}>
         {isLoadingNews ? (
           <View style={{marginTop: 20}}>
