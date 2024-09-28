@@ -18,17 +18,18 @@ function DonationDetails() {
   const { donation } = useLocalSearchParams<{ donation: string }>();
   const parsedDonationInfo: Donation = JSON.parse(donation);
 
-  // console.log(parsedDonationInfo);
+  console.log(parsedDonationInfo);
 
   const donationStatus = {
     agended: "Agendada",
+    canceled: "Cancelada",
     concluded: "Concluída",
   };
 
   const donationTime = new Date(
     parsedDonationInfo.donation_time
   ).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
-  const formattedDonationTime = `${donationTime.split(",")[0]} às ${donationTime
+  const formattedDonationTime = `${donationTime.split(",")[0]} às${donationTime
     .split(",")[1]
     .slice(0, 6)}`;
 
@@ -119,6 +120,8 @@ function DonationDetails() {
                 color:
                   parsedDonationInfo.status === "agended"
                     ? "#d18d0f"
+                    : parsedDonationInfo.status === "canceled"
+                    ? "#e82626"
                     : "#32CD32",
               },
             ]}
@@ -129,7 +132,12 @@ function DonationDetails() {
 
         <View style={styles.scheduleContainer}>
           <Text style={styles.scheduleText}>
-            Agendado para:{" "}
+            {parsedDonationInfo.status === "agended"
+              ? "Agendada para: "
+              : parsedDonationInfo.status === "canceled"
+              ? "Cancelada em: "
+              : "Concluída em : "}
+
             <Text style={styles.scheduleValue}>{formattedDonationTime}</Text>
           </Text>
           {parsedDonationInfo.status === "agended" && (

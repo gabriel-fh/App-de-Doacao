@@ -34,13 +34,13 @@ const Profile = () => {
     //   title: "Conquistas",
     //   onPress: () => console.log,
     // },
-    {
-      title: "Termos de uso",
-      icon: (
-        <FontAwesome5 name={"clipboard-list"} size={25} color={theme.primary} />
-      ),
-      onPress: () => router.navigate("Terms/Terms"),
-    },
+    // {
+    //   title: "Termos de uso",
+    //   icon: (
+    //     <FontAwesome5 name={"clipboard-list"} size={25} color={theme.primary} />
+    //   ),
+    //   onPress: () => router.navigate("Terms/Terms"),
+    // },
     {
       title: "Política de privacidade",
       icon: (

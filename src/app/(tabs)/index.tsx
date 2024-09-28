@@ -20,11 +20,10 @@ const index = () => {
       style={styles.container}
       contentContainerStyle={{
         marginHorizontal: 12,
-        paddingVertical: 20,
+        paddingVertical: 20
       }}
     >
       <CampaignCarousel />
-
       <View style={{ gap: 10, marginTop: 20 }}>
         {isLoadingNews ? (
           <View style={{marginTop: 20}}>

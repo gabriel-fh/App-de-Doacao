@@ -48,11 +48,49 @@ const ChangeData = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const initialValues = {
+    name: authData.name || "",
+    email: authData.email || "",
+    phone: formatedPhone || "",
+  };
+
   const onSubmit = async (data: Omit<User, "id">) => {
+    const hasChanged = Object.keys(initialValues).some(
+      (key) => initialValues[key] !== data[key]
+    );
+  
+    if (!hasChanged) {
+      showMessage({
+        message: "Nenhuma alteração foi feita.",
+        type: "info",
+        style: {
+          backgroundColor: "#f0ad4e",
+          height: 60,
+          marginTop: 20,
+        },
+        floating: true,
+        titleStyle: {
+          color: "white",
+          fontSize: 18,
+          fontFamily: "Montserrat_600SemiBold",
+          marginTop: 7,
+          textAlign: "center",
+        },
+      });
+      return; 
+    }
+  
+    const updatedData = Object.keys(data).reduce((acc, key) => {
+      if (initialValues[key] !== data[key]) {
+        acc[key] = data[key];
+      }
+      return acc;
+    }, {});
+  
     try {
-      const res = await changeData(data);
+      const res = await changeData(updatedData);
       if (res) {
-        router.navigate("Profile/Profile");
+        router.navigate("/");
         showMessage({
           message: "Dados alterados com sucesso!",
           type: "none",
