@@ -2,7 +2,7 @@ import { User } from "@/@types/app";
 import { QueryKeys } from "@/setup/QueryKeys";
 import { authedApi } from "@/setup/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const fetchData = async (): Promise<User> => {
   const storagedData = await AsyncStorage.getItem("@app-doacao:AuthToken");
@@ -17,6 +17,8 @@ const fetchData = async (): Promise<User> => {
 };
 
 export function useFetchUser() {
+  const queryClient = useQueryClient();
+
   const query = useQuery({
     queryFn: fetchData,
     queryKey: [QueryKeys.UserData],

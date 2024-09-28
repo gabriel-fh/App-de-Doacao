@@ -43,7 +43,7 @@ const IconText = ({
         <>
           <View style={{ minWidth: 30, alignItems: "center" }}>{children}</View>
           <Text
-            style={{ fontFamily: "Montserrat_500Medium" }}
+            style={{ fontFamily: "Montserrat_500Medium", flex: 1 }}
             numberOfLines={2}
           >
             {text}

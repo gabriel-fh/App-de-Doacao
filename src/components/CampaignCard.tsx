@@ -15,6 +15,9 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
     });
   };
 
+
+  const title = `Meta ${campaign?.donated_items_quantity} / ${campaign.donated_items_objective}`
+
   return (
     <TouchableOpacity
       onPress={handlePress}
@@ -36,7 +39,7 @@ const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
           donated={campaign.donated_items_quantity}
           objective={campaign.donated_items_objective}
           isCard
-          title={`Meta ${campaign.donated_items_quantity} / ${campaign.donated_items_objective}`}
+          title={title}
         />
       </View>
     </TouchableOpacity>

@@ -45,6 +45,7 @@ export interface CampaignById extends Campaign {
     id: number;
     avatar: string;
     name: string;
+    phone: string;
   };
 }
 

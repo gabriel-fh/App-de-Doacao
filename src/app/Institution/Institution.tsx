@@ -8,9 +8,10 @@ import { useFetchInstitutionById } from "@/hooks/Institutions/useFetchInstitutio
 import { theme } from "@/Theme/theme";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, Linking } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Institution = () => {
   const { institutionId } = useLocalSearchParams();
@@ -18,6 +19,19 @@ const Institution = () => {
   const { data: institutionInfo, isLoading } = useFetchInstitutionById(
     Array.isArray(institutionId) ? institutionId[0] : institutionId
   );
+
+
+  const getZipcode = () => { 
+    const zipcode = !institutionInfo?.address?.zipcode?.includes("-")
+    ? institutionInfo?.address?.zipcode?.replace(/(\d{5})(\d{3})/, "$1-$2")
+    : institutionInfo?.address?.zipcode;
+   
+    return zipcode;
+  }
+
+  const openTelephone = () => {
+    Linking.openURL(`tel: ${institutionInfo.phone}`);
+  }
 
   return isLoading ? (
     <InstitutionSkeleton />
@@ -48,20 +62,33 @@ const Institution = () => {
             <Text style={styles.subtitle}>Contato</Text>
             <View style={{ gap: 12, marginVertical: 10 }}>
               <IconText
+              onPress={openTelephone}
                 text={institutionInfo.phone
-                  .replace("+55", "")
-                  .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
+                  ?.replace("+55", "")
+                  ?.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
               >
-                <Foundation name={"telephone"} size={22} color={theme.primary} />
+                <Foundation
+                  name={"telephone"}
+                  size={28}
+                  color={theme.primary}
+                />
               </IconText>
               <IconText
                 text={
                   institutionInfo.address?.street +
-                  " - " +
-                  institutionInfo.address?.city
+                  ", " +
+                  institutionInfo.address?.city +
+                  ", " +
+                  institutionInfo.address?.state +
+                  ", " +
+                  getZipcode()
                 }
               >
-                <Entypo name={"location"} size={20} color={theme.primary} />
+                <MaterialIcons
+                  name="location-pin"
+                  size={30}
+                  color={theme.primary}
+                />
               </IconText>
             </View>
           </View>

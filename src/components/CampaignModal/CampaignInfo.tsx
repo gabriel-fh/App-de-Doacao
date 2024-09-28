@@ -7,9 +7,12 @@ import Foundation from "react-native-vector-icons/Foundation";
 import { Address } from "@/@types/app";
 import { theme } from "@/Theme/theme";
 
-const CampaignInfo = ({ addressess }: { addressess: Address[] }) => {
+const CampaignInfo = ({ addressess, phone }: { addressess: Address[], phone:string }) => {
+  
+  const formatedPhone = phone.replace("+55", "").replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+
   const openTelephone = () => {
-    Linking.openURL(`tel: (21) 99999-9999`);
+    Linking.openURL(`tel: ${phone}`);
   };
 
   return (
@@ -20,19 +23,44 @@ const CampaignInfo = ({ addressess }: { addressess: Address[] }) => {
           <AntDesign name="clockcircle" size={20} color={theme.primary} />
         </IconText>
 
-        <IconText text="(21) 99999-9999" onPress={openTelephone}>
+        <IconText text={`${formatedPhone}`} onPress={openTelephone}>
           <Foundation name="telephone" size={28} color={theme.primary} />
         </IconText>
 
         <View>
-          <IconText text="Endereços de entrega" arrow>
-            <MaterialIcons name="location-pin" size={30} color={theme.primary} />
+          <IconText text="Endereços de entrega">
+            <MaterialIcons
+              name="location-pin"
+              size={30}
+              color={theme.primary}
+            />
           </IconText>
-          <View style={{ paddingLeft: 8, marginTop: 10 }}>
+          <View style={{ paddingLeft: 8, marginTop: 10, gap: 12 }}>
             {addressess.map((item) => (
-              <Text style={styles.addressess} key={item.id}>
-                {item.street} - {item.city} - {item.state}, {item.zipcode}
-              </Text>
+              <View
+                key={item.id}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "95%",
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Montserrat_900Black",
+                    fontSize: 20,
+                    color: "#595959",
+                  }}
+                >
+                  •{" "}
+                </Text>
+                <Text style={styles.addressess} key={item.id}>
+                  {item.street}, {item.city}, {item.state},{" "}
+                  {item.zipcode.includes("-")
+                    ? item.zipcode
+                    : item.zipcode.replace(/(\d{5})(\d{3})/, "$1-$2")}
+                </Text>
+              </View>
             ))}
           </View>
         </View>

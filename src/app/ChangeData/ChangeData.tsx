@@ -58,7 +58,7 @@ const ChangeData = () => {
     const hasChanged = Object.keys(initialValues).some(
       (key) => initialValues[key] !== data[key]
     );
-  
+
     if (!hasChanged) {
       showMessage({
         message: "Nenhuma alteração foi feita.",
@@ -77,16 +77,16 @@ const ChangeData = () => {
           textAlign: "center",
         },
       });
-      return; 
+      return;
     }
-  
+
     const updatedData = Object.keys(data).reduce((acc, key) => {
       if (initialValues[key] !== data[key]) {
         acc[key] = data[key];
       }
       return acc;
     }, {});
-  
+
     try {
       const res = await changeData(updatedData);
       if (res) {
@@ -182,6 +182,15 @@ const ChangeData = () => {
             /\d/,
           ])}
           <Button text="Alterar Dados" onPress={handleSubmit(onSubmit)} />
+          <Text
+            style={{
+              textAlign: "justify",
+            }}
+          >
+            OBS: Após a confirmação, seus dados serão atualizados em até 30
+            segundos. Caso a alteração não ocorra dentro desse prazo,
+            recomendamos fechar e reabrir o aplicativo.
+          </Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

@@ -33,6 +33,8 @@ const ProgressBar = (progressProperty: ProgressBarProps) => {
 
   const textStyle = getStyles(isCard);
 
+  // console.log("percentage", title);
+
   return (
     <View style={styles.container}>
       {title && <Text style={textStyle.title}>{title}</Text>}

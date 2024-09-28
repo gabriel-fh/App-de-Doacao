@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet, Touchable, TouchableOpacity } from "react-native";
 import React from "react";
 import ProgressBar from "@/components/ProgressBar";
 import CloseModalButton from "@/components/CloseModalButton";
@@ -15,6 +10,7 @@ import BannerAvatar from "@/components/BannerAvatar";
 import CampaignInfo from "@/components/CampaignModal/CampaignInfo";
 import CampaignSkeleton from "@/components/CampaignModal/CampaignSkeleton";
 import SomethingWrong from "@/components/SomethingWrong";
+import CacheImage from "@/components/CacheImage";
 
 const CampaignModal = () => {
   const { campaignId } = useLocalSearchParams();
@@ -23,8 +19,6 @@ const CampaignModal = () => {
   const { data: campaignInfo, isLoading } = useFetchCampaignById(
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
-
-  // console.log(campaignInfo)
 
   const makeADonation = () => {
     if (authContext.authData) {
@@ -72,17 +66,66 @@ const CampaignModal = () => {
               />
             ))}
           </View>
-          <CampaignInfo addressess={campaignInfo.addressess} />
+          <View style={{
+            gap: 12,
+            marginTop: 5,
+          }}>
+            <Text style={styles.subtitle}>Instituição</Text>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+                flex: 1,
+              }}
+              onPress={() => {
+                router.navigate({
+                  pathname: "Institution/Institution",
+                  params: {
+                    institutionId: campaignInfo.institution.id,
+                  },
+                });
+              }}
+            >
+              <CacheImage
+                source={{
+                  uri: campaignInfo.institution.avatar,
+                }}
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 50,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: "Montserrat_500Medium",
+                  overflow: "hidden",
+                  width: "90%",
+                }}
+                numberOfLines={2}
+              >
+                {campaignInfo.institution.name}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <CampaignInfo
+            addressess={campaignInfo.addressess}
+            phone={campaignInfo.institution.phone}
+          />
         </View>
       </ScrollView>
       <FloatButton text="Doar Agora" onPress={makeADonation} />
     </View>
   ) : (
-    <View style={{
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <SomethingWrong />
     </View>
   );
