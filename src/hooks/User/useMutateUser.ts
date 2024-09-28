@@ -1,4 +1,5 @@
 import { Data, User, UserRegister } from "@/@types/app";
+import { ChangeDataType } from "@/contexts/Auth";
 import api, { authedApi } from "@/setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,7 +19,7 @@ const postRegister = async (data: UserRegister) => {
   return response.data;
 };
 
-const postEditUser = async (data: Omit<User, "id">) => {
+const postEditUser = async (data: ChangeDataType) => {
   const response = await authedApi.put(`/donator`, data);
   return response.data;
 };
@@ -63,7 +64,7 @@ export const useMutateEditUser = () => {
   const { mutateAsync } = useMutation<
     Omit<Data, "token" | "expiration_date">,
     unknown,
-    Omit<User, "id">
+    ChangeDataType
   >({
     mutationFn: postEditUser,
     onSuccess: () => {
@@ -73,7 +74,7 @@ export const useMutateEditUser = () => {
 
   return {
     mutate: async (
-      data: Omit<User, "id">
+      data: ChangeDataType
     ): Promise<Omit<Data, "token" | "expiration_date">> => {
       const result = await mutateAsync(data);
       return result;

@@ -7,7 +7,8 @@ import { Donation } from "@/@types/app";
 const DonationCard = ({ donation }: { donation: Donation }) => {
   const donationStatus = {
     agended: "Agendada",
-    concluded: "Completa",
+    canceled: "Cancelada",
+    concluded: "Concluída",
   };
 
   const handlePress = () => {
@@ -45,7 +46,12 @@ const DonationCard = ({ donation }: { donation: Donation }) => {
               <Text
                 style={{
                   fontFamily: "Montserrat_600SemiBold",
-                  color: donation.status === "agended" ? "#d18d0f" : "#32CD32",
+                  color:
+                    donation.status === "agended"
+                      ? "#d18d0f"
+                      : donation.status === "canceled"
+                      ? "#e82626"
+                      : "#32CD32",
                 }}
               >
                 {donationStatus[donation.status]}

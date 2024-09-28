@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
 import NetInfo from '@react-native-community/netinfo';
 
-const base_url = "http://167.172.158.244/api";
+const base_url = "https://admin.doacao.tech/api";
 
 const api = Axios.create({
     baseURL: base_url,

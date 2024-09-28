@@ -14,12 +14,18 @@ import { createContext, useContext, useEffect } from "react";
 import { Alert } from "react-native";
 import { showMessage } from "react-native-flash-message";
 
+export type ChangeDataType ={
+  name?: string;
+  phone?: string;
+  email?: string;
+};
+
 interface AuthContextData {
   authData?: User;
   isLoading: boolean;
   signIn: (data: { email: string; password: string }) => Promise<boolean>;
   signUp: (data: UserRegister) => Promise<boolean>;
-  changeData: (data: Omit<User, "id">) => Promise<boolean>;
+  changeData: (data: ChangeDataType) => Promise<boolean>;
   signOut: () => Promise<void>;
 }
 
@@ -115,7 +121,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const changeData = async (data: Omit<User, "id">): Promise<boolean> => {
+  const changeData = async (data: ChangeDataType): Promise<boolean> => {
     try {
       const res = await mutateEditUser(data);
       return res ? true : false;
