@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const Settings = () => {
-
   const authData = useAuth();
 
   const tabs = [
@@ -28,42 +27,53 @@ const Settings = () => {
   ];
 
   return (
-    <View style={styles.container}>
-      {tabs.map((tab, idx) => {
-        return (
-          <TouchableOpacity
-            key={idx}
-            style={[
-              styles.item,
-              idx < tabs.length - 1 && {
-                borderBottomWidth: 1,
-                borderBottomColor: "#ddd",
-              },
-            ]}
-            onPress={() => tab?.onPress()}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 20,
-              }}
+    <>
+      <View style={styles.container}>
+        {tabs.map((tab, idx) => {
+          return (
+            <TouchableOpacity
+              key={idx}
+              style={[
+                styles.item,
+                idx < tabs.length - 1 && {
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#ddd",
+                },
+              ]}
+              onPress={() => tab?.onPress()}
             >
-              {tab.icon}
-              <Text
+              <View
                 style={{
-                  fontFamily: "Montserrat_600SemiBold",
-                  fontSize: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 20,
                 }}
               >
-                {tab.title}
-              </Text>
-            </View>
-            <FontAwesome name={"angle-right"} size={30} color={"#666"} />
-          </TouchableOpacity>
-        );
-      })}
-    </View>
+                {tab.icon}
+                <Text
+                  style={{
+                    fontFamily: "Montserrat_600SemiBold",
+                    fontSize: 16,
+                  }}
+                >
+                  {tab.title}
+                </Text>
+              </View>
+              <FontAwesome name={"angle-right"} size={30} color={"#666"} />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <Text style={{
+        paddingHorizontal: 20,
+        fontFamily: "Montserrat_500Medium",
+        fontSize: 16,
+        color: "#666",
+        marginVertical: 10,
+      }}>Versão: {
+        require("../../../package.json").version
+      } </Text>
+    </>
   );
 };
 
