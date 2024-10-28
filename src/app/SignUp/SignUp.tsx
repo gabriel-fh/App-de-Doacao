@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import FormHeader from "@/components/FormHeader";
@@ -24,7 +24,7 @@ const formSchema = z.object({
       "Por favor, insira um telefone válido no formato (99) 99999-9999"
     ),
   password: z.string().min(8, "Senha deve ter no mínimo 8 caracteres"),
-});
+})
 
 const SignUp = () => {
   const { control, handleSubmit } = useForm({
@@ -37,20 +37,27 @@ const SignUp = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const [isLoading, setisLoading] = useState<boolean>(false);
+
   const authContext = useAuth();
 
   const onSubmit = async (data: UserRegister) => {
-    const { phone } = data;
+
+    if (isLoading) {
+      return;
+    }
+
+    setisLoading(true);
+    const formattedPhone = `+55${data.phone.replace(/[\s()\-]/g, "")}`;
     const response = authContext.signUp({
       ...data,
-      phone: `+55${phone
-        .replaceAll(" ", "")
-        .replaceAll("(", "")
-        .replaceAll(")", "")
-        .replaceAll("-", "")}`,
+      phone: formattedPhone,
     });
 
+    console.log(formattedPhone);
+
     if (response) {
+      setisLoading(false);
       router.navigate("/");
       showMessage({
         message: "Conta criada com sucesso!",
@@ -70,7 +77,70 @@ const SignUp = () => {
         },
       });
     }
+
   };
+
+  const Inputs = [
+    {
+      name: "name",
+      placeholder: "Digite seu nome",
+      title: "Nome Completo *",
+    },
+    {
+      name: "email",
+      placeholder: "Digite seu e-mail",
+      title: "E-mail *",
+    },
+    {
+      name: "phone",
+      placeholder: "(xx) xxxxx-xxxx",
+      title: "Telefone *",
+      mask: [
+        "(",
+        /\d/,
+        /\d/,
+        ")",
+        " ",
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        "-",
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/
+      ]
+    },
+    {
+      name: "password",
+      placeholder: "Minimo de 8 caracteres",
+      title: "Senha *",
+      isPassword: true,
+    },
+  ]
+
+  const ControllerInput = ({ name, placeholder, title, mask, isPassword }) => {
+    return (
+      <Controller
+        control={control}
+        name={name}
+        render={({ field: { onChange, value, onBlur }, fieldState: { error } }) => (
+          <Input
+            placeholder={placeholder}
+            title={title}
+            value={value}
+            onChangeText={onChange}
+            errorMessage={error?.message}
+            onBlur={onBlur}
+            mask={mask}
+            password={isPassword}
+          />
+        )}
+      />
+    );
+  }
 
   return (
     <ScrollView
@@ -83,95 +153,17 @@ const SignUp = () => {
           subtitle="Insira suas informações nos campos abaixo"
         />
         <View style={styles.inputContainer}>
-          <Controller
-            control={control}
-            name={"name"}
-            render={({
-              field: { onChange, value, onBlur },
-              fieldState: { error },
-            }) => (
-              <Input
-                placeholder={"Digite seu nome"}
-                title={"Nome Completo *"}
-                value={value}
-                onChangeText={onChange}
-                errorMessage={error?.message}
-                onBlur={onBlur}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={"email"}
-            render={({
-              field: { onChange, value, onBlur },
-              fieldState: { error },
-            }) => (
-              <Input
-                placeholder={"Digite seu e-mail"}
-                title={"E-mail *"}
-                value={value}
-                email
-                onChangeText={onChange}
-                errorMessage={error?.message}
-                onBlur={onBlur}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={"phone"}
-            render={({
-              field: { onChange, value, onBlur },
-              fieldState: { error },
-            }) => (
-              <Input
-                placeholder={"(xx) xxxxx-xxxx"}
-                title={"Telefone *"}
-                value={value}
-                onChangeText={onChange}
-                errorMessage={error?.message}
-                onBlur={onBlur}
-                mask={[
-                  "(",
-                  /\d/,
-                  /\d/,
-                  ")",
-                  " ",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={"password"}
-            render={({
-              field: { onChange, value, onBlur },
-              fieldState: { error },
-            }) => (
-              <Input
-                placeholder={"Minimo de 8 caracteres"}
-                title={"Senha *"}
-                value={value}
-                password
-                onChangeText={onChange}
-                errorMessage={error?.message}
-                onBlur={onBlur}
-              />
-            )}
-          />
-
-          <Button text="Continuar" onPress={handleSubmit(onSubmit)}></Button>
+          {Inputs.map((input, index) => (
+            <ControllerInput
+              key={index}
+              name={input.name}
+              placeholder={input.placeholder}
+              title={input.title}
+              mask={input.mask}
+              isPassword={input.isPassword}
+            />
+          ))}
+          <Button text="Continuar" onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
         </View>
       </View>
     </ScrollView>

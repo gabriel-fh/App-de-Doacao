@@ -51,16 +51,14 @@ const MyDonations = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {
-        <View style={{ gap: 10, flex: 1 }}>
-          {donations.map((donation) => (
+        <View style={{ gap: 10, flex: 1, paddingBottom: 20 }}>
+          {donations?.map((donation) => (
             <DonationCard
               key={donation.id}
               donation={donation}
             />
           ))}
         </View>
-      }
     </ScrollView>
   );
 };

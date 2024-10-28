@@ -1,44 +1,49 @@
+import React from "react";
 import { useState } from "react";
 import Picker from "./Picker";
 import PopUp from "../PopUp";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import Button from "../Button";
-import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
+// import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
 import { theme } from "@/Theme/theme";
-import DropDownPicker from "react-native-dropdown-picker";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { FlatList } from "react-native-gesture-handler";
+import RadioButton from "../RadioButton";
 
 type TimePickerProps = {
   value: any;
   setValue: any;
-  items: any;
-  setItems: any;
+  items: {
+    label: string;
+    value: string;
+  }[];
   disabled: boolean;
 };
 
 function TimePicker({
   items,
-  setItems,
   value,
   setValue,
   disabled,
 }: TimePickerProps) {
-  const [open, setOpen] = useState(false);
-
+  const [showPopUp, setShowPopUp] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   return (
     <>
-      {/* <Picker
-        title="Hora"
-        placeholder="HH:MM"
-        icon="clock-o"
-        iconSize={20}
-        onPress={() => setShowPopUp(true)}
-      /> */}
 
-      <View
+      <TouchableOpacity
+        onPress={() => setShowPopUp(true)}
         style={{
-          gap: 10,
-          width: 165,
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          borderWidth: 2,
+          borderColor: disabled ? "#acacac" : theme.primary,
+          height: 50,
+          borderRadius: 10,
         }}
+        disabled={disabled}
       >
         <Text
           style={[
@@ -48,30 +53,83 @@ function TimePicker({
         >
           Hora
         </Text>
-        <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          style={[
-            styles.select,
-            {
-              borderColor: disabled ? "#acacac" : theme.primary,
-            },
-          ]}
-          placeholder="HH:MM"
-          maxHeight={141}
-          disabled={disabled}
-          containerStyle={{}}
-          labelStyle={{
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 8,
+            // paddingLeft: 10,
+            paddingHorizontal: 15,
           }}
-          textStyle={{
-            color:  disabled ? "#acacac" : '#000'
+        >
+          <Text
+            style={{
+              color: "#666",
+              fontFamily: "Montserrat_500Medium",
+            }}
+          >
+            {!value ? "HH:MM" : value}
+          </Text>
+          <AntDesign
+            name={"clockcircleo"}
+            size={20}
+            color={disabled ? "#acacac" : theme.primary}
+          />
+        </View>
+      </TouchableOpacity>
+      <PopUp isVisible={showPopUp} closePopUp={() => setShowPopUp(false)}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: "Montserrat_600SemiBold",
+            textAlign: "left",
+            marginBottom: 10,
+          }}
+        >
+          Escolha um horário
+        </Text>
+        <FlatList
+          data={items}
+          keyExtractor={(item) => item.value}
+          renderItem={({ item }) => {
+            return (
+              <RadioButton
+                item={item}
+                isSelected={item.value === value}
+                onSelect={() => {
+                  setValue(item.value);
+                }}
+              />
+            );
           }}
         />
-      </View>
+        {error && (
+          <Text
+            style={{
+              color: "red",
+              fontFamily: "Montserrat_500Medium",
+              textAlign: "center",
+              paddingHorizontal: 12,
+            }}
+          >
+            {error}
+          </Text>
+        )}
+        <Button
+          text={"Confirmar"}
+          onPress={() => {
+            if (value) {
+              setShowPopUp(false)
+              setError(null)
+            } else {
+              setError("Selecione um horário")
+            }
+          }}
+          style={{ marginTop: 20 }}
+        />
+      </PopUp>
     </>
   );
 }

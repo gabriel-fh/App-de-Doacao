@@ -1,5 +1,12 @@
-import { View, Text, ScrollView, StyleSheet, Touchable, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import ProgressBar from "@/components/ProgressBar";
 import CloseModalButton from "@/components/CloseModalButton";
 import FloatButton from "@/components/FloatButton";
@@ -20,8 +27,16 @@ const CampaignModal = () => {
     Array.isArray(campaignId) ? campaignId[0] : campaignId
   );
 
-  const makeADonation = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const makeADonation = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    await authContext.verifyToken();
     if (authContext.authData) {
+      setLoading(false);
       router.navigate({
         pathname: "Donation/Donation",
         params: {
@@ -66,10 +81,12 @@ const CampaignModal = () => {
               />
             ))}
           </View>
-          <View style={{
-            gap: 12,
-            marginTop: 5,
-          }}>
+          <View
+            style={{
+              gap: 12,
+              marginTop: 5,
+            }}
+          >
             <Text style={styles.subtitle}>Instituição</Text>
             <TouchableOpacity
               style={{

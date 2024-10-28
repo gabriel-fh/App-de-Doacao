@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { theme } from "@/Theme/theme";
@@ -33,9 +33,16 @@ const Login = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const onSubmit = async (data) => {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
     const response = await authContext.signIn(data);
     if (response) {
+      setIsLoading(false);
       router.navigate("/");
       showMessage({
         message: "Conectado com sucesso!",
@@ -101,7 +108,7 @@ const Login = () => {
               />
             )}
           />
-          <Button text={"Entrar"} onPress={handleSubmit(onSubmit)}></Button>
+          <Button text={"Entrar"} onPress={handleSubmit(onSubmit)} isLoading={isLoading}/>
         </View>
         <View style={{ marginTop: 15, alignItems: "center" }}>
           <Text

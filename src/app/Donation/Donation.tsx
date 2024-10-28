@@ -64,8 +64,6 @@ const Donation = () => {
 
     const isToday = currentDate === selectedDate?.split("-")?.reverse()?.join("/");
 
-    console.log(isToday);
-
     while (current < endTime) {
       let next = new Date(current.getTime() + 30 * 60000);
 
@@ -166,7 +164,6 @@ const Donation = () => {
                 setValue={setSelectedTime}
                 value={selectedTime}
                 items={items}
-                setItems={setItems}
                 disabled={!selectedDate}
               />
             </View>
@@ -215,6 +212,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 20,
     gap: 20,
+    paddingBottom: 150,
   },
   title: {
     fontSize: 20,

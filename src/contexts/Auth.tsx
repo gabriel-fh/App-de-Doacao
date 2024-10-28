@@ -10,11 +10,11 @@ import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { showMessage } from "react-native-flash-message";
 
-export type ChangeDataType ={
+export type ChangeDataType = {
   name?: string;
   phone?: string;
   email?: string;
@@ -27,6 +27,7 @@ interface AuthContextData {
   signUp: (data: UserRegister) => Promise<boolean>;
   changeData: (data: ChangeDataType) => Promise<boolean>;
   signOut: () => Promise<void>;
+  verifyToken: () => Promise<boolean | null>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -41,16 +42,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    verifyToken();
+    const verifyRefresh = async () => {
+      const response = await verifyToken();
+      if(!response) {
+        await signOut();
+      }
+    };
+    verifyRefresh();
   }, []);
 
   const signIn = async (data: { email: string; password: string }) => {
     try {
-      const { token } = await mutateUser(data);
+      const { token, expiration_date } = await mutateUser(data);
 
       await AsyncStorage.setItem(
         "@app-doacao:AuthToken",
-        JSON.stringify({ token })
+        JSON.stringify({ token, expiration_date })
       );
 
       invalidateRefresh();
@@ -59,7 +66,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (err) {
       Alert.alert(
         "Ops! Ocorreu um erro ao entrar na sua conta: ",
-        `${err?.response?.data.message}`
+        `${err?.response?.data?.message}`
       );
       console.error(err?.response?.data);
       throw err;
@@ -101,11 +108,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (data: UserRegister) => {
     try {
-      const { token } = await mutateRegisterUser(data);
+      const { token, expiration_date } = await mutateRegisterUser(data);
 
       await AsyncStorage.setItem(
         "@app-doacao:AuthToken",
-        JSON.stringify({ token })
+        JSON.stringify({ token, expiration_date })
       );
 
       invalidateRefresh();
@@ -114,7 +121,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (err) {
       Alert.alert(
         "Ops! Ocorreu um erro ao criar sua conta: ",
-        `${err?.response?.data.message}`
+        `${err?.response?.data?.message}`
       );
       console.error(err?.response?.data);
       throw err;
@@ -128,7 +135,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (err) {
       Alert.alert(
         "Ops! Ocorreu um erro ao editar seus dados: ",
-        `${err?.response?.data.message}`
+        `${err?.response?.data?.message}`
       );
       console.error(err?.response?.data);
       throw err;
@@ -145,13 +152,40 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!expiration_date || !token) {
       return null;
     }
-
     const expirationDate = new Date(expiration_date);
-    const now = new Date();
 
-    if (expirationDate < now) {
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: "America/Sao_Paulo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("pt-BR", options).format(
+      expirationDate
+    );
+    const formattedNow = new Intl.DateTimeFormat("pt-BR", options).format(
+      new Date()
+    );
+
+    function parseDateString(dateString) {
+      const [datePart, timePart] = dateString.split(", ");
+      const [day, month, year] = datePart.split("/").map(Number);
+      const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+      return [year, month, day, hours, minutes, seconds];
+    }
+
+    const nowParsed = parseDateString(formattedNow);
+    const expirationParsed = parseDateString(formattedDate);
+
+    if (nowParsed > expirationParsed) {
       try {
-        const response = await authedApi.post("/clientes/refresh");
+        const response = await authedApi.post("/donators/refresh");
 
         if (response.data) {
           const { token, expiration_date } = response.data;
@@ -161,13 +195,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             JSON.stringify({ token, expiration_date })
           );
 
-          return response.data;
+          return true;
+        } else {
+          return null;
         }
       } catch (error) {
         console.log("AuthContext error: verifyToken", error.response.data);
         return null;
       }
     }
+
+    return true;
   }
 
   return (
@@ -179,6 +217,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signOut,
         signUp,
         changeData,
+        verifyToken,
       }}
     >
       {children}
@@ -193,5 +232,5 @@ export const useAuth = (): AuthContextData => {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-  return context;
+  return context; 
 };

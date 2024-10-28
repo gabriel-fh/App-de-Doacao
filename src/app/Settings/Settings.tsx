@@ -1,13 +1,29 @@
+import { useAuth } from "@/contexts/Auth";
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const Settings = () => {
+
+  const authData = useAuth();
+
   const tabs = [
     {
       title: "Exclur conta",
       icon: <FontAwesome name={"trash"} size={25} color={"#f00"} />,
-      onPress: () => console,
+      onPress: () =>
+        Alert.alert(
+          "Tem certeza que deseja excluir sua conta?",
+          "Ao proseguir seus dados serão excluidos dentro de 30 dias",
+          [
+            {
+              text: "Cancelar",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            { text: "OK", onPress: () => authData.signOut() },
+          ]
+        ),
     },
   ];
 
