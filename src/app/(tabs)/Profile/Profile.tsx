@@ -53,7 +53,7 @@ const Profile = () => {
     //   icon: (
     //     <FontAwesome6 name={"circle-info"} size={25} color={theme.primary} />
     //   ),
-    //   onPress: () => console,
+    //   onPress: () => router.navigate("About/About"),
     // },
     {
       icon: <Ionicons name={"settings"} size={27} color={theme.primary} />,
@@ -156,9 +156,9 @@ const styles = StyleSheet.create({
   wrapperContainer: {
     flex: 1,
     paddingHorizontal: 24,
-    marginTop: -20, // Ajustar para garantir que a wrapper apareça sobre o cabeçalho
+    marginTop: -20,
     zIndex: 1,
-    height: Dimensions.get("window").height,
+    height: 400,
   },
   wrapper: {
     width: "100%",
