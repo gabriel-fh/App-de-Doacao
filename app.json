@@ -28,9 +28,9 @@
         }
       }]
     ],
-    "name": "DoaAção",
+    "name": "DoAção",
     "slug": "doacao",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/logo.png",
@@ -51,7 +51,7 @@
         "android.permission.WRITE_CALENDAR"
       ],
       "package": "com.doacao",
-      "versionCode": 2
+      "versionCode": 3
     },
     "extra": {
       "eas": {

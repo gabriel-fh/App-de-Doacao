@@ -74,14 +74,16 @@ function useDonantion({
   };
 
   const sendDonation = async (sendItems) => {
-const donation_time = `${selectedDate} ${selectedTime.split("-")[0].trim()}`;
+    const donation_time = `${selectedDate} ${selectedTime
+      .split("-")[0]
+      .trim()}`;
     try {
       const postData = {
         campaign_id: parsedCampaignInfo.id,
-        donation_time: donation_time+":00",
+        donation_time: donation_time + ":00",
         items: sendItems,
       };
-    //   donation_time: selectedDate + " 11:56:33",
+      //   donation_time: selectedDate + " 11:56:33",
       console.log(postData);
       await mutateDonation(postData);
       return true;

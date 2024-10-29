@@ -44,8 +44,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const verifyRefresh = async () => {
       const response = await verifyToken();
-      if(!response) {
-        await signOut();
+      if (!response) {
+        await signOut(true);
       }
     };
     verifyRefresh();
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const signOut = async () => {
+  const signOut = async (message?: boolean) => {
     try {
       await AsyncStorage.removeItem("@app-doacao:AuthToken");
       queryClient.refetchQueries({
@@ -83,23 +83,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       invalidateRefresh();
 
       router.navigate("/");
-      showMessage({
-        message: "Desconectado com sucesso!",
-        type: "none",
-        style: {
-          backgroundColor: "#b50606",
-          height: 60,
-          marginTop: 20,
-        },
-        floating: true,
-        titleStyle: {
-          color: "white",
-          fontSize: 18,
-          fontFamily: "Montserrat_600SemiBold",
-          marginTop: 7,
-          textAlign: "center",
-        },
-      });
+      if (!message) {
+        showMessage({
+          message: "Desconectado com sucesso!",
+          type: "none",
+          style: {
+            backgroundColor: "#b50606",
+            height: 60,
+            marginTop: 20,
+          },
+          floating: true,
+          titleStyle: {
+            color: "white",
+            fontSize: 18,
+            fontFamily: "Montserrat_600SemiBold",
+            marginTop: 7,
+            textAlign: "center",
+          },
+        });
+      }
     } catch (err) {
       console.error(err);
       throw err;
@@ -150,6 +152,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     ) as AuthStorageData;
 
     if (!expiration_date || !token) {
+      console.log('sss')
       return null;
     }
     const expirationDate = new Date(expiration_date);
@@ -232,5 +235,5 @@ export const useAuth = (): AuthContextData => {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-  return context; 
+  return context;
 };
