@@ -3,6 +3,7 @@ import Button from "../Button";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { theme } from "@/Theme/theme";
 import moment from "moment";
+import { MarkedDates } from "react-native-calendars/src/types";
 
 const CustomCalendar = ({
   selectedDate,
@@ -32,29 +33,8 @@ const CustomCalendar = ({
       "Novembro",
       "Dezembro",
     ],
-    monthNamesShort: [
-      "Jan.",
-      "Fev.",
-      "Mar.",
-      "Abr.",
-      "Mai.",
-      "Jun.",
-      "Jul.",
-      "Ago.",
-      "Set.",
-      "Out.",
-      "Nov.",
-      "Dez.",
-    ],
-    dayNames: [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado",
-    ],
+    monthNamesShort: ["Jan.", "Fev.", "Mar.", "Abr.", "Mai.", "Jun.", "Jul.", "Ago.", "Set.", "Out.", "Nov.", "Dez."],
+    dayNames: ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"],
     dayNamesShort: ["Dom.", "Seg.", "Ter.", "Qua.", "Qui.", "Sex.", "Sáb."],
     today: "Hoje",
   };
@@ -65,11 +45,9 @@ const CustomCalendar = ({
 
   const [selected, setSelected] = useState(selectedDate || today);
 
-  // const disabledDates = {
-  //   '2024-06-10': { disabled: true, disableTouchEvent: true},
-  //   '2024-06-15': { disabled: true, disableTouchEvent: true },
-  //   '2024-06-20': { disabled: true, disableTouchEvent: true }
-  // };
+  const disabledDates: MarkedDates = {
+    "2024-10-15": { disabled: true, inactive: true},
+  };
 
   return (
     <>
@@ -78,11 +56,14 @@ const CustomCalendar = ({
           setSelected(day.dateString);
         }}
         markedDates={{
-          [selected]: { selected: true, disableTouchEvent: true },
+          [selected]: { selected: true, disableTouchEvent: true,  },
+          ...disabledDates
         }}
-        minDate={today} // Set minDate to today
+        minDate={today}
         maxDate={endDate}
         hideExtraDays
+        disableAllTouchEventsForDisabledDays
+        disableAllTouchEventsForInactiveDays
         theme={{
           arrowColor: theme.primary,
           todayTextColor: theme.primary,

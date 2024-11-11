@@ -24,15 +24,13 @@ type routeParams = {
 const Donation = () => {
   const { campaignInfo } = useLocalSearchParams<routeParams>();
   const parsedCampaignInfo: CampaignById = JSON.parse(campaignInfo);
-  
+
   const [donationItems, setDonationItems] = useState<ItemById[]>([]);
   const [commentary, setCommentary] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedDate, setSelectedDate] = useState();
   const [selectedTime, setSelectedTime] = useState(null);
-  const [items, setItems] = useState<{ label: string; value: string }[] | null>(
-    []
-  );
+  const [items, setItems] = useState<{ label: string; value: string }[] | null>([]);
 
   const { mutate: mutateDonation } = useMutateDonation();
 
@@ -44,6 +42,7 @@ const Donation = () => {
     parsedCampaignInfo,
     selectedTime,
     commentary,
+    items,
     setErrorMsg,
     mutateDonation,
     setDonationItems,
@@ -53,7 +52,7 @@ const Donation = () => {
     const times = [];
     let current = new Date(start);
     const endTime = new Date(end);
-    const now = new Date(); 
+    const now = new Date();
 
     const timeOptions: Intl.DateTimeFormatOptions = {
       timeZone: "America/Sao_Paulo",
@@ -84,7 +83,7 @@ const Donation = () => {
     const timeData = generateTimeRange(
       parsedCampaignInfo.donation_start_time,
       parsedCampaignInfo.donation_end_time,
-      selectedDate 
+      selectedDate
     );
     setItems(timeData);
   }, [selectedDate]);
@@ -100,11 +99,7 @@ const Donation = () => {
               gap: 10,
             }}
           >
-            <CacheImage
-              source={{ uri: parsedCampaignInfo.avatar }}
-              style={styles.avatar}
-              resizeMode="contain"
-            />
+            <CacheImage source={{ uri: parsedCampaignInfo.avatar }} style={styles.avatar} resizeMode="contain" />
 
             <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
           </View>
@@ -129,21 +124,14 @@ const Donation = () => {
                 >
                   {donationItems.map((item, idx) => (
                     <React.Fragment key={idx}>
-                      <DonationItem
-                        item={item}
-                        deleteItem={deleteItem}
-                        setDonationItems={setDonationItems}
-                      />
+                      <DonationItem item={item} deleteItem={deleteItem} setDonationItems={setDonationItems} />
                     </React.Fragment>
                   ))}
                 </ScrollView>
               )}
             </View>
 
-            <Observation
-              commentary={commentary}
-              setCommentary={setCommentary}
-            />
+            <Observation commentary={commentary} setCommentary={setCommentary} />
 
             <View
               style={{
@@ -165,7 +153,7 @@ const Donation = () => {
                 setValue={setSelectedTime}
                 value={selectedTime}
                 items={items}
-                disabled={!selectedDate}
+                disabled={!selectedDate || items.length < 1}
               />
             </View>
 

@@ -12,6 +12,7 @@ function useDonantion({
   mutateDonation,
   setErrorMsg,
   selectedTime,
+  items,
 }) {
   const selectItem = (newItem: ItemById) => {
     if (donationItems.find((item) => item.id === newItem.id)) {
@@ -62,6 +63,11 @@ function useDonantion({
 
     if (isDateMissing) {
       setErrorMsg(errorMessages.noDate);
+      return false;
+    }
+
+    if (!!selectedDate && items.length < 1) {
+      setErrorMsg("Não há horários disponíveis para este dia");
       return false;
     }
 
