@@ -43,6 +43,7 @@ const Donation = () => {
     donationItems,
     parsedCampaignInfo,
     selectedTime,
+    commentary,
     setErrorMsg,
     mutateDonation,
     setDonationItems,

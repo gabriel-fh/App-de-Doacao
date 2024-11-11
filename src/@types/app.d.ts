@@ -110,4 +110,11 @@ export interface Donation {
     quantity: number;
   }[];
   status: string;
+  observation?: string;
+  institution: {
+    id: number;
+    avatar: string;
+    name: string;
+    phone: string;
+  };
 }

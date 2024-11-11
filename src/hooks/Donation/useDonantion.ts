@@ -8,6 +8,7 @@ function useDonantion({
   setDonationItems,
   selectedDate,
   parsedCampaignInfo,
+  commentary,
   mutateDonation,
   setErrorMsg,
   selectedTime,
@@ -82,6 +83,7 @@ function useDonantion({
         campaign_id: parsedCampaignInfo.id,
         donation_time: donation_time + ":00",
         items: sendItems,
+        observation: commentary,
       };
       //   donation_time: selectedDate + " 11:56:33",
       console.log(postData);
