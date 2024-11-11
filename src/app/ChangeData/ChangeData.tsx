@@ -182,7 +182,7 @@ const ChangeData = () => {
             /\d/,
           ])}
           <Button text="Alterar Dados" onPress={handleSubmit(onSubmit)} />
-          <Text
+          {/* <Text
             style={{
               textAlign: "justify",
             }}
@@ -190,7 +190,7 @@ const ChangeData = () => {
             OBS: Após a confirmação, seus dados serão atualizados em até 30
             segundos. Caso a alteração não ocorra dentro desse prazo,
             recomendamos fechar e reabrir o aplicativo.
-          </Text>
+          </Text> */}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

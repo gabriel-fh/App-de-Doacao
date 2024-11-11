@@ -34,8 +34,8 @@ const CampaignModal = () => {
       return;
     }
     setLoading(true);
-    await authContext.verifyToken();
-    if (authContext.authData) {
+    const res = await authContext.verifyToken();
+    if (authContext.authData && res) {
       setLoading(false);
       router.navigate({
         pathname: "Donation/Donation",
