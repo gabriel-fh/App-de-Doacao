@@ -9,7 +9,6 @@ import { theme } from "@/Theme/theme";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { View, StyleSheet, Text, ScrollView, Linking } from "react-native";
-import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
@@ -20,18 +19,17 @@ const Institution = () => {
     Array.isArray(institutionId) ? institutionId[0] : institutionId
   );
 
-
-  const getZipcode = () => { 
+  const getZipcode = () => {
     const zipcode = !institutionInfo?.address?.zipcode?.includes("-")
-    ? institutionInfo?.address?.zipcode?.replace(/(\d{5})(\d{3})/, "$1-$2")
-    : institutionInfo?.address?.zipcode;
-   
+      ? institutionInfo?.address?.zipcode?.replace(/(\d{5})(\d{3})/, "$1-$2")
+      : institutionInfo?.address?.zipcode;
+
     return zipcode;
-  }
+  };
 
   const openTelephone = () => {
     Linking.openURL(`tel: ${institutionInfo.phone}`);
-  }
+  };
 
   return isLoading ? (
     <InstitutionSkeleton />
@@ -39,16 +37,10 @@ const Institution = () => {
     <>
       <CloseModalButton />
       <ScrollView style={styles.container}>
-        <BannerAvatar
-          banner={institutionInfo.banner}
-          avatar={institutionInfo.avatar}
-          name={institutionInfo.name}
-        />
+        <BannerAvatar banner={institutionInfo.banner} avatar={institutionInfo.avatar} name={institutionInfo.name} />
         <View style={{ ...styles.container, ...styles.wrapper }}>
           <View>
-            <Text style={{ ...styles.description }}>
-              {institutionInfo.description}
-            </Text>
+            <Text style={{ ...styles.description }}>{institutionInfo.description}</Text>
           </View>
           <View>
             <Text style={styles.subtitle}>Campanhas Ativas</Text>
@@ -62,16 +54,10 @@ const Institution = () => {
             <Text style={styles.subtitle}>Contato</Text>
             <View style={{ gap: 12, marginVertical: 10 }}>
               <IconText
-              onPress={openTelephone}
-                text={institutionInfo.phone
-                  ?.replace("+55", "")
-                  ?.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
+                onPress={openTelephone}
+                text={institutionInfo.phone?.replace("+55", "")?.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
               >
-                <Foundation
-                  name={"telephone"}
-                  size={28}
-                  color={theme.primary}
-                />
+                <Foundation name={"telephone"} size={28} color={theme.primary} />
               </IconText>
               <IconText
                 text={
@@ -84,11 +70,7 @@ const Institution = () => {
                   getZipcode()
                 }
               >
-                <MaterialIcons
-                  name="location-pin"
-                  size={30}
-                  color={theme.primary}
-                />
+                <MaterialIcons name="location-pin" size={30} color={theme.primary} />
               </IconText>
             </View>
           </View>
