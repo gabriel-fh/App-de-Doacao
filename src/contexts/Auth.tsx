@@ -1,10 +1,6 @@
 import { AuthStorageData, User, UserRegister } from "@/@types/app";
 import { useFetchUser } from "@/hooks/User/useFetchUser";
-import {
-  useMutateUser,
-  useMutateRegisterUser,
-  useMutateEditUser,
-} from "@/hooks/User/useMutateUser";
+import { useMutateUser, useMutateRegisterUser, useMutateEditUser } from "@/hooks/User/useMutateUser";
 import { authedApi } from "@/setup/api";
 import { QueryKeys } from "@/setup/QueryKeys";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -30,9 +26,7 @@ interface AuthContextData {
   verifyToken: () => Promise<boolean | null>;
 }
 
-export const AuthContext = createContext<AuthContextData>(
-  {} as AuthContextData
-);
+export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: authData, isLoading, invalidateRefresh } = useFetchUser();
@@ -55,19 +49,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const { token, expiration_date } = await mutateUser(data);
 
-      await AsyncStorage.setItem(
-        "@app-doacao:AuthToken",
-        JSON.stringify({ token, expiration_date })
-      );
+      await AsyncStorage.setItem("@app-doacao:AuthToken", JSON.stringify({ token, expiration_date }));
 
       invalidateRefresh();
 
       return true;
     } catch (err) {
-      Alert.alert(
-        "Ops! Ocorreu um erro ao entrar na sua conta: ",
-        `${err?.response?.data?.message}`
-      );
+      Alert.alert("Ops! Ocorreu um erro ao entrar na sua conta: ", `${err?.response?.data?.message}`);
       console.error(err?.response?.data);
       throw err;
     }
@@ -112,19 +100,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const { token, expiration_date } = await mutateRegisterUser(data);
 
-      await AsyncStorage.setItem(
-        "@app-doacao:AuthToken",
-        JSON.stringify({ token, expiration_date })
-      );
+      await AsyncStorage.setItem("@app-doacao:AuthToken", JSON.stringify({ token, expiration_date }));
 
       invalidateRefresh();
 
       return true;
     } catch (err) {
-      Alert.alert(
-        "Ops! Ocorreu um erro ao criar sua conta: ",
-        `${err?.response?.data?.message}`
-      );
+      Alert.alert("Ops! Ocorreu um erro ao criar sua conta: ", `${err?.response?.data?.message}`);
       console.error(err?.response?.data);
       throw err;
     }
@@ -133,12 +115,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const changeData = async (data: ChangeDataType): Promise<boolean> => {
     try {
       const res = await mutateEditUser(data);
+      queryClient.refetchQueries({
+        queryKey: [QueryKeys.UserData],
+      });
+      invalidateRefresh();
       return res ? true : false;
     } catch (err) {
-      Alert.alert(
-        "Ops! Ocorreu um erro ao editar seus dados: ",
-        `${err?.response?.data?.message}`
-      );
+      Alert.alert("Ops! Ocorreu um erro ao editar seus dados: ", `${err?.response?.data?.message}`);
       console.error(err?.response?.data);
       throw err;
     }
@@ -146,17 +129,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function verifyToken() {
     const _auth_data = await AsyncStorage.getItem("@app-doacao:AuthToken");
-
-    const { expiration_date, token } = JSON.parse(
-      _auth_data
-    ) as AuthStorageData;
-
-    if (!expiration_date || !token) {
-      console.log('sss')
+  
+    if (!_auth_data) {
       return null;
     }
+  
+    const { expiration_date, token } = JSON.parse(_auth_data) as AuthStorageData;
+  
+    if (!expiration_date || !token) {
+      return null;
+    }
+  
     const expirationDate = new Date(expiration_date);
-
+  
     const options: Intl.DateTimeFormatOptions = {
       timeZone: "America/Sao_Paulo",
       year: "numeric",
@@ -167,49 +152,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       second: "2-digit",
       hour12: false,
     };
-
-    const formattedDate = new Intl.DateTimeFormat("pt-BR", options).format(
-      expirationDate
-    );
-    const formattedNow = new Intl.DateTimeFormat("pt-BR", options).format(
-      new Date()
-    );
-
-    function parseDateString(dateString) {
+  
+    const formattedDate = new Intl.DateTimeFormat("pt-BR", options).format(expirationDate);
+    const formattedNow = new Intl.DateTimeFormat("pt-BR", options).format(new Date());
+  
+    function parseDateString(dateString: string) {
       const [datePart, timePart] = dateString.split(", ");
       const [day, month, year] = datePart.split("/").map(Number);
       const [hours, minutes, seconds] = timePart.split(":").map(Number);
-
+  
       return [year, month, day, hours, minutes, seconds];
     }
-
+  
     const nowParsed = parseDateString(formattedNow);
     const expirationParsed = parseDateString(formattedDate);
 
     if (nowParsed > expirationParsed) {
-      try {
-        const response = await authedApi.post("/donators/refresh");
-
-        if (response.data) {
-          const { token, expiration_date } = response.data;
-
-          await AsyncStorage.setItem(
-            "@app-doacao:AuthToken",
-            JSON.stringify({ token, expiration_date })
-          );
-
-          return true;
-        } else {
-          return null;
-        }
-      } catch (error) {
-        console.log("AuthContext error: verifyToken", error.response.data);
-        return null;
-      }
+      await AsyncStorage.removeItem("@app-doacao:AuthToken");
+      queryClient.refetchQueries({
+        queryKey: [QueryKeys.UserData],
+      });
+      
+      invalidateRefresh();
+      return null;
     }
-
+  
     return true;
-  }
+  }  
 
   return (
     <AuthContext.Provider

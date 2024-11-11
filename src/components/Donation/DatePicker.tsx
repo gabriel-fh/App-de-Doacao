@@ -9,12 +9,18 @@ function DatePicker({
   setSelectedDate,
   startDate,
   endDate,
+  generateTimeRange,
+  startTime,
+  endTime,
 }: {
   formatedDate: (date: string) => string;
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   startDate: string;
   endDate: string;
+  generateTimeRange: (start: string, end: string, selectedDate: string) => { label: string; value: string; }[];
+  startTime: string,
+  endTime: string,
 }) {
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -28,16 +34,16 @@ function DatePicker({
         onPress={() => setShowCalendar(!showCalendar)}
       />
       {showCalendar && (
-        <PopUp
-          isVisible={showCalendar}
-          closePopUp={() => setShowCalendar(false)}
-        >
+        <PopUp isVisible={showCalendar} closePopUp={() => setShowCalendar(false)}>
           <CustomCalendar
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             setShowCalendar={setShowCalendar}
             startDate={startDate}
             endDate={endDate}
+            generateTimeRange={generateTimeRange}
+            startTime={startTime}
+            endTime={endTime}
           />
         </PopUp>
       )}

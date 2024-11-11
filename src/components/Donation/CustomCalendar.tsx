@@ -11,12 +11,18 @@ const CustomCalendar = ({
   setShowCalendar,
   startDate,
   endDate,
+  endTime,
+  startTime,
+  generateTimeRange
 }: {
   selectedDate: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
   startDate: string;
   endDate: string;
+  generateTimeRange: (start: string, end: string, selectedDate: string) => { label: string; value: string; }[];
+  startTime: string,
+  endTime: string,
 }) => {
   LocaleConfig.locales["pt-BR"] = {
     monthNames: [
@@ -45,9 +51,28 @@ const CustomCalendar = ({
 
   const [selected, setSelected] = useState(selectedDate || today);
 
-  const disabledDates: MarkedDates = {
-    "2024-10-15": { disabled: true, inactive: true},
+  // const disabledDates: MarkedDates = {
+  //   "2024-11-15": { disabled: true, inactive: true},
+  // };
+
+  const getDisabledWeekends = (startDate: string, endDate: string): MarkedDates => {
+    let disabledDates: MarkedDates = {};
+
+    let currentDate = moment(startDate);
+    while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, "day")) {
+      const formattedDate = currentDate.format("YYYY-MM-DD");
+      if (currentDate.day() === 0 || currentDate.day() === 6) {
+        disabledDates[formattedDate] = { disabled: true, inactive: true };
+      }
+      currentDate.add(1, "days");
+    }
+
+    return disabledDates;
   };
+
+  const disabledDates = getDisabledWeekends(startDate, endDate);
+
+  const timeRange = generateTimeRange(startTime, endTime, today);
 
   return (
     <>
@@ -56,8 +81,9 @@ const CustomCalendar = ({
           setSelected(day.dateString);
         }}
         markedDates={{
-          [selected]: { selected: true, disableTouchEvent: true,  },
-          ...disabledDates
+          [selected]: { selected: true, disableTouchEvent: true },
+          ...disabledDates,
+          ...(timeRange.length < 1 && { [today]: { disabled: true, inactive: true, selected: false } }),
         }}
         minDate={today}
         maxDate={endDate}

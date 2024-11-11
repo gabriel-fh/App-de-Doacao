@@ -48,37 +48,42 @@ const Donation = () => {
     setDonationItems,
   });
 
-  function generateTimeRange(start, end, selectedDate) {
+  function generateTimeRange(start: string, end: string, selectedDate: string): { label: string; value: string }[] {
     const times = [];
     let current = new Date(start);
     const endTime = new Date(end);
     const now = new Date();
-
+  
     const timeOptions: Intl.DateTimeFormatOptions = {
       timeZone: "America/Sao_Paulo",
       hour: "2-digit",
       minute: "2-digit",
     };
-
+  
     const currentDate = now.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
-
     const isToday = currentDate === selectedDate?.split("-")?.reverse()?.join("/");
-
+  
+    const adjustedNow = new Date(now.getTime() + 30 * 60000); 
+  
     while (current < endTime) {
-      let next = new Date(current.getTime() + 30 * 60000);
-
-      if (!isToday || next > now) {
-        const startTime = current.toLocaleTimeString("pt-BR", timeOptions);
-        const endTimeFormatted = next.toLocaleTimeString("pt-BR", timeOptions);
-
-        times.push(`${startTime} - ${endTimeFormatted}`);
+      const next = new Date(current.getTime() + 30 * 60000); 
+  
+      if (isToday && next <= adjustedNow) {
+        current = next;
+        continue;
       }
-
+  
+      const startTime = current.toLocaleTimeString("pt-BR", timeOptions);
+      const endTimeFormatted = next.toLocaleTimeString("pt-BR", timeOptions);
+  
+      times.push(`${startTime} - ${endTimeFormatted}`);
+  
       current = next;
     }
-
+  
     return times.map((time) => ({ label: time, value: time }));
   }
+  
   useEffect(() => {
     const timeData = generateTimeRange(
       parsedCampaignInfo.donation_start_time,
@@ -100,7 +105,6 @@ const Donation = () => {
             }}
           >
             <CacheImage source={{ uri: parsedCampaignInfo.avatar }} style={styles.avatar} resizeMode="contain" />
-
             <Text style={styles.title}>{parsedCampaignInfo.name}</Text>
           </View>
           <View style={{ gap: 25 }}>
@@ -130,9 +134,7 @@ const Donation = () => {
                 </ScrollView>
               )}
             </View>
-
             <Observation commentary={commentary} setCommentary={setCommentary} />
-
             <View
               style={{
                 display: "flex",
@@ -147,6 +149,9 @@ const Donation = () => {
                 setSelectedDate={setSelectedDate}
                 startDate={parsedCampaignInfo.start_date}
                 endDate={parsedCampaignInfo.end_date}
+                generateTimeRange={generateTimeRange}
+                startTime={parsedCampaignInfo.donation_start_time}
+                endTime={parsedCampaignInfo.donation_end_time}
               />
 
               <TimePicker
