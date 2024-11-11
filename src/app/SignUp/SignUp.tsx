@@ -1,15 +1,16 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import FormHeader from "@/components/FormHeader";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/contexts/Auth";
 import { UserRegister } from "@/@types/app";
 import { router } from "expo-router";
 import { showMessage } from "react-native-flash-message";
+import { theme } from "@/Theme/theme";
 
 const formSchema = z.object({
   name: z
@@ -17,14 +18,9 @@ const formSchema = z.object({
     .min(3, "Nome deve ter no mínimo 3 caracteres")
     .regex(/^[^0-9]*$/, "Por favor, insira um nome válido"),
   email: z.string().email("Por favor, insira um e-mail válido"),
-  phone: z
-    .string()
-    .regex(
-      /^\(\d{2}\) \d{5}-\d{4}$/,
-      "Por favor, insira um telefone válido no formato (99) 99999-9999"
-    ),
+  phone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, "Por favor, insira um telefone válido no formato (99) 99999-9999"),
   password: z.string().min(8, "Senha deve ter no mínimo 8 caracteres"),
-})
+});
 
 const SignUp = () => {
   const { control, handleSubmit } = useForm({
@@ -38,13 +34,21 @@ const SignUp = () => {
   });
 
   const [isLoading, setisLoading] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const authContext = useAuth();
 
   const onSubmit = async (data: UserRegister) => {
-
     if (isLoading) {
       return;
+    }
+
+    if (!checked) {
+      setError("Você precisa concordar com a política de privacidade para continuar.");
+      return;
+    } else {
+      setError(null);
     }
 
     setisLoading(true);
@@ -52,9 +56,8 @@ const SignUp = () => {
     const response = authContext.signUp({
       ...data,
       phone: formattedPhone,
+      email: data.email.toLowerCase(),
     });
-
-    console.log(formattedPhone);
 
     if (response) {
       setisLoading(false);
@@ -77,7 +80,6 @@ const SignUp = () => {
         },
       });
     }
-
   };
 
   const Inputs = [
@@ -95,23 +97,7 @@ const SignUp = () => {
       name: "phone",
       placeholder: "(xx) xxxxx-xxxx",
       title: "Telefone *",
-      mask: [
-        "(",
-        /\d/,
-        /\d/,
-        ")",
-        " ",
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        "-",
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/
-      ]
+      mask: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
     },
     {
       name: "password",
@@ -119,7 +105,7 @@ const SignUp = () => {
       title: "Senha *",
       isPassword: true,
     },
-  ]
+  ];
 
   const ControllerInput = ({ name, placeholder, title, mask, isPassword }) => {
     return (
@@ -136,22 +122,17 @@ const SignUp = () => {
             onBlur={onBlur}
             mask={mask}
             password={isPassword}
+            email={name === "email"}
           />
         )}
       />
     );
-  }
+  };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      keyboardShouldPersistTaps="handled"
-    >
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <View style={styles.wrapper}>
-        <FormHeader
-          title={"Cadastre-se"}
-          subtitle="Insira suas informações nos campos abaixo"
-        />
+        <FormHeader title={"Cadastre-se"} subtitle="Insira suas informações nos campos abaixo" />
         <View style={styles.inputContainer}>
           {Inputs.map((input, index) => (
             <ControllerInput
@@ -163,6 +144,56 @@ const SignUp = () => {
               isPassword={input.isPassword}
             />
           ))}
+          <View>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+              }}
+            >
+              <TouchableOpacity
+                style={[styles.checkBox, checked && { backgroundColor: theme.primary }]}
+                onPress={() => setChecked(!checked)}
+              >
+                {checked && <View style={styles.checked} />}
+              </TouchableOpacity>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text>Li e concordo com a </Text>
+                <TouchableOpacity onPress={() => router.navigate("PrivacyPolicy/PrivacyPolicy")}>
+                  <Text
+                    style={{
+                      color: theme.primary,
+                      textDecorationLine: "underline",
+                    }}
+                  >
+                    política de privacidade.
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            {error && (
+              <Text
+                style={{
+                  color: "#f00",
+                  fontSize: 12,
+                  fontFamily: "Montserrat_400Regular",
+                  marginTop: 10,
+                }}
+              >
+                {error}
+              </Text>
+            )}
+          </View>
+
           <Button text="Continuar" onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
         </View>
       </View>
@@ -196,6 +227,25 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     gap: 30,
+  },
+  checkBox: {
+    height: 17,
+    width: 17,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: theme.primary,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checked: {
+    width: 7,
+    height: 13,
+    borderColor: "#fff",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    transform: [{ rotate: "45deg" }],
+    marginBottom: 4,
   },
 });
 

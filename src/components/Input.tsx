@@ -47,6 +47,7 @@ const Input = ({ ...props }: InputProps) => {
           selectionColor={theme.primary}
           autoCapitalize={props.email ? "none" : "sentences"}
           autoCorrect={false}
+          
         />
         {props.password && (
           <TouchableOpacity
