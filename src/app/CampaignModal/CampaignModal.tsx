@@ -18,6 +18,7 @@ import CampaignInfo from "@/components/CampaignModal/CampaignInfo";
 import CampaignSkeleton from "@/components/CampaignModal/CampaignSkeleton";
 import SomethingWrong from "@/components/SomethingWrong";
 import CacheImage from "@/components/CacheImage";
+import Reservation from "react-native-calendars/src/agenda/reservation-list/reservation";
 
 const CampaignModal = () => {
   const { campaignId } = useLocalSearchParams();
@@ -44,6 +45,7 @@ const CampaignModal = () => {
         },
       });
     } else {
+      setLoading(false);
       router.navigate("Login/Login");
     }
   };
