@@ -22,11 +22,14 @@
           "calendarPermission": "Permitir que $(PRODUCT_NAME) acesse sua agenda para salvar agendamentos de doações."
         }
       ],
-      ["expo-build-properties", {
-        "android": {
-          "usesCleartextTraffic": true
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
-      }]
+      ]
     ],
     "name": "DoAção",
     "slug": "doacao",
@@ -36,6 +39,12 @@
       "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#0D62AD"
+    },
+    "updates": {
+      "enabled": true,
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "url": "https://u.expo.dev/b37bca8a-c57a-4c6e-b140-698ada78a237"
     },
     "android": {
       "config": {
@@ -51,11 +60,18 @@
         "android.permission.WRITE_CALENDAR"
       ],
       "package": "com.doacao",
-      "versionCode": 6
+      "versionCode": 6,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "ios": {},
     "extra": {
       "eas": {
-        "projectId": "c11438e0-f378-4766-b63d-7037722cbde1"
+        "projectId": "b37bca8a-c57a-4c6e-b140-698ada78a237"
       }
     }
   }

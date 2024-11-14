@@ -23,6 +23,7 @@ import { theme } from "@/Theme/theme";
 import { AuthProvider } from "@/contexts/Auth";
 import FlashMessage from "react-native-flash-message";
 import { useVerifyConnetion } from "@/hooks/Verifications/Connection";
+import { useUpdate } from "@/hooks/Verifications/Update";
 
 const RootLayoutNav = () => {
   const [fontsLoaded] = useFonts({
@@ -46,6 +47,7 @@ const RootLayoutNav = () => {
   });
 
   const { isConnected, showFlashMessage } = useVerifyConnetion();
+  const { checkForUpdate } = useUpdate();
 
   useEffect(() => {
     if (!isConnected) {
@@ -55,6 +57,12 @@ const RootLayoutNav = () => {
       (setOnline) => () => setOnline(!!isConnected)
     );
   }, [isConnected]);
+
+  useEffect(() => {
+    if(!__DEV__) {
+      checkForUpdate();
+    }
+  }, []);
 
   if (!fontsLoaded) {
     return null;
