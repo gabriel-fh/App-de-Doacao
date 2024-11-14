@@ -42,6 +42,17 @@
         "buildType": "apk"
       },
       "channel": "production"
+    },
+    "preview": {
+      "extends": "base",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk",
+        "env": {
+          "PLATFORM": "android"
+        }
+      },
+      "channel": "preview"
     }
   },
   "submit": {
